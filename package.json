@@ -1,0 +1,13 @@
+{
+  "name": "brink-components",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "demo"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=demo",
+    "build": "npm run build --workspace=@brink-components/component-library"
+  }
+}
