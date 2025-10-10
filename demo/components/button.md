@@ -24,14 +24,16 @@ import { Button } from '@brink-components/component-library'
 import { Button } from '@brink-components/component-library'
 </script>
 
-<div class="flex flex-wrap gap-4 my-4">
-  <Button variant="default">Default</Button>
-  <Button variant="destructive">Destructive</Button>
-  <Button variant="outline">Outline</Button>
-  <Button variant="secondary">Secondary</Button>
-  <Button variant="ghost">Ghost</Button>
-  <Button variant="link">Link</Button>
-</div>
+<iframe data-why class="h-20">
+  <div class="flex flex-wrap gap-4">
+    <Button variant="default">Default</Button>
+    <Button variant="destructive">Destructive</Button>
+    <Button variant="outline">Outline</Button>
+    <Button variant="secondary">Secondary</Button>
+    <Button variant="ghost">Ghost</Button>
+    <Button variant="link">Link</Button>
+  </div>
+</iframe>
 
 ```vue
 <Button variant="default">Default</Button>
@@ -44,11 +46,13 @@ import { Button } from '@brink-components/component-library'
 
 ### Sizes
 
-<div class="flex flex-wrap items-center gap-4 my-4">
-  <Button size="sm">Small</Button>
-  <Button size="default">Default</Button>
-  <Button size="lg">Large</Button>
-</div>
+<iframe data-why class="h-20">
+  <div class="flex flex-wrap items-center gap-4">
+    <Button size="sm">Small</Button>
+    <Button size="default">Default</Button>
+    <Button size="lg">Large</Button>
+  </div>
+</iframe>
 
 ```vue
 <Button size="sm">Small</Button>
@@ -58,17 +62,19 @@ import { Button } from '@brink-components/component-library'
 
 ### Icon Buttons
 
-<div class="flex flex-wrap items-center gap-4 my-4">
-  <Button size="icon-sm" variant="outline">
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>
-  </Button>
-  <Button size="icon" variant="outline">
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>
-  </Button>
-  <Button size="icon-lg" variant="outline">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>
-  </Button>
-</div>
+<iframe data-why class="h-20">
+  <div class="flex flex-wrap items-center gap-4">
+    <Button size="icon-sm" variant="outline">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>
+    </Button>
+    <Button size="icon" variant="outline">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>
+    </Button>
+    <Button size="icon-lg" variant="outline">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>
+    </Button>
+  </div>
+</iframe>
 
 ```vue
 <Button size="icon-sm" variant="outline">
@@ -84,12 +90,12 @@ import { Button } from '@brink-components/component-library'
 
 ### With Icon
 
-<div class="flex flex-wrap gap-4 my-4">
+<iframe data-why class="h-20">
   <Button>
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
     Button with Icon
   </Button>
-</div>
+</iframe>
 
 ```vue
 <Button>
@@ -100,10 +106,12 @@ import { Button } from '@brink-components/component-library'
 
 ### Disabled State
 
-<div class="flex flex-wrap gap-4 my-4">
-  <Button disabled>Disabled Button</Button>
-  <Button variant="outline" disabled>Disabled Outline</Button>
-</div>
+<iframe data-why class="h-20">
+  <div class="flex flex-wrap gap-4">
+    <Button disabled>Disabled Button</Button>
+    <Button variant="outline" disabled>Disabled Outline</Button>
+  </div>
+</iframe>
 
 ```vue
 <Button disabled>Disabled Button</Button>

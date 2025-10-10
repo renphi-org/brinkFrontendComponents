@@ -1,8 +1,12 @@
 import { defineConfig } from "vitepress";
 import path from "path";
+import { whyframe } from "@whyframe/core";
+import { whyframeVue } from "@whyframe/vue";
 
 export default defineConfig({
   vite: {
+    // @ts-ignore - Vite version mismatch between VitePress and whyframe plugins
+
     resolve: {
       alias: {
         "@brink-components/component-library": path.resolve(
@@ -27,6 +31,7 @@ export default defineConfig({
         items: [
           { text: "Button", link: "/components/button" },
           { text: "Tag", link: "/components/tag" },
+          { text: "DataTable", link: "/components/datatable" },
         ],
       },
     ],

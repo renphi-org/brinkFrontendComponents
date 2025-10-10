@@ -1,5 +1,5 @@
+import { postcssIsolateStyles } from 'vitepress'
+
 export default {
-  plugins: {
-    '@tailwindcss/postcss': {},
-  },
+  plugins: [postcssIsolateStyles()]
 }

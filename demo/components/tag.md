@@ -24,13 +24,15 @@ import { Tag } from '@brink-components/component-library'
 import { Tag } from '@brink-components/component-library'
 </script>
 
-<div class="flex flex-wrap gap-2 my-4">
-  <Tag variant="default">Default</Tag>
-  <Tag variant="destructive">Destructive</Tag>
-  <Tag variant="destructive-outline">Destructive Outline</Tag>
-  <Tag variant="outline">Outline</Tag>
-  <Tag variant="tag">Tag</Tag>
-</div>
+<iframe data-why class="h-16">
+  <div class="flex flex-wrap gap-2">
+    <Tag variant="default">Default</Tag>
+    <Tag variant="destructive">Destructive</Tag>
+    <Tag variant="destructive-outline">Destructive Outline</Tag>
+    <Tag variant="outline">Outline</Tag>
+    <Tag variant="tag">Tag</Tag>
+  </div>
+</iframe>
 
 ```vue
 <Tag variant="default">Default</Tag>
@@ -42,12 +44,14 @@ import { Tag } from '@brink-components/component-library'
 
 ### Status Variants
 
-<div class="flex flex-wrap gap-2 my-4">
-  <Tag variant="success">Success</Tag>
-  <Tag variant="draft">Draft</Tag>
-  <Tag variant="released">Released</Tag>
-  <Tag variant="archived">Archived</Tag>
-</div>
+<iframe data-why class="h-16">
+  <div class="flex flex-wrap gap-2">
+    <Tag variant="success">Success</Tag>
+    <Tag variant="draft">Draft</Tag>
+    <Tag variant="released">Released</Tag>
+    <Tag variant="archived">Archived</Tag>
+  </div>
+</iframe>
 
 ```vue
 <Tag variant="success">Success</Tag>
@@ -58,15 +62,17 @@ import { Tag } from '@brink-components/component-library'
 
 ### Type Variants
 
-<div class="flex flex-wrap gap-2 my-4">
-  <Tag variant="attribute">Attribute</Tag>
-  <Tag variant="attributetype">Attribute Type</Tag>
-  <Tag variant="attributeset">Attribute Set</Tag>
-  <Tag variant="attributesetgroup">Attribute Set Group</Tag>
-  <Tag variant="choice">Choice</Tag>
-  <Tag variant="outputchannel">Output Channel</Tag>
-  <Tag variant="unit">Unit</Tag>
-</div>
+<iframe data-why class="h-16">
+  <div class="flex flex-wrap gap-2">
+    <Tag variant="attribute">Attribute</Tag>
+    <Tag variant="attributetype">Attribute Type</Tag>
+    <Tag variant="attributeset">Attribute Set</Tag>
+    <Tag variant="attributesetgroup">Attribute Set Group</Tag>
+    <Tag variant="choice">Choice</Tag>
+    <Tag variant="outputchannel">Output Channel</Tag>
+    <Tag variant="unit">Unit</Tag>
+  </div>
+</iframe>
 
 ```vue
 <Tag variant="attribute">Attribute</Tag>
@@ -80,12 +86,14 @@ import { Tag } from '@brink-components/component-library'
 
 ### Domain Variants
 
-<div class="flex flex-wrap gap-2 my-4">
-  <Tag variant="workprocess">Work Process</Tag>
-  <Tag variant="article">Article</Tag>
-  <Tag variant="partlist">Part List</Tag>
-  <Tag variant="assembly">Assembly</Tag>
-</div>
+<iframe data-why class="h-16">
+  <div class="flex flex-wrap gap-2">
+    <Tag variant="workprocess">Work Process</Tag>
+    <Tag variant="article">Article</Tag>
+    <Tag variant="partlist">Part List</Tag>
+    <Tag variant="assembly">Assembly</Tag>
+  </div>
+</iframe>
 
 ```vue
 <Tag variant="workprocess">Work Process</Tag>
@@ -96,11 +104,13 @@ import { Tag } from '@brink-components/component-library'
 
 ### Custom Classes
 
-<div class="flex flex-wrap gap-2 my-4">
-  <Tag class="!text-xs">Smaller Text</Tag>
-  <Tag class="uppercase">Uppercase</Tag>
-  <Tag class="tracking-wider">Wider Tracking</Tag>
-</div>
+<iframe data-why class="h-16">
+  <div class="flex flex-wrap gap-2">
+    <Tag class="!text-xs">Smaller Text</Tag>
+    <Tag class="uppercase">Uppercase</Tag>
+    <Tag class="tracking-wider">Wider Tracking</Tag>
+  </div>
+</iframe>
 
 ```vue
 <Tag class="!text-xs">Smaller Text</Tag>

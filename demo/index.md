@@ -38,6 +38,9 @@ A versatile button component with multiple variants and sizes.
 ### [Tag](/components/tag)
 A flexible tag component with semantic and visual variants.
 
+### [DataTable](/components/datatable)
+A powerful data table with sorting, pagination, selection, and custom cell rendering.
+
 </div>
 
 <style scoped>
