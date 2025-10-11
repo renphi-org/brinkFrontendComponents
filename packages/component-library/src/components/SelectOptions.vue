@@ -32,7 +32,7 @@ defineEmits<{ onAddItem: [] }>()
 // Simple translations
 const t = (key: string) => {
   const translations: Record<string, string> = {
-    'common.select': 'Select...',
+    'common.select': 'Select',
     'common.reset': 'Reset',
     'common.addItem': 'Add Item',
   }

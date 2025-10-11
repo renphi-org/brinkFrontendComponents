@@ -3,16 +3,23 @@ import vue from "@vitejs/plugin-vue";
 import tailwindcss from "@tailwindcss/vite";
 import dts from "vite-plugin-dts";
 import path from "node:path";
+import Markdown from "unplugin-vue-markdown/vite";
 
 export default defineConfig({
   plugins: [
-    vue(),
+    vue({
+      include: [/\.vue$/, /\.md$/],
+    }),
+    Markdown({}),
     tailwindcss(),
     dts({
       insertTypesEntry: true,
       copyDtsFiles: true,
     }),
   ],
+  server: {
+    port: 3002,
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

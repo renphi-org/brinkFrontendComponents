@@ -37,9 +37,6 @@ coverage/
 .cache/
 .temp/
 
-# VitePress
-demo/.vitepress/dist
-demo/.vitepress/cache
 
 
 
