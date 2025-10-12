@@ -114,13 +114,30 @@ const columns: TableColumn<TableData>[] = [
 
 ## Features
 
-- 📊 Sortable columns
-- 🔍 Built-in search and filtering
-- 📄 Pagination support
-- ✅ Row selection (single and multi-select)
-- 🎨 Customizable with slots
-- 📱 Responsive design
-- ⚡ Performance optimized for large datasets
+- 📊 **Sortable columns** - Click column headers to sort (asc/desc)
+- 👁️ **Column visibility** - Show/hide columns via dropdown menu
+- 🔽 **Column dropdowns** - Each header has a dropdown with sort and hide options
+- 🔍 **Built-in search and filtering**
+- 📄 **Pagination support**
+- ✅ **Row selection** - Single and multi-select modes
+- 🎨 **Customizable with slots**
+- 📱 **Responsive design**
+- ⚡ **Performance optimized** for large datasets
+
+## New Features
+
+### Column Header Dropdowns
+
+Each column header now has a dropdown menu that allows you to:
+- Sort ascending/descending
+- Clear sort
+- Hide the column
+
+Simply click on any column header to access these options.
+
+### View Options Button
+
+The "View" button in the top-right corner allows you to toggle column visibility. All columns with titles can be shown/hidden from this menu.
 
 </div>
 </div>

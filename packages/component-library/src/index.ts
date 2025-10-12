@@ -4,6 +4,8 @@ import "./index.css";
 export { Tag } from "./Tag";
 export { Button } from "./components/ui/button";
 export { default as DataTable, useToggleState } from "./components/DataTable";
+export { default as DataTableColumnHeader } from "./components/DataTable/DataTableColumnHeader.vue";
+export { default as DataTableViewOptions } from "./components/DataTable/DataTableViewOptions.vue";
 export type { DataTableProps, DataTableEmits, TableColumn, SortBy, TranslatableConfig } from "./components/DataTable";
 
 // Additional components

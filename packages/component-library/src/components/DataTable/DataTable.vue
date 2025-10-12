@@ -1,9 +1,11 @@
 <script setup lang="ts" generic="T extends Record<string, any>">
 import type { DataTableEmits, DataTableProps, SortBy } from '.'
-import { ArrowDown, ArrowDownUp, ArrowUp, ChevronDown, ChevronRight, Loader2 } from 'lucide-vue-next'
+import { ChevronDown, ChevronRight, Loader2 } from 'lucide-vue-next'
 import { objectify, title } from 'radash'
 import { computed, useTemplateRef, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import DataTableColumnHeader from './DataTableColumnHeader.vue'
+import DataTableViewOptions from './DataTableViewOptions.vue'
 import PaginationCustom from '@/components/PaginationCustom.vue'
 import { Badge } from '@/components/ui/badge'
 import Button from '@/components/ui/button/Button.vue'
@@ -130,6 +132,12 @@ defineExpose({ selected, clearSelected: clear })
 
 <template>
   <div class="flex flex-col flex-1 min-w-0  min-h-0 relative">
+    <!-- Toolbar with view options -->
+    <div class="flex items-center justify-end py-2">
+      <DataTableViewOptions :columns="columns" :visible-columns="visibleColumns"
+        @update:visible-columns="(cols) => visibleColumns = cols" />
+    </div>
+
     <div ref="container" class="min-w-0 min-h-0 relative flex flex-col"
       :class="{ '[&_td:first-child]:!w-0 [&_th:first-child]:!w-0': selectMode === 'multiselect', '[&_td:last-child]:!w-0 [&_th:last-child]:!w-0': hasActionsColumn }">
       <!-- Loading overlay -->
@@ -156,19 +164,10 @@ defineExpose({ selected, clearSelected: clear })
                 <Checkbox :model-value="allSelectedState" @update:model-value="() => toggleAllSelected()" />
               </th>
               <th v-for="col in filteredColumns" :key="col.id">
-                <span v-if="!sortable || !col.sortable" class="text-xs text-muted-foreground"> {{
-                  col.title || title(col.id as string)
-                  }}</span>
-                <Button v-else size="sm" variant="ghost" class="-mx-2 px-2 !whitespace-normal break-word text-left"
-                  :class="sortBy?.key === col.id ? `text-foreground` : `text-muted-foreground`"
-                  @click="updateSort(col.id as string)">
-                  {{ col.title || title(col.id as string) }}
-                  <div class="[&>*]:!w-3 [&>*]:!h-3 -ml-1">
-                    <ArrowUp v-if="sortBy?.key === col.id && sortBy.order === 'desc'" />
-                    <ArrowDown v-else-if="sortBy?.key === col.id && sortBy.order === 'asc'" />
-                    <ArrowDownUp v-else />
-                  </div>
-                </Button>
+                <DataTableColumnHeader :title="col.title || title(col.id as string)"
+                  :sortable="sortable && col.sortable" :sort-order="sortBy?.key === col.id ? sortBy.order : undefined"
+                  :hideable="true" @sort="(order) => order ? updateSort(col.id as string) : (sortBy = undefined)"
+                  @hide="() => visibleColumns = visibleColumns?.filter(id => id !== col.id)" />
               </th>
               <th v-if="hasActionsColumn" />
             </tr>
