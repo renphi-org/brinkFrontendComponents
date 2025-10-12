@@ -44,3 +44,7 @@ export { default as DynamicConfirmComponentDialog } from "./components/DynamicDi
 export { default as DynamicDialog } from "./components/DynamicDialog/DynamicDialog.vue";
 export { default as DynamicDrawer } from "./components/DynamicDialog/DynamicDrawer.vue";
 export type { DynamicDialogProps, DynamicComponenWithModelConfig, DynamicComponenWithModelDialogProps, GenericAutoFormConfig, DynamicAutoFormDialogProps, OnOkFn, OnGenericSubmitFn } from "./components/DynamicDialog";
+
+// Layout components
+export { default as AppSidebar } from "./components/AppSidebar.vue";
+export type { AppSidebarConfig, MenuItem, MenuItemGroup } from "./components/AppSidebar.types";

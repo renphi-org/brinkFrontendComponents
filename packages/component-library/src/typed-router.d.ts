@@ -22,6 +22,7 @@ declare module 'vue-router/auto-routes' {
     '/autoform': RouteRecordInfo<'/autoform', '/autoform', Record<never, never>, Record<never, never>>,
     '/datatable': RouteRecordInfo<'/datatable', '/datatable', Record<never, never>, Record<never, never>>,
     '/dynamic-dialog': RouteRecordInfo<'/dynamic-dialog', '/dynamic-dialog', Record<never, never>, Record<never, never>>,
+    '/sidebar': RouteRecordInfo<'/sidebar', '/sidebar', Record<never, never>, Record<never, never>>,
   }
 
   /**
@@ -49,6 +50,10 @@ declare module 'vue-router/auto-routes' {
     }
     'pages/dynamic-dialog.md': {
       routes: '/dynamic-dialog'
+      views: never
+    }
+    'pages/sidebar.md': {
+      routes: '/sidebar'
       views: never
     }
   }

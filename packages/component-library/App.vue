@@ -1,33 +1,16 @@
 <template>
   <div :class="isDark ? 'dark' : ''">
     <SidebarProvider>
-      <Sidebar>
-        <SidebarHeader>
-          <div class="flex items-center justify-between px-2">
-            <h2 class="text-lg font-semibold">Brink Components</h2>
+      <AppSidebar :config="sidebarConfig" :current-path="$route.path">
+        <template #header>
+          <div class="flex items-center justify-between px-2 mt-4">
+            <h2 class="text-lg font-semibold truncate">Brink Components</h2>
             <Button @click="toggleDarkMode" variant="ghost" size="icon-sm" class="size-8">
               <component :is="isDark ? Sun : Moon" class="w-4 h-4" />
             </Button>
           </div>
-        </SidebarHeader>
-        <SidebarContent>
-          <SidebarGroup>
-            <SidebarGroupLabel>Components</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                <SidebarMenuItem v-for="route in routes" :key="route.path">
-                  <SidebarMenuButton
-                    :data-active="$route.path === route.path"
-                    @click="$router.push(route.path)"
-                  >
-                    {{ route.meta?.title || route.name }}
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        </SidebarContent>
-      </Sidebar>
+        </template>
+      </AppSidebar>
 
       <SidebarInset>
         <header class="flex h-16 shrink-0 items-center gap-2 border-b px-4">
@@ -49,31 +32,21 @@
 
 <script setup lang="ts">
 import { ref, onMounted, watch, computed } from 'vue'
-import { useRouter } from 'vue-router'
-import { Moon, Sun } from 'lucide-vue-next'
+import { useRouter, useRoute } from 'vue-router'
+import { Moon, Sun, Home, FormInput, Table, MessageSquare } from 'lucide-vue-next'
 import { Button } from './src/components/ui/button'
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarHeader,
-  SidebarInset,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarProvider,
-  SidebarTrigger,
-} from './src/components/ui/sidebar'
+import { SidebarProvider, SidebarInset, SidebarTrigger } from './src/components/ui/sidebar'
+import AppSidebar from './src/components/AppSidebar.vue'
+import type { AppSidebarConfig } from './src/components/AppSidebar.types'
 import DynamicComponentProvider from './src/components/DynamicComponent/DynamicComponentProvider.vue'
 
 const router = useRouter()
+const route = useRoute()
 const isDark = ref(false)
 
-// Get all routes for sidebar navigation
-const routes = computed(() => {
-  return router.getRoutes()
+// Configure sidebar with routes
+const sidebarConfig = computed<AppSidebarConfig>(() => {
+  const allRoutes = router.getRoutes()
     .filter(route => !route.path.includes(':')) // Filter out dynamic routes
     .sort((a, b) => {
       // Put index route first
@@ -81,6 +54,34 @@ const routes = computed(() => {
       if (b.path === '/') return 1
       return a.path.localeCompare(b.path)
     })
+
+  // Map routes to menu items with icons
+  const menuItems = allRoutes.map(route => {
+    let icon = Home
+
+    // Assign icons based on route path or title
+    if (route.path.includes('autoform')) icon = FormInput
+    else if (route.path.includes('datatable')) icon = Table
+    else if (route.path.includes('dynamic-dialog')) icon = MessageSquare
+
+    return {
+      title: (route.meta?.title as string) || (route.name as string) || route.path,
+      url: route.path,
+      icon,
+      isActive: route.path === '/',
+    }
+  })
+
+  return {
+    title: 'Brink Components',
+    collapsible: 'icon',
+    menuGroups: [
+      {
+        title: 'Components',
+        items: menuItems,
+      },
+    ],
+  }
 })
 
 // Load dark mode preference from localStorage
