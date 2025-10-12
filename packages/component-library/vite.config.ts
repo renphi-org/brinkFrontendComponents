@@ -4,13 +4,26 @@ import tailwindcss from "@tailwindcss/vite";
 import dts from "vite-plugin-dts";
 import path from "node:path";
 import Markdown from "unplugin-vue-markdown/vite";
+import Shiki from "@shikijs/markdown-it";
 
 export default defineConfig({
   plugins: [
     vue({
       include: [/\.vue$/, /\.md$/],
     }),
-    Markdown({}),
+    Markdown({
+      async markdownItSetup(md) {
+        md.use(
+          await Shiki({
+            themes: {
+              light: "github-light",
+              dark: "github-dark",
+            },
+            defaultColor: false, // Use CSS variables instead of inline styles
+          })
+        );
+      },
+    }),
     tailwindcss(),
     dts({
       insertTypesEntry: true,

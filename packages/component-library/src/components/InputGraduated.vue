@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue'
-import { Plus, X } from 'lucide-vue-next'
+import { Plus, X, Trash2 } from 'lucide-vue-next'
 import {
   Popover,
   PopoverContent,
@@ -23,6 +23,7 @@ const t = (key: string) => {
     'common.from': 'From',
     'common.value': 'Value',
     'common.add': 'Add',
+    'common.clear': 'Clear All',
   }
   return translations[key] || key
 }
@@ -31,6 +32,7 @@ const isString = (val: any): val is string => typeof val === 'string'
 const model = defineModel<ValueGraduated[]>({ default: () => [] })
 const add = () => model.value?.push({ from: 0, value: 0 })
 const remove = (index: number) => model.value.splice(index, 1)
+const clear = () => model.value = []
 </script>
 
 <template>
@@ -54,10 +56,16 @@ const remove = (index: number) => model.value.splice(index, 1)
           <X />
         </Button>
       </div>
-      <Button size="sm" variant="ghost" class="!justify-start -mx-2" @click="add()">
-        <Plus />
-        {{ t("common.add") }}
-      </Button>
+      <div class="flex gap-2">
+        <Button size="sm" variant="ghost" class="!justify-start -mx-2 flex-1" @click="add()">
+          <Plus />
+          {{ t("common.add") }}
+        </Button>
+        <Button v-if="model.length > 0" size="sm" variant="ghost" class="!justify-start -mx-2" @click="clear()">
+          <Trash2 />
+          {{ t("common.clear") }}
+        </Button>
+      </div>
     </PopoverContent>
   </Popover>
 </template>
