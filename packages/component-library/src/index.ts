@@ -13,15 +13,15 @@ export { default as InputSearch } from "./components/InputSearch.vue";
 export { default as SelectListOptions } from "./components/SelectListOptions.vue";
 export { default as Empty } from "./components/Empty.vue";
 export { default as ButtonSelect } from "./components/ButtonSelect.vue";
-export type { SelectOption } from "./components/SelectOptions.vue";
 
 // Input components
 export { default as InputRange } from "./components/InputRange.vue";
 export { default as InputGraduated } from "./components/InputGraduated.vue";
 export { default as InputBoolean } from "./components/InputBoolean.vue";
 export { default as DisplayGraduated } from "./components/DisplayGraduated.vue";
-export type { ValueRange } from "./components/InputRange.vue";
-export type { ValueGraduated } from "./components/InputGraduated.vue";
+
+// Component types
+export type { SelectOption, ValueRange, ValueGraduated } from "./components/types";
 
 // Dynamic components
 export { useDynamicComponent, dynamicComponent } from "./components/DynamicComponent";

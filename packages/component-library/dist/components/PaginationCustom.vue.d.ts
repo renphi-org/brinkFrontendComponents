@@ -5,14 +5,16 @@ type __VLS_Props = PaginationRootProps & {
     itemsPerPage?: number | undefined;
     hideItemsPerPage?: boolean;
 };
-type __VLS_PublicProps = __VLS_Props & {
+type __VLS_ModelProps = {
     'itemsPerPage'?: number | undefined;
 };
-declare const _default: import("vue").DefineComponent<__VLS_PublicProps, {}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
+type __VLS_PublicProps = __VLS_Props & __VLS_ModelProps;
+declare const __VLS_export: import("vue").DefineComponent<__VLS_PublicProps, {}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
     "update:page": (value: number) => any;
     "update:itemsPerPage": (value: number | undefined) => any;
 }, string, import("vue").PublicProps, Readonly<__VLS_PublicProps> & Readonly<{
     "onUpdate:page"?: ((value: number) => any) | undefined;
     "onUpdate:itemsPerPage"?: ((value: number | undefined) => any) | undefined;
 }>, {}, {}, {}, {}, string, import("vue").ComponentProvideOptions, false, {}, any>;
+declare const _default: typeof __VLS_export;
 export default _default;

@@ -3,6 +3,7 @@ import type { DataTableEmits, DataTableProps, SortBy } from '.'
 import { ArrowDown, ArrowDownUp, ArrowUp, ChevronDown, ChevronRight, Loader2 } from 'lucide-vue-next'
 import { objectify, title } from 'radash'
 import { computed, useTemplateRef, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import PaginationCustom from '@/components/PaginationCustom.vue'
 import { Badge } from '@/components/ui/badge'
 import Button from '@/components/ui/button/Button.vue'
@@ -43,24 +44,7 @@ defineSlots<
   }
 >()
 
-// Simple translation function - you can replace with your own i18n solution
-const t = (key: string, values?: Record<string, any>) => {
-  const translations: Record<string, string> = {
-    'dataTable.loading': 'Loading...',
-    'dataTable.noEntriesFound': 'No entries found',
-    'dataTable.expandedContent': 'Expanded content for ID: {id}',
-    'dataTable.elementsSelected': '{count} of {total} selected',
-    'dataTable.totalElements': '{total} total elements',
-    'dataTable.manageTranslations': 'Manage translations',
-  }
-  let result = translations[key] || key
-  if (values) {
-    Object.entries(values).forEach(([k, v]) => {
-      result = result.replace(`{${k}}`, String(v))
-    })
-  }
-  return result
-}
+const { t } = useI18n()
 
 // Pagination size options
 
@@ -71,6 +55,7 @@ const visibleColumns = defineModel<string[]>('visibleColumns')
 const itemsPerPage = defineModel<number>('itemsPerPage')
 const page = defineModel<number>('page')
 const sortBy = defineModel<SortBy>('sortBy')
+const selected = defineModel<any[]>('selected', { default: () => [] })
 
 const hasItems = computed(() => items && items.length > 0)
 
@@ -117,7 +102,7 @@ useDelegatedClickEventListener(containerRef, '[data-row-id]', (el) => {
   emit('clickRow', rowId)
 })
 const itemsRef = computed(() => items)
-const { state: selected, clear, stateMap: selectedMap, toggle: toggleSelected, toggleAll: toggleAllSelected, allToggledState: allSelectedState } = useToggleState(itemsRef, 'id')
+const { stateMap: selectedMap, toggle: toggleSelected, toggleAll: toggleAllSelected, allToggledState: allSelectedState, clear } = useToggleState(itemsRef, 'id', storagekey, selected)
 
 // range select on shift key press
 useShiftKeyRangeSelect<T>(
@@ -158,8 +143,8 @@ defineExpose({ selected, clearSelected: clear })
 
       <div class="flex-1  flex flex-col min-h-0" :class="{ '!rounded-md border': bordered }">
         <table
-          class="[&>tbody>tr:hover]:bg-emphasis h-1 !table [&_td,&_th]:border-muted/15  min-h-0 w-full [&_th:last-child,&_td:last-child]:pr-6 [&>tbody>tr>td,&>thead>tr>th]:border-b-1 [&>thead>tr>th:first-child,&tbody>tr>td:first-child]:pl-6">
-          <thead class="">
+          class="[&>tbody>tr:hover]:bg-muted h-1  [&_tr]:border-b [&_th,&_td]:px-2 [&_th,&_td]:py-1 [&_tbody_tr:last-child]:border-b-none  min-h-0 w-full [&_.p-datatable-empty-message]:!bg-transparent [&_.p-datatable-paginator-bottom]:sticky [&_.p-datatable-paginator-bottom]:bottom-0 [&_.p-paginator]:justify-start [&_.p-paginator]:pt-3 [&_.p-paginator]:pb-6 [&_th]:!text-sm [&_tr>*:first-child]:!pl-6 [&_tr>*:last-child]:!pr-6">
+          <thead class="text-left">
             <tr>
               <th v-if="expandable" class="!w-6 !pr-0">
                 <Button v-tooltip="'Toggle collapse'" variant="muted" size="xs" class="[&:not(:hover)]:opacity-0 "

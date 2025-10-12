@@ -1,31 +1,87 @@
 <template>
   <div :class="isDark ? 'dark' : ''">
-    <div class="min-h-screen bg-background text-foreground prose p-7">
-      <!-- Dark Mode Toggle -->
-      <div class="fixed top-4 right-4 z-50">
-        <Button @click="toggleDarkMode" variant="outline" size="sm" class="gap-2">
-          <component :is="isDark ? Sun : Moon" class="w-4 h-4" />
-          {{ isDark ? 'Light' : 'Dark' }} Mode
-        </Button>
-      </div>
+    <SidebarProvider>
+      <Sidebar>
+        <SidebarHeader>
+          <div class="flex items-center justify-between px-2">
+            <h2 class="text-lg font-semibold">Brink Components</h2>
+            <Button @click="toggleDarkMode" variant="ghost" size="icon-sm" class="size-8">
+              <component :is="isDark ? Sun : Moon" class="w-4 h-4" />
+            </Button>
+          </div>
+        </SidebarHeader>
+        <SidebarContent>
+          <SidebarGroup>
+            <SidebarGroupLabel>Components</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                <SidebarMenuItem v-for="route in routes" :key="route.path">
+                  <SidebarMenuButton
+                    :data-active="$route.path === route.path"
+                    @click="$router.push(route.path)"
+                  >
+                    {{ route.meta?.title || route.name }}
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
+      </Sidebar>
 
-      <!-- Demo Content -->
-      <DemoApp />
+      <SidebarInset>
+        <header class="flex h-16 shrink-0 items-center gap-2 border-b px-4">
+          <SidebarTrigger class="-ml-1" />
+          <div class="flex items-center gap-2">
+            <h1 class="text-lg font-semibold">{{ $route.meta?.title || 'Component Library' }}</h1>
+          </div>
+        </header>
 
-      <!-- Dynamic Component Provider -->
-      <DynamicComponentProvider />
-    </div>
+        <div class="flex-1 overflow-auto">
+          <RouterView />
+        </div>
+
+        <DynamicComponentProvider />
+      </SidebarInset>
+    </SidebarProvider>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watch, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import { Moon, Sun } from 'lucide-vue-next'
 import { Button } from './src/components/ui/button'
-import DemoApp from './DemoApp.md'
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+  SidebarTrigger,
+} from './src/components/ui/sidebar'
 import DynamicComponentProvider from './src/components/DynamicComponent/DynamicComponentProvider.vue'
 
+const router = useRouter()
 const isDark = ref(false)
+
+// Get all routes for sidebar navigation
+const routes = computed(() => {
+  return router.getRoutes()
+    .filter(route => !route.path.includes(':')) // Filter out dynamic routes
+    .sort((a, b) => {
+      // Put index route first
+      if (a.path === '/') return -1
+      if (b.path === '/') return 1
+      return a.path.localeCompare(b.path)
+    })
+})
 
 // Load dark mode preference from localStorage
 onMounted(() => {

@@ -5,9 +5,15 @@ import dts from "vite-plugin-dts";
 import path from "node:path";
 import Markdown from "unplugin-vue-markdown/vite";
 import Shiki from "@shikijs/markdown-it";
+import VueRouter from "unplugin-vue-router/vite";
 
 export default defineConfig({
   plugins: [
+    VueRouter({
+      routesFolder: "pages",
+      extensions: [".vue", ".md"],
+      dts: "src/typed-router.d.ts",
+    }),
     vue({
       include: [/\.vue$/, /\.md$/],
     }),

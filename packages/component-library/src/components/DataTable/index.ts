@@ -49,8 +49,8 @@ export interface TranslatableConfig<T> {
   updateTranslations: (options: { path: { id: string }, body: any }) => Promise<any>
 }
 
-export function useToggleState<T extends Record<string, any>>(items: Ref<T[]>, idCol: keyof T, storageKey?: string) {
-  const state = storageKey ? useSessionStorage(storageKey, []) : ref<any[]>([])
+export function useToggleState<T extends Record<string, any>>(items: Ref<T[]>, idCol: keyof T, storageKey?: string, externalState?: Ref<any[]>) {
+  const state = externalState || (storageKey ? useSessionStorage(storageKey, []) : ref<any[]>([]))
   const stateMap = computed(() => Object.fromEntries(state.value.map(id => [id, true])))
   const toggle = (id: string | number) => state.value = toggleRadash(state.value, id)
   const allToggledState = computed<'indeterminate' | boolean>(() => state.value.length > 0 ? (state.value?.length === items.value.length ? true : 'indeterminate') : false)

@@ -62,8 +62,8 @@ export function openAutoFormDialog<T extends object = any>(
   dialogConfig: DynamicDialogProps | string,
   formConfig: GenericAutoFormConfig<T>,
 ) {
-  return dynamicComponent.open<typeof DynamicAutoFormDialog<T>>({
-    component: DynamicAutoFormDialog<T>,
+  return dynamicComponent.open<typeof DynamicAutoFormDialog>({
+    component: DynamicAutoFormDialog,
     componentProps: {
       formConfig,
       dialogConfig: (typeof dialogConfig === 'string' ? { title: dialogConfig } : dialogConfig),

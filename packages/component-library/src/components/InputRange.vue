@@ -2,8 +2,9 @@
 import { triggerRef } from 'vue'
 import { Input } from './ui/input'
 import { cn } from '@/lib/utils'
+import type { ValueRange } from './types'
 
-export type ValueRange = [number | undefined, number | undefined]
+export type { ValueRange }
 interface Props {
   modelValue?: ValueRange
   class?: string

@@ -10,8 +10,9 @@ import ButtonSelect from './ButtonSelect.vue'
 import DisplayGraduated from './DisplayGraduated.vue'
 import Button from './ui/button/Button.vue'
 import Input from './ui/input/Input.vue'
+import type { ValueGraduated } from './types'
 
-export interface ValueGraduated { from: number, value: number }
+export type { ValueGraduated }
 const props = defineProps<{
   class?: HTMLAttributes['class']
   placeholder?: string | ValueGraduated[]

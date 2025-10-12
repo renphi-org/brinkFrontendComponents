@@ -8,8 +8,9 @@ import { cn } from '@/lib/utils'
 import ButtonSelect from './ButtonSelect.vue'
 import Button from './ui/button/Button.vue'
 import DropdownMenuSeparator from './ui/dropdown-menu/DropdownMenuSeparator.vue'
+import type { SelectOption } from './types'
 
-export interface SelectOption { value: any, label: string }
+export type { SelectOption }
 
 interface Props {
   placeholder?: string
