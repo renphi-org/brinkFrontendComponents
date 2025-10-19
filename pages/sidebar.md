@@ -84,7 +84,6 @@ const exampleConfig: AppSidebarConfig = {
 }
 </script>
 
-
 # AppSidebar Component
 
 A reusable, configurable sidebar component with collapsible menu items and nested navigation.
@@ -102,36 +101,10 @@ A reusable, configurable sidebar component with collapsible menu items and neste
 ## Example Usage
 
 ```vue
-<template>
-  <SidebarProvider>
-    <AppSidebar :config="sidebarConfig" :current-path="$route.path">
-      <template #header>
-        <div class="p-4">
-          <h2>My App</h2>
-        </div>
-      </template>
-
-      <template #footer>
-        <div class="p-4">
-          <UserProfile />
-        </div>
-      </template>
-    </AppSidebar>
-
-    <SidebarInset>
-      <header>
-        <SidebarTrigger />
-        <h1>{{ $route.meta?.title }}</h1>
-      </header>
-      <RouterView />
-    </SidebarInset>
-  </SidebarProvider>
-</template>
-
 <script setup lang="ts">
+import type { AppSidebarConfig } from '@brink-components/component-library'
+import { AppSidebar, SidebarInset, SidebarProvider, SidebarTrigger } from '@brink-components/component-library'
 import { Home, Settings, Users } from 'lucide-vue-next'
-import { AppSidebar, type AppSidebarConfig } from '@brink-components/component-library'
-import { SidebarProvider, SidebarInset, SidebarTrigger } from '@brink-components/component-library'
 
 const sidebarConfig: AppSidebarConfig = {
   title: 'My Application',
@@ -168,6 +141,32 @@ const sidebarConfig: AppSidebarConfig = {
   ],
 }
 </script>
+
+<template>
+  <SidebarProvider>
+    <AppSidebar :config="sidebarConfig" :current-path="$route.path">
+      <template #header>
+        <div class="p-4">
+          <h2>My App</h2>
+        </div>
+      </template>
+
+      <template #footer>
+        <div class="p-4">
+          <UserProfile />
+        </div>
+      </template>
+    </AppSidebar>
+
+    <SidebarInset>
+      <header>
+        <SidebarTrigger />
+        <h1>{{ $route.meta?.title }}</h1>
+      </header>
+      <RouterView />
+    </SidebarInset>
+  </SidebarProvider>
+</template>
 ```
 
 ## Configuration
@@ -247,16 +246,16 @@ const sidebarConfig: AppSidebarConfig = {
 
 ## Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `config` | `AppSidebarConfig` | **required** | Sidebar configuration object |
-| `currentPath` | `string` | `''` | Current route path for active state |
+| Prop          | Type               | Default      | Description                         |
+| ------------- | ------------------ | ------------ | ----------------------------------- |
+| `config`      | `AppSidebarConfig` | **required** | Sidebar configuration object        |
+| `currentPath` | `string`           | `''`         | Current route path for active state |
 
 ## Slots
 
-| Slot | Description |
-|------|-------------|
-| `header` | Custom header content (overrides default title) |
+| Slot     | Description                                        |
+| -------- | -------------------------------------------------- |
+| `header` | Custom header content (overrides default title)    |
 | `footer` | Footer content (e.g., user profile, logout button) |
 
 ## Collapsible Modes
@@ -264,4 +263,3 @@ const sidebarConfig: AppSidebarConfig = {
 - **`icon`** - Collapses to show only icons
 - **`offcanvas`** - Slides in/out from the side
 - **`none`** - Always visible, no collapse
-

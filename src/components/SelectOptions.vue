@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Component, HTMLAttributes, MaybeRef } from 'vue'
+import type { SelectOption } from './types'
 import { Plus, RotateCcw } from 'lucide-vue-next'
 import { SelectTrigger } from 'reka-ui'
 import { computed, toValue } from 'vue'
@@ -8,7 +9,6 @@ import { cn } from '@/lib/utils'
 import ButtonSelect from './ButtonSelect.vue'
 import Button from './ui/button/Button.vue'
 import DropdownMenuSeparator from './ui/dropdown-menu/DropdownMenuSeparator.vue'
-import type { SelectOption } from './types'
 
 export type { SelectOption }
 
@@ -31,7 +31,7 @@ const props = defineProps<Props & { class?: HTMLAttributes['class'] }>()
 defineEmits<{ onAddItem: [] }>()
 
 // Simple translations
-const t = (key: string) => {
+function t(key: string) {
   const translations: Record<string, string> = {
     'common.select': 'Select',
     'common.reset': 'Reset',
@@ -60,27 +60,19 @@ const hasChanges = computed(() => props.initialValues === undefined ? model.valu
 </script>
 
 <template>
-  <Select
-    v-model="model"
-    :multiple
-  >
+  <Select v-model="model" :multiple>
     <SelectTrigger
       :class="cn(
         'w-full data-[placeholder]:text-muted-foreground ',
-        props.class)" v-bind="$attrs"
-      as-child
+        props.class)" v-bind="$attrs" as-child
     >
       <ButtonSelect variant="outline">
         <slot :selected-options>
-          <SelectValue :placeholder="placeholder || t('common.select') " class="flex-wrap ">
+          <SelectValue :placeholder="placeholder || t('common.select')" class="flex-wrap ">
             <template v-if="customValueComponent && selectedOptions.length > 0">
               <component
-                :is="customValueComponent"
-                v-for="option in selectedOptions"
-                :key="option.value"
-                :option="option"
-                :selected-options="selectedOptions"
-                v-bind="customValueProps"
+                :is="customValueComponent" v-for="option in selectedOptions" :key="option.value"
+                :option="option" :selected-options="selectedOptions" v-bind="customValueProps"
               />
             </template>
           </SelectValue>
@@ -91,11 +83,7 @@ const hasChanges = computed(() => props.initialValues === undefined ? model.valu
       <div v-if="label" class="text-xs font-semibold px-2 py-2">
         {{ label }}
       </div>
-      <SelectItem
-        v-for="option in toValue(options)"
-        :key="String(option.value)"
-        :value="option.value"
-      >
+      <SelectItem v-for="option in toValue(options)" :key="String(option.value)" :value="option.value">
         {{ option.label }}
       </SelectItem>
       <div v-if="showResetButton && hasChanges">
@@ -108,7 +96,7 @@ const hasChanges = computed(() => props.initialValues === undefined ? model.valu
     </SelectContent>
   </Select>
   <div v-if="showAddItemButton" class="-mt-2">
-    <Button size="xs" class="sticky bottom-0" variant="ghost" @click="$emit('onAddItem')">
+    <Button size="sm" class="sticky bottom-0" variant="ghost" @click="$emit('onAddItem')">
       <Plus />
       {{ t('common.addItem') }}
     </Button>

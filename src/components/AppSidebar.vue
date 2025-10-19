@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import type { AppSidebarConfig, MenuItem } from './AppSidebar.types'
 import { ChevronRight } from 'lucide-vue-next'
 import { RouterLink } from 'vue-router'
-import type { MenuItem, AppSidebarConfig } from './AppSidebar.types'
 import {
   Collapsible,
   CollapsibleContent,
@@ -37,9 +37,11 @@ defineSlots<{
   footer?: () => any
 }>()
 
-const isMenuItemActive = (item: MenuItem, currentPath: string): boolean => {
-  if (item.url === currentPath) return true
-  if (item.items?.some(subItem => subItem.url === currentPath)) return true
+function isMenuItemActive(item: MenuItem, currentPath: string): boolean {
+  if (item.url === currentPath)
+    return true
+  if (item.items?.some(subItem => subItem.url === currentPath))
+    return true
   return false
 }
 </script>
@@ -57,7 +59,9 @@ const isMenuItemActive = (item: MenuItem, currentPath: string): boolean => {
     <SidebarContent>
       <SidebarMenu>
         <SidebarGroup v-for="(group, groupIndex) in config.menuGroups" :key="groupIndex" class="!pb-0">
-          <SidebarGroupLabel v-if="group.title">{{ group.title }}</SidebarGroupLabel>
+          <SidebarGroupLabel v-if="group.title">
+            {{ group.title }}
+          </SidebarGroupLabel>
 
           <template v-for="item in group.items" :key="item.title">
             <!-- Collapsible menu item with subitems -->

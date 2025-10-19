@@ -36,8 +36,10 @@ if (formConfig.initialValues) {
 
 <template>
   <DynamicDialog v-bind="dialogConfig" v-model:open="open">
-    <AutoForm :schema="simplifySchema(formConfig.schema)" :form :field-config="formConfig.fieldConfig"
-      class="flex flex-col gap-3" @submit="(event) => onSubmit(event as T)">
+    <AutoForm
+      :schema="simplifySchema(formConfig.schema)" :form :field-config="formConfig.fieldConfig"
+      class="flex flex-col gap-3" @submit="(event) => onSubmit(event as T)"
+    >
       <div class="mt-1">
         <Button type="submit" :disabled="isPending">
           {{ dialogConfig.okButtonText || "Submit" }}

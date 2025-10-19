@@ -9,18 +9,18 @@ type __VLS_Slots = {} & {
     default?: (props: typeof __VLS_16) => any;
 };
 declare const __VLS_base: import("vue").DefineComponent<SheetContentProps, {}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
-    openAutoFocus: (event: Event) => any;
     escapeKeyDown: (event: KeyboardEvent) => any;
     pointerDownOutside: (event: import("reka-ui").PointerDownOutsideEvent) => any;
     focusOutside: (event: import("reka-ui").FocusOutsideEvent) => any;
     interactOutside: (event: import("reka-ui").PointerDownOutsideEvent | import("reka-ui").FocusOutsideEvent) => any;
+    openAutoFocus: (event: Event) => any;
     closeAutoFocus: (event: Event) => any;
 }, string, import("vue").PublicProps, Readonly<SheetContentProps> & Readonly<{
-    onOpenAutoFocus?: ((event: Event) => any) | undefined;
     onEscapeKeyDown?: ((event: KeyboardEvent) => any) | undefined;
     onPointerDownOutside?: ((event: import("reka-ui").PointerDownOutsideEvent) => any) | undefined;
     onFocusOutside?: ((event: import("reka-ui").FocusOutsideEvent) => any) | undefined;
     onInteractOutside?: ((event: import("reka-ui").PointerDownOutsideEvent | import("reka-ui").FocusOutsideEvent) => any) | undefined;
+    onOpenAutoFocus?: ((event: Event) => any) | undefined;
     onCloseAutoFocus?: ((event: Event) => any) | undefined;
 }>, {
     side: "top" | "right" | "bottom" | "left";

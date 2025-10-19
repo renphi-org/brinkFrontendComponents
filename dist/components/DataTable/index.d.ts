@@ -10,6 +10,7 @@ export interface DataTableProps<T> {
     idcol?: keyof T;
     total?: number;
     isPending?: boolean;
+    showOptions?: boolean;
     sortable?: boolean;
     bordered?: boolean;
     expandable?: boolean;
@@ -30,6 +31,7 @@ export interface TableColumn<T> {
     cssClass?: string;
     onClick?: (item: T) => void;
     translatable?: boolean;
+    hideable?: boolean;
 }
 export interface SortBy {
     key: string;

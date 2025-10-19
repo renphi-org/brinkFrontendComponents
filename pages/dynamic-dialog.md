@@ -164,18 +164,12 @@ Dynamic dialog system for programmatic dialogs and confirmations
 ## Example Usage
 
 ```vue
-<template>
-  <div>
-    <Button @click="showConfirmDialog">Confirm Select</Button>
-    <DynamicComponentProvider />
-  </div>
-</template>
-
 <script setup>
+import { alert, Button, confirmGeneric, confirmSelect, confirmSelectList, DynamicComponentProvider } from '@brink-components/component-library'
 import { ref } from 'vue'
-import { Button } from '@brink-components/component-library'
-import { confirmSelect, confirmSelectList, confirmGeneric, alert } from '@brink-components/component-library'
-import { DynamicComponentProvider } from '@brink-components/component-library'
+
+// AutoForm Dialog with Zod schema
+import { z } from 'zod'
 
 const options = [
   { value: '1', label: 'Option 1' },
@@ -229,9 +223,6 @@ async function showAlert() {
   )
 }
 
-// AutoForm Dialog with Zod schema
-import { z } from 'zod'
-
 const userSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
   email: z.string().email('Invalid email address'),
@@ -282,6 +273,15 @@ async function showDynamicDrawer() {
   )
 }
 </script>
+
+<template>
+  <div>
+    <Button @click="showConfirmDialog">
+      Confirm Select
+    </Button>
+    <DynamicComponentProvider />
+  </div>
+</template>
 ```
 
 **Important:** You must include `<DynamicComponentProvider />` in your app root (e.g., App.vue) for dynamic dialogs to work.

@@ -2,10 +2,20 @@ pre-commit:
   parallel: false
   commands:
     build:
-      run: npm run build
+      glob: '*'
+      run: |
+        echo "Building library..."
+        npm run build
+      skip:
+        - merge
+        - rebase
     stage-dist:
+      glob: '*'
       run: git add dist/
+      skip:
+        - merge
+        - rebase
     lint:
-      glob: "*.{ts,vue}"
+      glob: '*.{ts,vue}'
       run: npx eslint {staged_files} --fix
       stage_fixed: true

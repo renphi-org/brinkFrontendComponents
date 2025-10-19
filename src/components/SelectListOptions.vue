@@ -22,7 +22,7 @@ const filteredOptions = computed(() => toValue(options).filter(options => starts
 const hasOptions = computed(() => !!toValue(options).length)
 
 // Simple translation
-const t = (key: string, values?: Record<string, any>) => {
+function t(key: string, values?: Record<string, any>) {
   const translations: Record<string, string> = {
     'common.elementCountSelected': '{count} selected',
   }
@@ -37,14 +37,9 @@ const t = (key: string, values?: Record<string, any>) => {
 </script>
 
 <template>
-  <ListboxRoot
-    v-model="model"
-    :multiple
-  >
+  <ListboxRoot v-model="model" :multiple>
     <ListboxFilter
-      v-model="searchTerm"
-      :disabled="!hasOptions"
-      :class="cn(
+      v-model="searchTerm" :disabled="!hasOptions" :class="cn(
         'file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
         'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]',
         'aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive',
@@ -53,21 +48,21 @@ const t = (key: string, values?: Record<string, any>) => {
     <Empty v-if="!filteredOptions.length" />
     <ListboxContent class="max-h-[400px] overflow-auto">
       <ListboxItem
-        v-for="option in filteredOptions"
-        :key="String(option.value)"
-        :value="option.value"
+        v-for="option in filteredOptions" :key="String(option.value)" :value="option.value"
         class="focus:bg-accent focus:text-accent-foreground data-[highlighted]:bg-accent [&_svg:not([class*='text-'])]:text-muted-foreground relative flex w-full cursor-default items-center gap-2 rounded-sm py-1.5 pr-8 pl-2 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2 "
       >
         <div class="flex-1">
           {{ option.label }}
         </div>
-        <ListboxItemIndicator><Check :size="12" /> </ListboxItemIndicator>
+        <ListboxItemIndicator>
+          <Check :size="12" />
+        </ListboxItemIndicator>
       </ListboxItem>
     </ListboxContent>
   </ListboxRoot>
   <div class="flex gap-1 items-center">
     <div v-if="showAddItemButton" class="flex-1">
-      <Button size="xs" class="sticky bottom-0" variant="ghost" @click="$emit('onAddItem')">
+      <Button size="sm" class="sticky bottom-0" variant="ghost" @click="$emit('onAddItem')">
         <Plus />
         {{ addItemButtonLabel }}
       </Button>

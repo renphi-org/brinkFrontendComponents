@@ -1,18 +1,18 @@
-import { defineConfig } from "vite";
-import vue from "@vitejs/plugin-vue";
-import tailwindcss from "@tailwindcss/vite";
-import dts from "vite-plugin-dts";
-import path from "node:path";
-import Markdown from "unplugin-vue-markdown/vite";
-import Shiki from "@shikijs/markdown-it";
-import VueRouter from "unplugin-vue-router/vite";
+import path from 'node:path'
+import Shiki from '@shikijs/markdown-it'
+import tailwindcss from '@tailwindcss/vite'
+import vue from '@vitejs/plugin-vue'
+import Markdown from 'unplugin-vue-markdown/vite'
+import VueRouter from 'unplugin-vue-router/vite'
+import { defineConfig } from 'vite'
+import dts from 'vite-plugin-dts'
 
 export default defineConfig({
   plugins: [
     VueRouter({
-      routesFolder: "pages",
-      extensions: [".vue", ".md"],
-      dts: "src/typed-router.d.ts",
+      routesFolder: 'pages',
+      extensions: ['.vue', '.md'],
+      dts: 'src/typed-router.d.ts',
     }),
     vue({
       include: [/\.vue$/, /\.md$/],
@@ -22,12 +22,12 @@ export default defineConfig({
         md.use(
           await Shiki({
             themes: {
-              light: "github-light",
-              dark: "github-dark",
+              light: 'github-light',
+              dark: 'github-dark',
             },
             defaultColor: false, // Use CSS variables instead of inline styles
-          })
-        );
+          }),
+        )
       },
     }),
     tailwindcss(),
@@ -41,28 +41,28 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      '@': path.resolve(__dirname, './src'),
     },
   },
   build: {
     lib: {
       entry: {
-        index: "src/index.ts",
+        index: 'src/index.ts',
       },
-      name: "BrinkComponentLibrary",
+      name: 'BrinkComponentLibrary',
       fileName: () => `index.js`,
-      formats: ["es"],
+      formats: ['es'],
     },
     cssCodeSplit: false,
     rollupOptions: {
-      external: ["vue", "reka-ui"],
+      external: ['vue', 'reka-ui'],
       output: {
         globals: {
-          vue: "Vue",
-          "reka-ui": "RekaUI",
+          'vue': 'Vue',
+          'reka-ui': 'RekaUI',
         },
         assetFileNames: 'style.css',
       },
     },
   },
-});
+})

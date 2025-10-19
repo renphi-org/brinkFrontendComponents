@@ -1,8 +1,8 @@
+type __VLS_Props = Props;
 interface Props {
     showClearButton?: boolean;
     placeholder?: string;
 }
-type __VLS_Props = Props;
 type __VLS_ModelProps = {
     modelValue?: string;
     'modelSubmit'?: string;

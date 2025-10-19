@@ -2,16 +2,16 @@ import type { Component, MaybeRef } from 'vue'
 import type { ComponentProps } from 'vue-component-type-helpers'
 import type { Config } from '../ui/auto-form'
 import type { ZodObjectOrWrapped } from '../ui/auto-form/utils'
-import DynamicConfirmComponentDialog from './DynamicConfirmComponentDialog.vue'
-import SelectOptions from '../SelectOptions.vue'
 import { useDynamicComponent } from '../DynamicComponent'
 import SelectListOptions from '../SelectListOptions.vue'
-
-// GenericObject type from vee-validate
-type GenericObject = Record<string, any>
+import SelectOptions from '../SelectOptions.vue'
 import DynamicAlertDialog from './DynamicAlertDialog.vue'
 import DynamicAutoFormDialog from './DynamicAutoFormDialog.vue'
 import DynamicComponentDialog from './DynamicComponentDialog.vue'
+import DynamicConfirmComponentDialog from './DynamicConfirmComponentDialog.vue'
+
+// GenericObject type from vee-validate
+type GenericObject = Record<string, any>
 
 export type OnOkFn<T = any> = (value?: T) => Promise<boolean> | boolean
 export type OnGenericSubmitFn = (obj: GenericObject) => Promise<boolean> | boolean

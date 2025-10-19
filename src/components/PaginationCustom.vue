@@ -28,7 +28,7 @@ const pageSizeOptions = [25, 50, 100, 250, 500]
 const itemsPerPage = defineModel<number | undefined>('itemsPerPage', { default: 25 })
 
 // Simple translation function
-const t = (key: string, values?: Record<string, any>) => {
+function t(key: string, values?: Record<string, any>) {
   const translations: Record<string, string> = {
     'dataTable.rowsPerPage': 'Rows per page',
     'dataTable.pageOf': 'Page {page} of {pageCount}',

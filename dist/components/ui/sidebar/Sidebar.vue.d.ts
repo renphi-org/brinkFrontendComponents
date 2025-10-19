@@ -8,9 +8,9 @@ type __VLS_Slots = {} & {
     default?: (props: typeof __VLS_31) => any;
 };
 declare const __VLS_base: import("vue").DefineComponent<SidebarProps, {}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").PublicProps, Readonly<SidebarProps> & Readonly<{}>, {
-    variant: "sidebar" | "floating" | "inset";
-    side: "left" | "right";
     collapsible: "offcanvas" | "icon" | "none";
+    side: "left" | "right";
+    variant: "sidebar" | "floating" | "inset";
 }, {}, {}, {}, string, import("vue").ComponentProvideOptions, false, {}, any>;
 declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;
 declare const _default: typeof __VLS_export;

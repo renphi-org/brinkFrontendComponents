@@ -1,6 +1,6 @@
 import { type VariantProps } from 'class-variance-authority';
 declare const badgeVariants: (props?: ({
-    variant?: "default" | "destructive" | "outline" | "secondary" | null | undefined;
+    variant?: "default" | "outline" | "destructive" | "secondary" | null | undefined;
 } & import("class-variance-authority/types").ClassProp) | undefined) => string;
 type BadgeVariants = VariantProps<typeof badgeVariants>;
 type __VLS_Props = {

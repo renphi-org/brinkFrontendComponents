@@ -131,8 +131,6 @@ const groupedByCategory = computed(() => {
 })
 </script>
 
-
-
 # DataTable Component
 
 Feature-rich data table with sorting, filtering, and pagination
@@ -164,20 +162,12 @@ class='not-prose'
 ## Example Usage
 
 ```vue
-<template>
-  <DataTable
-    :items="tableData"
-    :columns="columns"
-    :total="tableData.length"
-  />
-</template>
-
 <script setup>
-import { ref } from 'vue'
-import { DataTable } from '@brink-components/component-library'
 import type { TableColumn } from '@brink-components/component-library'
+import { DataTable } from '@brink-components/component-library'
+import { ref } from 'vue'
 
-type TableData = {
+interface TableData {
   id: number
   name: string
   email: string
@@ -198,6 +188,14 @@ const columns: TableColumn<TableData>[] = [
   { id: 'status', title: 'Status', sortable: true },
 ]
 </script>
+
+<template>
+  <DataTable
+    :items="tableData"
+    :columns="columns"
+    :total="tableData.length"
+  />
+</template>
 ```
 
 ## Features
@@ -217,6 +215,7 @@ const columns: TableColumn<TableData>[] = [
 ### Column Header Dropdowns
 
 Each column header now has a dropdown menu that allows you to:
+
 - Sort ascending/descending
 - Clear sort
 - Hide the column
@@ -261,24 +260,9 @@ Click on any row to expand and see additional details.
 ### Code Example
 
 ```vue
-<template>
-  <DataTable
-    :items="expandableData"
-    :columns="columns"
-    :total="expandableData.length"
-    :expandable="true"
-  >
-    <template #expanded-row="{ item }">
-      <div class="p-4 bg-muted/50">
-        <p>{{ item.description }}</p>
-      </div>
-    </template>
-  </DataTable>
-</template>
-
 <script setup>
-import { ref } from 'vue'
 import { DataTable } from '@brink-components/component-library'
+import { ref } from 'vue'
 
 const expandableData = ref([
   {
@@ -299,6 +283,21 @@ const columns = [
   { id: 'status', title: 'Status', sortable: true },
 ]
 </script>
+
+<template>
+  <DataTable
+    :items="expandableData"
+    :columns="columns"
+    :total="expandableData.length"
+    :expandable="true"
+  >
+    <template #expanded-row="{ item }">
+      <div class="p-4 bg-muted/50">
+        <p>{{ item.description }}</p>
+      </div>
+    </template>
+  </DataTable>
+</template>
 ```
 
 ---
@@ -331,24 +330,9 @@ Data grouped by category with collapsible groups.
 ### Code Example
 
 ```vue
-<template>
-  <DataTable
-    :items="groupedData"
-    :columns="columns"
-    :total="groupedData.length"
-    :is-grouped="true"
-    :groups="groupedByCategory"
-    group-by-field="category"
-  >
-    <template #cell:price="{ value }">
-      <span class="font-mono">${{ value }}</span>
-    </template>
-  </DataTable>
-</template>
-
 <script setup>
-import { ref, computed } from 'vue'
 import { DataTable } from '@brink-components/component-library'
+import { computed, ref } from 'vue'
 
 const groupedData = ref([
   { id: 1, product: 'Laptop', category: 'Electronics', price: 1200, stock: 15 },
@@ -366,7 +350,7 @@ const columns = [
 // Group data by category
 const groupedByCategory = computed(() => {
   const groups = {}
-  groupedData.value.forEach(item => {
+  groupedData.value.forEach((item) => {
     if (!groups[item.category]) {
       groups[item.category] = []
     }
@@ -375,4 +359,19 @@ const groupedByCategory = computed(() => {
   return groups
 })
 </script>
+
+<template>
+  <DataTable
+    :items="groupedData"
+    :columns="columns"
+    :total="groupedData.length"
+    :is-grouped="true"
+    :groups="groupedByCategory"
+    group-by-field="category"
+  >
+    <template #cell:price="{ value }">
+      <span class="font-mono">${{ value }}</span>
+    </template>
+  </DataTable>
+</template>
 ```

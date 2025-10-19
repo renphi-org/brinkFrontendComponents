@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ArrowDown, ArrowUp, ArrowUpDown, ChevronsUpDown, EyeOff } from 'lucide-vue-next'
 import { computed } from 'vue'
-import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -10,6 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { cn } from '@/lib/utils'
 
 interface Props {
   title: string
@@ -29,7 +29,8 @@ const emit = defineEmits<{
 }>()
 
 const sortIcon = computed(() => {
-  if (!props.sortOrder) return ChevronsUpDown
+  if (!props.sortOrder)
+    return ChevronsUpDown
   return props.sortOrder === 'asc' ? ArrowUp : ArrowDown
 })
 
@@ -50,8 +51,10 @@ function handleHide() {
   <div v-else :class="cn('flex items-center space-x-2')">
     <DropdownMenu>
       <DropdownMenuTrigger as-child>
-        <Button variant="ghost" size="sm"
-          class="-ml-3 h-8 data-[state=open]:bg-accent text-muted-foreground text-xs font-normal">
+        <Button
+          variant="ghost" size="sm"
+          class="-ml-3 h-8 data-[state=open]:bg-accent text-muted-foreground text-xs font-normal"
+        >
           <span>{{ title }}</span>
           <component :is="sortIcon" v-if="sortable" class="ml-2 !h-3.5 !w-3.5" />
         </Button>

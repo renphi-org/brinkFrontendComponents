@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue'
-import { Plus, X, Trash2 } from 'lucide-vue-next'
+import type { ValueGraduated } from './types'
+import { Plus, Trash2, X } from 'lucide-vue-next'
 import {
   Popover,
   PopoverContent,
@@ -10,7 +11,6 @@ import ButtonSelect from './ButtonSelect.vue'
 import DisplayGraduated from './DisplayGraduated.vue'
 import Button from './ui/button/Button.vue'
 import Input from './ui/input/Input.vue'
-import type { ValueGraduated } from './types'
 
 export type { ValueGraduated }
 const props = defineProps<{
@@ -19,7 +19,7 @@ const props = defineProps<{
 }>()
 
 // Simple translations
-const t = (key: string) => {
+function t(key: string) {
   const translations: Record<string, string> = {
     'common.from': 'From',
     'common.value': 'Value',

@@ -7,17 +7,18 @@ defineOptions({
   inheritAttrs: false,
 })
 
-interface Props {
-  showClearButton?: boolean
-  placeholder?: string
-}
-
 withDefaults(defineProps<Props>(), {
   showClearButton: true,
   placeholder: 'Search...',
 })
 
 const emit = defineEmits<{ onSubmit: [value: string], onClear: [value: string] }>()
+
+interface Props {
+  showClearButton?: boolean
+  placeholder?: string
+}
+
 const model = defineModel<string>()
 const modelSubmit = defineModel<string>('modelSubmit', { default: '' })
 

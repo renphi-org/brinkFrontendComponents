@@ -75,24 +75,15 @@ Automatically generate forms from Zod schemas with validation
 ## Example Usage
 
 ```vue
-<template>
-  <AutoForm
-    :schema="formSchema"
-    @submit="onSubmit"
-  >
-    <Button type="submit">Submit</Button>
-  </AutoForm>
-</template>
-
 <script setup>
-import { z } from 'zod'
 import { AutoForm, Button } from '@brink-components/component-library'
+import { z } from 'zod'
 
 const formSchema = z.object({
   username: z.string().min(2, 'Username must be at least 2 characters'),
   email: z.string().email('Invalid email address'),
   age: z.coerce.number().min(18, 'Must be at least 18 years old'),
-  acceptTerms: z.boolean().refine((val) => val === true, {
+  acceptTerms: z.boolean().refine(val => val === true, {
     message: 'You must accept the terms'
   }),
   bio: z.string().min(10).optional(),
@@ -102,6 +93,17 @@ function onSubmit(values: any) {
   console.log('Form submitted:', values)
 }
 </script>
+
+<template>
+  <AutoForm
+    :schema="formSchema"
+    @submit="onSubmit"
+  >
+    <Button type="submit">
+      Submit
+    </Button>
+  </AutoForm>
+</template>
 ```
 
 ## Features
@@ -111,4 +113,3 @@ function onSubmit(values: any) {
 - 🎨 Supports various field types (string, number, boolean, enum, date, etc.)
 - 📝 Optional fields with `.optional()`
 - 🔧 Customizable field configs and labels
-

@@ -38,7 +38,7 @@ const translations: Record<string, string> = {
   'date.justNow': 'Just now',
 }
 
-const t = (key: string, values?: Record<string, any>) => {
+function t(key: string, values?: Record<string, any>) {
   let result = translations[key] || key
   if (values) {
     Object.entries(values).forEach(([k, v]) => {

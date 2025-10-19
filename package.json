@@ -1,10 +1,7 @@
 {
   "name": "@brink-components/component-library",
-  "version": "0.1.0",
   "type": "module",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "version": "0.1.0",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -12,6 +9,9 @@
     },
     "./style.css": "./dist/style.css"
   },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
@@ -19,35 +19,14 @@
     "build": "vite build && vue-tsc --declaration --emitDeclarationOnly",
     "dev": "vite",
     "components": "vite",
-    "lint": "eslint src --ext .ts,.vue",
-    "test": "vitest",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "test": "vitest"
   },
   "peerDependencies": {
     "reka-ui": "^2.5.1",
     "tailwindcss": "^4.1.14",
     "vue": "^3.0.0"
-  },
-  "devDependencies": {
-    "@evilmartians/lefthook": "^1.13.6",
-    "@shikijs/markdown-it": "^3.13.0",
-    "@tailwindcss/vite": "^4.1.14",
-    "@types/markdown-it": "^14.1.2",
-    "@types/node": "^24.7.2",
-    "@vitejs/plugin-vue": "^6.0.1",
-    "eslint": "latest",
-    "markdown-it": "^14.1.0",
-    "reka-ui": "^2.5.1",
-    "shadcn-vue": "latest",
-    "shiki": "^3.13.0",
-    "tailwindcss": "^4.1.14",
-    "typescript": "^5.0.0",
-    "unplugin-vue-markdown": "^29.2.0",
-    "unplugin-vue-router": "^0.15.0",
-    "vite": "^7.1.9",
-    "vite-plugin-dts": "^4.3.0",
-    "vitest": "latest",
-    "vue": "^3.0.0",
-    "vue-tsc": "^3.1.1"
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.19",
@@ -65,5 +44,29 @@
     "vue-i18n": "^11.1.12",
     "vue-router": "^4.5.1",
     "zod": "3.25.76"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^6.0.0",
+    "@evilmartians/lefthook": "^1.13.6",
+    "@shikijs/markdown-it": "^3.13.0",
+    "@tailwindcss/vite": "^4.1.14",
+    "@types/markdown-it": "^14.1.2",
+    "@types/node": "^24.7.2",
+    "@vitejs/plugin-vue": "^6.0.1",
+    "eslint": "^9.38.0",
+    "eslint-plugin-format": "^1.0.2",
+    "markdown-it": "^14.1.0",
+    "reka-ui": "^2.5.1",
+    "shadcn-vue": "latest",
+    "shiki": "^3.13.0",
+    "tailwindcss": "^4.1.14",
+    "typescript": "^5.0.0",
+    "unplugin-vue-markdown": "^29.2.0",
+    "unplugin-vue-router": "^0.15.0",
+    "vite": "^7.1.9",
+    "vite-plugin-dts": "^4.3.0",
+    "vitest": "latest",
+    "vue": "^3.0.0",
+    "vue-tsc": "^3.1.1"
   }
 }

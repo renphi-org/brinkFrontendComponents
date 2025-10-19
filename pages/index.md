@@ -18,7 +18,6 @@ import InputBoolean from '../src/components/InputBoolean.vue'
 import { z } from 'zod'
 import AutoForm from '../src/components/ui/auto-form/AutoForm.vue'
 
-
 // DateFormat examples
 const now = new Date()
 const pastDate = new Date(now.getTime() - 2 * 60 * 60 * 1000) // 2 hours ago
@@ -87,11 +86,7 @@ function handleAutoFormSubmit(values: any) {
 }
 </script>
 
-
-
 <<< @/index.ts
-
-
 
 # Brink Component Library
 
@@ -156,20 +151,25 @@ Compact tag component for labels and categories
 ### Example Usage
 
 ```vue
-<template>
-  <Tag>Default Tag</Tag>
-  <Tag variant="success">Success</Tag>
-  <Tag variant="destructive">Error</Tag>
-  <Tag variant="outline">Outline</Tag>
-</template>
-
 <script setup>
 import { Tag } from '@brink-components/component-library'
 </script>
+
+<template>
+  <Tag>Default Tag</Tag>
+  <Tag variant="success">
+    Success
+  </Tag>
+  <Tag variant="destructive">
+    Error
+  </Tag>
+  <Tag variant="outline">
+    Outline
+  </Tag>
+</template>
 ```
 
 ---
-
 
 ## DateFormat Component
 
@@ -195,15 +195,15 @@ Format dates and timestamps with locale support and relative time
 ### Example Usage
 
 ```vue
+<script setup>
+import { DateFormat } from '@brink-components/component-library'
+</script>
+
 <template>
   <DateFormat :date="new Date()" />
   <DateFormat :date="timestamp" format="YYYY-MM-DD" />
   <DateFormat :date="pastDate" :relative="true" />
 </template>
-
-<script setup>
-import { DateFormat } from '@brink-components/component-library'
-</script>
 ```
 
 ---
@@ -220,19 +220,19 @@ Search input with icon and submit on enter
 ### Example Usage
 
 ```vue
-<template>
-  <InputSearch v-model="search" @onSubmit="handleSearch" />
-</template>
-
 <script setup>
-import { ref } from 'vue'
 import { InputSearch } from '@brink-components/component-library'
+import { ref } from 'vue'
 
 const search = ref('')
-const handleSearch = (value: string) => {
+function handleSearch(value: string) {
   console.log('Searching for:', value)
 }
 </script>
+
+<template>
+  <InputSearch v-model="search" @on-submit="handleSearch" />
+</template>
 ```
 
 ---
@@ -258,6 +258,18 @@ Advanced select with single and multiple selection support
 ### Example Usage
 
 ```vue
+<script setup>
+import { SelectOptions } from '@brink-components/component-library'
+import { ref } from 'vue'
+
+const selected = ref('')
+const multiSelect = ref([])
+const options = [
+  { value: '1', label: 'Option 1' },
+  { value: '2', label: 'Option 2' }
+]
+</script>
+
 <template>
   <SelectOptions
     v-model="selected"
@@ -271,18 +283,6 @@ Advanced select with single and multiple selection support
     :multiple="true"
   />
 </template>
-
-<script setup>
-import { ref } from 'vue'
-import { SelectOptions } from '@brink-components/component-library'
-
-const selected = ref('')
-const multiSelect = ref([])
-const options = [
-  { value: '1', label: 'Option 1' },
-  { value: '2', label: 'Option 2' }
-]
-</script>
 ```
 
 ---
@@ -298,6 +298,10 @@ Listbox with search/filter functionality
 ### Example Usage
 
 ```vue
+<script setup>
+import { SelectListOptions } from '@brink-components/component-library'
+</script>
+
 <template>
   <SelectListOptions
     v-model="selected"
@@ -305,10 +309,6 @@ Listbox with search/filter functionality
     :multiple="true"
   />
 </template>
-
-<script setup>
-import { SelectListOptions } from '@brink-components/component-library'
-</script>
 ```
 
 ---
@@ -325,14 +325,16 @@ Empty state indicator for lists and data
 ### Example Usage
 
 ```vue
-<template>
-  <Empty v-if="!items.length" />
-  <Empty v-if="!results.length">No search results found</Empty>
-</template>
-
 <script setup>
 import { Empty } from '@brink-components/component-library'
 </script>
+
+<template>
+  <Empty v-if="!items.length" />
+  <Empty v-if="!results.length">
+    No search results found
+  </Empty>
+</template>
 ```
 
 ---
@@ -349,17 +351,17 @@ Range input for min/max values
 ### Example Usage
 
 ```vue
-<template>
-  <InputRange v-model="range" :placeholder="['Min', 'Max']" />
-</template>
-
 <script setup>
-import { ref } from 'vue'
-import { InputRange } from '@brink-components/component-library'
 import type { ValueRange } from '@brink-components/component-library'
+import { InputRange } from '@brink-components/component-library'
+import { ref } from 'vue'
 
 const range = ref<ValueRange>([0, 100])
 </script>
+
+<template>
+  <InputRange v-model="range" :placeholder="['Min', 'Max']" />
+</template>
 ```
 
 ---
@@ -376,20 +378,20 @@ Graduated pricing/value input with popover
 ### Example Usage
 
 ```vue
-<template>
-  <InputGraduated v-model="graduated" />
-</template>
-
 <script setup>
-import { ref } from 'vue'
-import { InputGraduated } from '@brink-components/component-library'
 import type { ValueGraduated } from '@brink-components/component-library'
+import { InputGraduated } from '@brink-components/component-library'
+import { ref } from 'vue'
 
 const graduated = ref<ValueGraduated[]>([
   { from: 0, value: 10 },
   { from: 100, value: 8 }
 ])
 </script>
+
+<template>
+  <InputGraduated v-model="graduated" />
+</template>
 ```
 
 ---
@@ -406,14 +408,14 @@ Boolean select input (True/False)
 ### Example Usage
 
 ```vue
-<template>
-  <InputBoolean v-model="enabled" />
-</template>
-
 <script setup>
-import { ref } from 'vue'
 import { InputBoolean } from '@brink-components/component-library'
+import { ref } from 'vue'
 
 const enabled = ref(true)
 </script>
+
+<template>
+  <InputBoolean v-model="enabled" />
+</template>
 ```

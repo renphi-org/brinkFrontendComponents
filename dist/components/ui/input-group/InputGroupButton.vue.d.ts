@@ -4,8 +4,8 @@ type __VLS_Slots = {} & {
     default?: (props: typeof __VLS_7) => any;
 };
 declare const __VLS_base: import("vue").DefineComponent<InputGroupButtonProps, {}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").PublicProps, Readonly<InputGroupButtonProps> & Readonly<{}>, {
-    variant: "default" | "destructive" | "outline" | "link" | "secondary" | "ghost" | null;
     size: "sm" | "icon-sm" | "xs" | "icon-xs" | null;
+    variant: "default" | "link" | "outline" | "destructive" | "secondary" | "ghost" | null;
 }, {}, {}, {}, string, import("vue").ComponentProvideOptions, false, {}, any>;
 declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;
 declare const _default: typeof __VLS_export;

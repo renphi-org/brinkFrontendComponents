@@ -2,7 +2,7 @@
 import { Frown } from 'lucide-vue-next'
 
 // Simple translation
-const t = (key: string) => {
+function t(key: string) {
   const translations: Record<string, string> = {
     'common.noValues': 'No values',
   }

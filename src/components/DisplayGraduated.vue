@@ -11,7 +11,7 @@ interface Props {
 defineProps<Props>()
 
 // Simple translation
-const t = (key: string) => {
+function t(key: string) {
   const translations: Record<string, string> = {
     'common.novalue': 'No value',
   }

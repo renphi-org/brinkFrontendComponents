@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { triggerRef } from 'vue'
-import { Input } from './ui/input'
-import { cn } from '@/lib/utils'
 import type { ValueRange } from './types'
+import { triggerRef } from 'vue'
+import { cn } from '@/lib/utils'
+import { Input } from './ui/input'
 
 export type { ValueRange }
 interface Props {
