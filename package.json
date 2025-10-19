@@ -20,7 +20,7 @@
     "dev": "vite",
     "components": "vite",
     "lint": "eslint src --ext .ts,.vue",
-    "test": "vitest"
+    "test": "vitest",
   },
   "peerDependencies": {
     "reka-ui": "^2.5.1",
@@ -28,6 +28,7 @@
     "vue": "^3.0.0"
   },
   "devDependencies": {
+    "@evilmartians/lefthook": "^1.13.6",
     "@shikijs/markdown-it": "^3.13.0",
     "@tailwindcss/vite": "^4.1.14",
     "@types/markdown-it": "^14.1.2",

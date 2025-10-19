@@ -4,7 +4,6 @@ node_modules/
 
 # Build outputs
 # Keep component library dist for git installations
-dist/
 !packages/component-library/dist/
 *.tsbuildinfo
 

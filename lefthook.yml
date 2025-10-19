@@ -1,0 +1,11 @@
+pre-commit:
+  parallel: false
+  commands:
+    build:
+      run: npm run build
+    stage-dist:
+      run: git add dist/
+    lint:
+      glob: "*.{ts,vue}"
+      run: npx eslint {staged_files} --fix
+      stage_fixed: true
