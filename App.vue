@@ -20,7 +20,7 @@
           </div>
         </header>
 
-        <div class="flex-1 overflow-auto">
+        <div class="flex-1 overflow-auto max-w-4xl p-8 prose dark:prose-invert">
           <RouterView />
         </div>
 

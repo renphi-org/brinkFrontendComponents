@@ -24,7 +24,7 @@ const emit = defineEmits<{
 }>()
 
 const hideableColumns = computed(() =>
-  props.columns.filter(col => col.title)
+  props.columns.filter(col => col.title && col.hideable !== false)
 )
 
 // Get current visible columns - if undefined, all columns are visible
@@ -66,12 +66,9 @@ function toggleColumn(columnId: string, visible: boolean | 'indeterminate') {
     <DropdownMenuContent align="end" class="w-[150px]">
       <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
       <DropdownMenuSeparator />
-      <DropdownMenuCheckboxItem
-        v-for="column in hideableColumns"
-        :key="column.id as string"
+      <DropdownMenuCheckboxItem v-for="column in hideableColumns" :key="column.id as string"
         :model-value="isColumnVisible(column.id as string)"
-        @update:model-value="(value) => toggleColumn(column.id as string, value)"
-      >
+        @update:model-value="(value) => toggleColumn(column.id as string, value)">
         {{ column.title }}
       </DropdownMenuCheckboxItem>
     </DropdownMenuContent>

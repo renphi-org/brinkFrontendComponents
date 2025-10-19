@@ -122,9 +122,6 @@ async function handleDynamicDrawer() {
 }
 </script>
 
-<div class="p-8">
-<div class="max-w-4xl mx-auto space-y-12 prose dark:prose-invert prose-headings:text-foreground prose-p:text-muted-foreground">
-
 # DynamicDialog System
 
 Dynamic dialog system for programmatic dialogs and confirmations
@@ -288,6 +285,3 @@ async function showDynamicDrawer() {
 ```
 
 **Important:** You must include `<DynamicComponentProvider />` in your app root (e.g., App.vue) for dynamic dialogs to work.
-
-</div>
-</div>

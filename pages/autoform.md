@@ -51,9 +51,6 @@ function handleAutoFormSubmit(values: any) {
 }
 </script>
 
-<div class="p-8">
-<div class="max-w-4xl mx-auto space-y-12 prose dark:prose-invert prose-headings:text-foreground prose-p:text-muted-foreground">
-
 # AutoForm Component
 
 Automatically generate forms from Zod schemas with validation
@@ -115,5 +112,3 @@ function onSubmit(values: any) {
 - 📝 Optional fields with `.optional()`
 - 🔧 Customizable field configs and labels
 
-</div>
-</div>

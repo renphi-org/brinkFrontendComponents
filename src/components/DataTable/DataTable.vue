@@ -27,6 +27,7 @@ const {
   isPending,
   sortable = true,
   bordered = true,
+  showOptions = true,
   expandable = false,
   translatableConfig,
   isGrouped = false,
@@ -133,7 +134,7 @@ defineExpose({ selected, clearSelected: clear })
 <template>
   <div class="flex flex-col flex-1 min-w-0  min-h-0 relative">
     <!-- Toolbar with view options -->
-    <div class="flex items-center justify-end py-2">
+    <div class="flex items-center justify-end py-2" v-if="showOptions">
       <DataTableViewOptions :columns="columns" :visible-columns="visibleColumns"
         @update:visible-columns="(cols) => visibleColumns = cols" />
     </div>
@@ -166,7 +167,8 @@ defineExpose({ selected, clearSelected: clear })
               <th v-for="col in filteredColumns" :key="col.id">
                 <DataTableColumnHeader :title="col.title || title(col.id as string)"
                   :sortable="sortable && col.sortable" :sort-order="sortBy?.key === col.id ? sortBy.order : undefined"
-                  :hideable="true" @sort="(order) => order ? updateSort(col.id as string) : (sortBy = undefined)"
+                  :hideable="col.hideable ?? true"
+                  @sort="(order) => order ? updateSort(col.id as string) : (sortBy = undefined)"
                   @hide="() => visibleColumns = visibleColumns?.filter(id => id !== col.id)" />
               </th>
               <th v-if="hasActionsColumn" />

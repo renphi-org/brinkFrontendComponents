@@ -7,7 +7,6 @@ meta:
 import { ref } from 'vue'
 import { Button } from '../src/components/ui/button'
 import { Tag } from '../src/Tag'
-import DataTable, { type TableColumn } from '../src/components/DataTable'
 import DateFormat from '../src/components/DateFormat.vue'
 import SelectOptions, { type SelectOption } from '../src/components/SelectOptions.vue'
 import InputSearch from '../src/components/InputSearch.vue'
@@ -19,32 +18,6 @@ import InputBoolean from '../src/components/InputBoolean.vue'
 import { z } from 'zod'
 import AutoForm from '../src/components/ui/auto-form/AutoForm.vue'
 
-// Sample data for DataTable
-type TableData = {
-  id: number
-  name: string
-  email: string
-  role: string
-  status: string
-}
-
-const tableData = ref<TableData[]>([
-  { id: 1, name: 'John Doe', email: 'john@example.com', role: 'Admin', status: 'Active' },
-  { id: 2, name: 'Jane Smith', email: 'jane@example.com', role: 'User', status: 'Active' },
-  { id: 3, name: 'Bob Johnson', email: 'bob@example.com', role: 'User', status: 'Inactive' },
-  { id: 4, name: 'Alice Williams', email: 'alice@example.com', role: 'Editor', status: 'Active' },
-  { id: 5, name: 'Charlie Brown', email: 'charlie@example.com', role: 'User', status: 'Active' },
-  { id: 6, name: 'Diana Prince', email: 'diana@example.com', role: 'Admin', status: 'Active' },
-  { id: 7, name: 'Ethan Hunt', email: 'ethan@example.com', role: 'User', status: 'Inactive' },
-])
-
-const tableColumns: TableColumn<TableData>[] = [
-  { id: 'id', title: 'ID', sortable: true },
-  { id: 'name', title: 'Name', sortable: true },
-  { id: 'email', title: 'Email', sortable: true },
-  { id: 'role', title: 'Role', sortable: true },
-  { id: 'status', title: 'Status', sortable: true },
-]
 
 // DateFormat examples
 const now = new Date()
@@ -114,8 +87,10 @@ function handleAutoFormSubmit(values: any) {
 }
 </script>
 
-<div class="p-8">
-<div class="max-w-4xl mx-auto space-y-12 prose dark:prose-invert prose-headings:text-foreground prose-p:text-muted-foreground">
+
+
+<<< @/index.ts
+
 
 
 # Brink Component Library
@@ -195,17 +170,6 @@ import { Tag } from '@brink-components/component-library'
 
 ---
 
-## DataTable Component
-
-Feature-rich data table with sorting, filtering, and pagination
-
-<DataTable
-  :items="tableData"
-  :columns="tableColumns"
-  :total="tableData.length"
-/>
-
----
 
 ## DateFormat Component
 
@@ -453,68 +417,3 @@ import { InputBoolean } from '@brink-components/component-library'
 const enabled = ref(true)
 </script>
 ```
-
----
-
-## AutoForm Component
-
-Automatically generate forms from Zod schemas with validation
-
-<div class="not-prose">
-<AutoForm
-  :schema="autoFormSchema"
-  @submit="handleAutoFormSubmit"
-  class="space-y-4 max-w-md"
->
-  <Button type="submit" class="w-full mt-4">Submit Form</Button>
-</AutoForm>
-
-<div v-if="autoFormValues" class="mt-4 space-y-2">
-  <div class="text-sm font-medium">Submitted Values:</div>
-  <div class="text-sm text-muted-foreground bg-muted p-3 rounded">
-    <pre>{{ JSON.stringify(autoFormValues, null, 2) }}</pre>
-  </div>
-</div>
-</div>
-
-### Example Usage
-
-```vue
-<template>
-  <AutoForm
-    :schema="formSchema"
-    @submit="onSubmit"
-  >
-    <Button type="submit">Submit</Button>
-  </AutoForm>
-</template>
-
-<script setup>
-import { z } from 'zod'
-import { AutoForm, Button } from '@brink-components/component-library'
-
-const formSchema = z.object({
-  username: z.string().min(2, 'Username must be at least 2 characters'),
-  email: z.string().email('Invalid email address'),
-  age: z.coerce.number().min(18, 'Must be at least 18 years old'),
-  acceptTerms: z.boolean().refine((val) => val === true, {
-    message: 'You must accept the terms'
-  }),
-  bio: z.string().min(10).optional(),
-})
-
-function onSubmit(values: any) {
-  console.log('Form submitted:', values)
-}
-</script>
-```
-
-**Features:**
-- 🎯 Automatic field generation from Zod schema
-- ✅ Built-in validation with error messages
-- 🎨 Supports various field types (string, number, boolean, enum, date, etc.)
-- 📝 Optional fields with `.optional()`
-- 🔧 Customizable field configs and labels
-
-</div>
-</div>

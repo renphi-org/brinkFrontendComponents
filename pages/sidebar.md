@@ -84,8 +84,6 @@ const exampleConfig: AppSidebarConfig = {
 }
 </script>
 
-<div class="p-8">
-<div class="max-w-4xl mx-auto space-y-12 prose dark:prose-invert prose-headings:text-foreground prose-p:text-muted-foreground">
 
 # AppSidebar Component
 
@@ -200,7 +198,7 @@ interface MenuItem {
 
 ## Example Configuration
 
-<div class="not-prose">
+<div >
 
 ```typescript
 const sidebarConfig: AppSidebarConfig = {
@@ -267,5 +265,3 @@ const sidebarConfig: AppSidebarConfig = {
 - **`offcanvas`** - Slides in/out from the side
 - **`none`** - Always visible, no collapse
 
-</div>
-</div>

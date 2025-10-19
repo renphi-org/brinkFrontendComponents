@@ -18,7 +18,7 @@ type TableData = {
 }
 
 const tableData = ref<TableData[]>([
-  { id: 1, name: 'John Doe', email: 'john@example.com', role: 'Admin', status: 'Active' },
+  { id: 1, name: 'John Doe', email: 'john@example.com', role: 'Admin', status: 'Active'},
   { id: 2, name: 'Jane Smith', email: 'jane@example.com', role: 'User', status: 'Active' },
   { id: 3, name: 'Bob Johnson', email: 'bob@example.com', role: 'User', status: 'Inactive' },
   { id: 4, name: 'Alice Williams', email: 'alice@example.com', role: 'Editor', status: 'Active' },
@@ -28,7 +28,7 @@ const tableData = ref<TableData[]>([
 ])
 
 const tableColumns: TableColumn<TableData>[] = [
-  { id: 'id', title: 'ID', sortable: true },
+  { id: 'id', title: 'ID', sortable: true,  hideable: false},
   { id: 'name', title: 'Name', sortable: true },
   { id: 'email', title: 'Email', sortable: true },
   { id: 'role', title: 'Role', sortable: true },
@@ -84,7 +84,7 @@ const expandableData = ref<ExpandableData[]>([
 ])
 
 const expandableColumns: TableColumn<ExpandableData>[] = [
-  { id: 'id', title: 'ID', sortable: true },
+  { id: 'id', title: 'ID', sortable: true  },
   { id: 'project', title: 'Project', sortable: true },
   { id: 'client', title: 'Client', sortable: true },
   { id: 'budget', title: 'Budget', sortable: true },
@@ -131,8 +131,7 @@ const groupedByCategory = computed(() => {
 })
 </script>
 
-<div class="p-8">
-<div class="max-w-4xl mx-auto space-y-12 prose dark:prose-invert prose-headings:text-foreground prose-p:text-muted-foreground">
+
 
 # DataTable Component
 
@@ -377,6 +376,3 @@ const groupedByCategory = computed(() => {
 })
 </script>
 ```
-
-</div>
-</div>
