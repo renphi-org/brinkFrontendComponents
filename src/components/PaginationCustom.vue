@@ -4,6 +4,7 @@ import type { HTMLAttributes } from 'vue'
 import { reactiveOmit } from '@vueuse/core'
 import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon } from 'lucide-vue-next'
 import { useForwardPropsEmits } from 'reka-ui'
+import { useI18n } from 'vue-i18n'
 import {
   Pagination,
   PaginationContent,
@@ -27,20 +28,7 @@ const pageSizeOptions = [25, 50, 100, 250, 500]
 
 const itemsPerPage = defineModel<number | undefined>('itemsPerPage', { default: 25 })
 
-// Simple translation function
-function t(key: string, values?: Record<string, any>) {
-  const translations: Record<string, string> = {
-    'dataTable.rowsPerPage': 'Rows per page',
-    'dataTable.pageOf': 'Page {page} of {pageCount}',
-  }
-  let result = translations[key] || key
-  if (values) {
-    Object.entries(values).forEach(([k, v]) => {
-      result = result.replace(`{${k}}`, String(v))
-    })
-  }
-  return result
-}
+const { t } = useI18n()
 </script>
 
 <template>

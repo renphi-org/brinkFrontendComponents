@@ -12,6 +12,8 @@ const i18n = createI18n({
   messages: {
     en: {
       dataTable: {
+        rowsPerPage: 'Rows per page',
+        pageOf: 'Page {page} of {pageCount}',
         loading: 'Loading...',
         noEntriesFound: 'No entries found',
         expandedContent: 'Expanded content for ID: {id}',
