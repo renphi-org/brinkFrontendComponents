@@ -11693,7 +11693,7 @@ const xu = /* @__PURE__ */ $({
   class: "hover:!bg-transparent"
 }, qy = ["colspan"], Yy = { class: "p-4" }, Ky = {
   key: 1,
-  class: "@container sticky bottom-0 right-0 w-full gap-2 flex items-center bg-background px-0 py-3 z-10 transition-[left] duration-200 ease-linear"
+  class: "@container w-full gap-2 flex items-center px-0 py-3 z-10 transition-[left] duration-200 ease-linear"
 }, Xy = { key: 0 }, Jy = { class: "flex gap-2 items-center min-w-0" }, Qy = { class: "text-sm mr-2 line-clamp-1 min-w-0 text-muted-foreground" }, eb = { key: 1 }, tb = { class: "text-sm line-clamp-1 text-muted-foreground" }, nb = {
   key: 2,
   class: "flex flex-1 justify-end items-center gap-4"
@@ -11939,7 +11939,7 @@ const xu = /* @__PURE__ */ $({
                     ], 10, Hy))), 128)),
                     e.hasActionsColumn ? (p(), j("td", {
                       key: 2,
-                      class: Ee(["sticky right-0", { "bg-background/90  [[data-state=selected]_&]:bg-muted/90 ": !i(P).right }])
+                      class: Ee(["sticky right-0", { "[[data-state=selected]_&]:bg-muted/90 ": !i(P).right }])
                     }, [
                       oe("div", Zy, [
                         R(fe.$slots, "cell:actions", { item: W })

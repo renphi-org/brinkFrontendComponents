@@ -283,7 +283,7 @@ defineExpose({ selected, clearSelected: clear })
                   </td>
                   <td
                     v-if="hasActionsColumn" class="sticky right-0"
-                    :class="{ 'bg-background/90  [[data-state=selected]_&]:bg-muted/90 ': !overflow.right }"
+                    :class="{ '[[data-state=selected]_&]:bg-muted/90 ': !overflow.right }"
                   >
                     <div class="flex items-center gap-0.5">
                       <slot name="cell:actions" :item>
@@ -319,7 +319,7 @@ defineExpose({ selected, clearSelected: clear })
 
     <div
       v-if="total && total > 0"
-      class="@container sticky bottom-0 right-0 w-full gap-2 flex items-center bg-background px-0 py-3 z-10 transition-[left] duration-200 ease-linear"
+      class="@container  w-full gap-2 flex items-center  px-0 py-3 z-10 transition-[left] duration-200 ease-linear"
     >
       <div v-if="selectMode === 'multiselect' && selected.length > 0">
         <div class="flex gap-2 items-center min-w-0">
