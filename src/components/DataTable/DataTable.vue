@@ -32,6 +32,7 @@ const {
   isGrouped = false,
   groups = {},
   groupByField,
+  pageSizeOptions = [25, 50, 100, 250, 500],
   highlightedRow,
 } = defineProps<DataTableProps<T>>()
 
@@ -158,7 +159,7 @@ defineExpose({ selected, clearSelected: clear })
 
       <div class="flex-1  flex flex-col min-h-0" :class="{ '!rounded-md border': bordered }">
         <table
-          class="[&>tbody>tr:hover]:bg-muted h-1  [&_tr]:border-b [&_th,&_td]:px-2 [&_th,&_td]:py-1 [&_tbody_tr:last-child]:border-b-0  min-h-0 w-full [&_.p-datatable-empty-message]:!bg-transparent [&_.p-datatable-paginator-bottom]:sticky [&_.p-datatable-paginator-bottom]:bottom-0 [&_.p-paginator]:justify-start [&_.p-paginator]:pt-3 [&_.p-paginator]:pb-6 [&_th]:!text-sm [&_tr>*:first-child]:!pl-6 [&_tr>*:last-child]:!pr-6"
+          class="[&>tbody>tr:hover]:bg-muted h-1 [&_tr]:border-b [&_th,&_td]:px-2 [&_th,&_td]:py-1 [&_tbody_tr:last-child]:border-b-0 min-h-0 w-full [&_.p-datatable-empty-message]:!bg-transparent [&_.p-datatable-paginator-bottom]:sticky [&_.p-datatable-paginator-bottom]:bottom-0 [&_.p-paginator]:justify-start [&_.p-paginator]:pt-3 [&_.p-paginator]:pb-6 [&_th]:!text-sm [&_tr>*:first-child]:pl-6 [&_tr>*:last-child]:pr-6"
         >
           <thead class="text-left ">
             <tr>
@@ -341,8 +342,9 @@ defineExpose({ selected, clearSelected: clear })
       <!-- Pagination controls on the right -->
       <div v-if="total !== undefined" class="flex flex-1 justify-end items-center gap-4">
         <PaginationCustom
-          v-model:page="page" v-model:items-per-page="itemsPerPage!"
-          :hide-items-per-page="selected.length > 0" :total="total" :disabled="isPending"
+          v-model:page="page" v-model:items-per-page="itemsPerPage!" :page-size-options
+          :hide-items-per-page="selected.length > 0 || pageSizeOptions.length < 2" :total="total"
+          :disabled="isPending"
         />
       </div>
     </div>

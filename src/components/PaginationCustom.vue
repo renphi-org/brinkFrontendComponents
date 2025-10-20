@@ -19,12 +19,12 @@ const props = defineProps<PaginationRootProps & {
   class?: HTMLAttributes['class']
   itemsPerPage?: number | undefined
   hideItemsPerPage?: boolean
+  pageSizeOptions: number[]
 }>()
 const emits = defineEmits<PaginationRootEmits>()
 
 const delegatedProps = reactiveOmit(props, 'class')
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
-const pageSizeOptions = [25, 50, 100, 250, 500]
 
 const itemsPerPage = defineModel<number | undefined>('itemsPerPage', { default: 25 })
 
@@ -39,10 +39,8 @@ const { t } = useI18n()
           {{ t('dataTable.rowsPerPage') }}
         </span>
         <SelectOptions
-          class="!w-auto"
-          :options="pageSizeOptions.map(p => ({ value: p, label: `${p}` }))"
-          :model-value="itemsPerPage"
-          @update:model-value="(value) => itemsPerPage = value"
+          class="!w-auto" :options="pageSizeOptions.map(p => ({ value: p, label: `${p}` }))"
+          :model-value="itemsPerPage" @update:model-value="(value) => itemsPerPage = value"
         />
       </div>
       <PaginationContent>

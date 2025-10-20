@@ -20,6 +20,7 @@ export interface DataTableProps<T> {
   bordered?: boolean
   expandable?: boolean
   translatableConfig?: TranslatableConfig<T>
+  pageSizeOptions?: number[]
   // For grouped data
   isGrouped?: boolean
   groups?: Record<string, T[]>

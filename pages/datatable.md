@@ -144,6 +144,7 @@ class='not-prose'
   v-model:selected="selected"
   :items="tableData"
   :columns="tableColumns"
+  :pageSizeOptions='[25]'
   :total="tableData.length"
   selectMode='multiselect'
 />

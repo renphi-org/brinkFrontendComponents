@@ -4,6 +4,7 @@ type __VLS_Props = PaginationRootProps & {
     class?: HTMLAttributes['class'];
     itemsPerPage?: number | undefined;
     hideItemsPerPage?: boolean;
+    pageSizeOptions: number[];
 };
 type __VLS_ModelProps = {
     'itemsPerPage'?: number | undefined;

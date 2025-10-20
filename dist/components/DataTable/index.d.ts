@@ -1,10 +1,10 @@
-import type { Ref } from 'vue';
-import DataTable from './DataTable.vue';
+import type { Ref } from "vue";
+import DataTable from "./DataTable.vue";
 export default DataTable;
 export interface DataTableProps<T> {
     items: T[];
     columns: TableColumn<T>[];
-    selectMode?: 'multiselect';
+    selectMode?: "multiselect";
     storagekey?: string;
     hasActionsColumn?: boolean;
     idcol?: keyof T;
@@ -15,6 +15,7 @@ export interface DataTableProps<T> {
     bordered?: boolean;
     expandable?: boolean;
     translatableConfig?: TranslatableConfig<T>;
+    pageSizeOptions?: number[];
     isGrouped?: boolean;
     groups?: Record<string, T[]>;
     groupByField?: string;
@@ -35,7 +36,7 @@ export interface TableColumn<T> {
 }
 export interface SortBy {
     key: string;
-    order: 'asc' | 'desc';
+    order: "asc" | "desc";
 }
 export interface TranslatableConfig<T> {
     fields: Array<keyof T>;
