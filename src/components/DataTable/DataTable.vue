@@ -50,7 +50,6 @@ defineSlots<
 const { t } = useI18n()
 
 // Pagination size options
-
 const columnsMap = computed(() => objectify(columns, col => col.id))
 const itemsMap = computed(() => objectify(items, item => item.id))
 
@@ -132,7 +131,7 @@ defineExpose({ selected, clearSelected: clear })
 </script>
 
 <template>
-  <div class="flex flex-col flex-1 min-w-0  min-h-0 relative">
+  <div class="flex flex-col flex-1 min-w-0 min-h-0 relative">
     <!-- Toolbar with view options -->
     <div v-if="showOptions" class="flex items-center justify-end py-2">
       <slot name='header'></slot>
