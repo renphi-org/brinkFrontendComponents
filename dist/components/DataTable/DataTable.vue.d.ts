@@ -24,6 +24,7 @@ declare const __VLS_export: <T extends Record<string, any>>(__VLS_props: NonNull
         value?: T[K];
         expanded?: boolean;
     }) => any) | undefined; } & {
+        header?: any;
         bulk?: (props: {
             selected: any[];
         }) => any;
