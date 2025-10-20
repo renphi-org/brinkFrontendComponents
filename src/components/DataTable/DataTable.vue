@@ -41,6 +41,7 @@ defineSlots<
   {
     [K in keyof T as K extends string ? `cell:${K | 'actions'}` : never]?: (_: { item: T, value?: T[K], expanded?: boolean }) => any;
   } & {
+    'header'?: any
     'bulk'?: (props: { selected: any[] }) => any
     'expanded-row'?: (props: { item: T }) => any
   }
@@ -134,6 +135,7 @@ defineExpose({ selected, clearSelected: clear })
   <div class="flex flex-col flex-1 min-w-0  min-h-0 relative">
     <!-- Toolbar with view options -->
     <div v-if="showOptions" class="flex items-center justify-end py-2">
+      <slot name='header'></slot>
       <DataTableViewOptions :columns="columns" :visible-columns="visibleColumns"
         @update:visible-columns="(cols) => visibleColumns = cols" />
     </div>
