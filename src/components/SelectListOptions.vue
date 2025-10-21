@@ -5,7 +5,7 @@ import { ListboxContent, ListboxFilter, ListboxItem, ListboxItemIndicator, Listb
 import { computed, ref, toValue } from 'vue'
 
 import { cn } from '@/lib/utils'
-import Empty from './Empty.vue'
+import Empty from './EmptyMini.vue'
 import Button from './ui/button/Button.vue'
 
 export interface SelectOption { value: any, label: string }

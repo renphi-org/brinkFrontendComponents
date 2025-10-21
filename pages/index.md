@@ -11,7 +11,7 @@ import DateFormat from '../src/components/DateFormat.vue'
 import SelectOptions, { type SelectOption } from '../src/components/SelectOptions.vue'
 import InputSearch from '../src/components/InputSearch.vue'
 import SelectListOptions from '../src/components/SelectListOptions.vue'
-import Empty from '../src/components/Empty.vue'
+import EmptyMini from '../src/components/EmptyMini.vue'
 import InputRange, { type ValueRange } from '../src/components/InputRange.vue'
 import InputGraduated, { type ValueGraduated } from '../src/components/InputGraduated.vue'
 import InputBoolean from '../src/components/InputBoolean.vue'
@@ -313,27 +313,27 @@ import { SelectListOptions } from '@brink-components/component-library'
 
 ---
 
-## Empty Component
+## EmptyMini Component
 
-Empty state indicator for lists and data
+EmptyMini state indicator for lists and data
 
 <div class="not-prose">
-<Empty />
-<Empty>Custom empty message</Empty>
+<EmptyMini />
+<EmptyMini>Custom EmptyMini message</EmptyMini>
 </div>
 
 ### Example Usage
 
 ```vue
 <script setup>
-import { Empty } from '@brink-components/component-library'
+import { EmptyMini } from '@brink-components/component-library'
 </script>
 
 <template>
-  <Empty v-if="!items.length" />
-  <Empty v-if="!results.length">
+  <EmptyMini v-if="!items.length" />
+  <EmptyMini v-if="!results.length">
     No search results found
-  </Empty>
+  </EmptyMini>
 </template>
 ```
 

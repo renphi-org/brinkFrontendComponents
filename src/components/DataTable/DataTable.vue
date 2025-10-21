@@ -1,6 +1,6 @@
 <script setup lang="ts" generic="T extends Record<string, any>">
 import type { DataTableEmits, DataTableProps, SortBy } from '.'
-import { ChevronDown, ChevronRight, Loader2 } from 'lucide-vue-next'
+import { ChevronDown, ChevronRight, Frown, Loader2 } from 'lucide-vue-next'
 import { objectify, title } from 'radash'
 import { computed, useTemplateRef, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
@@ -8,6 +8,14 @@ import PaginationCustom from '@/components/PaginationCustom.vue'
 import { Badge } from '@/components/ui/badge'
 import Button from '@/components/ui/button/Button.vue'
 import { Checkbox } from '@/components/ui/checkbox'
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from '@/components/ui/empty'
 import { useElementSelector } from '@/composables/useElementSelector'
 import { useEscapeKeyWhile } from '@/composables/useEscapeKey'
 import { useOverflowDetection } from '@/composables/useOverflowDetection'
@@ -283,7 +291,7 @@ defineExpose({ selected, clearSelected: clear })
                   </td>
                   <td
                     v-if="hasActionsColumn" class="sticky right-0"
-                    :class="{ '[[data-state=selected]_&]:bg-muted/90 ': !overflow.right }"
+                    :class="{ 'bg-background/90  [[data-state=selected]_&]:bg-muted/90 ': !overflow.right }"
                   >
                     <div class="flex items-center gap-0.5">
                       <slot name="cell:actions" :item>
@@ -309,9 +317,20 @@ defineExpose({ selected, clearSelected: clear })
               </template>
             </template>
 
-            <TableEmpty v-if="!hasItems" :colspan="colNum">
-              {{ t('dataTable.noEntriesFound') }}
-            </TableEmpty>
+            <td v-if="!hasItems" :colspan="colNum">
+              <Empty>
+                <EmptyHeader>
+                  <EmptyMedia variant="icon">
+                    <Frown />
+                  </EmptyMedia>
+                  <EmptyTitle>{{ t('dataTable.noEntriesFound') }}</EmptyTitle>
+                  <EmptyDescription>{{ t('dataTable.noEntriesFoundDescription') }}</EmptyDescription>
+                </EmptyHeader>
+                <EmptyContent>
+                  <!-- <Button>Add data</Button> -->
+                </EmptyContent>
+              </Empty>
+            </td>
           </tbody>
         </table>
       </div>
@@ -319,7 +338,7 @@ defineExpose({ selected, clearSelected: clear })
 
     <div
       v-if="total && total > 0"
-      class="@container  w-full gap-2 flex items-center  px-0 py-3 z-10 transition-[left] duration-200 ease-linear"
+      class="@container sticky bottom-0 right-0 w-full gap-2 flex items-center bg-background px-0 py-3 z-10 transition-[left] duration-200 ease-linear"
     >
       <div v-if="selectMode === 'multiselect' && selected.length > 0">
         <div class="flex gap-2 items-center min-w-0">

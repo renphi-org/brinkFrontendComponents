@@ -229,6 +229,42 @@ The "View" button in the top-right corner allows you to toggle column visibility
 
 ---
 
+## Empty Table Example
+
+DataTable with no data shows a customizable empty state.
+
+<div class="not-prose">
+<DataTable
+  :items="[]"
+  :columns="tableColumns"
+  :total="0"
+/>
+</div>
+
+### Code Example
+
+```vue
+<script setup>
+import { DataTable } from '@brink-components/component-library'
+
+const columns = [
+  { id: 'id', title: 'ID', sortable: true },
+  { id: 'name', title: 'Name', sortable: true },
+  { id: 'email', title: 'Email', sortable: true },
+]
+</script>
+
+<template>
+  <DataTable
+    :items="[]"
+    :columns="columns"
+    :total="0"
+  />
+</template>
+```
+
+---
+
 ## Expandable Rows Example
 
 Click on any row to expand and see additional details.
