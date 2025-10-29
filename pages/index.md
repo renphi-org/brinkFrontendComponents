@@ -295,6 +295,11 @@ Listbox with search/filter functionality
 <SelectListOptions :options="selectOptions" v-model="selectedOption" />
 </div>
 
+### Multiple
+
+<div class="not-prose max-w-sm">
+<SelectListOptions :options="selectOptions" v-model="selectedMultiple" multiple  />
+</div>
 ### Example Usage
 
 ```vue
@@ -310,8 +315,6 @@ import { SelectListOptions } from '@brink-components/component-library'
   />
 </template>
 ```
-
----
 
 ## EmptyMini Component
 

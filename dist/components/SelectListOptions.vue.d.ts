@@ -1,37 +1,35 @@
 import type { MaybeRef } from 'vue';
-export interface SelectOption {
+export interface SelectOption<T = any> {
     value: any;
     label: string;
+    data?: T;
 }
-type __VLS_Props = {
-    placeholder?: string;
-    addItemButtonLabel?: string;
-    multiple?: boolean;
-    options: MaybeRef<SelectOption[]>;
-    showAddItemButton?: boolean;
+declare const __VLS_export: <T = any>(__VLS_props: NonNullable<Awaited<typeof __VLS_setup>>["props"], __VLS_ctx?: __VLS_PrettifyLocal<Pick<NonNullable<Awaited<typeof __VLS_setup>>, "attrs" | "emit" | "slots">>, __VLS_expose?: NonNullable<Awaited<typeof __VLS_setup>>["expose"], __VLS_setup?: Promise<{
+    props: __VLS_PrettifyLocal<({
+        placeholder?: string;
+        addItemButtonLabel?: string;
+        multiple?: boolean;
+        options: MaybeRef<SelectOption<T>[]>;
+        showAddItemButton?: boolean;
+    } & {
+        modelValue?: any;
+    }) & {
+        "onUpdate:modelValue"?: ((value: any) => any) | undefined;
+        onOnAddItem?: (() => any) | undefined;
+    }> & import("vue").PublicProps;
+    expose: (exposed: {}) => void;
+    attrs: any;
+    slots: {
+        option?: (props: {
+            option: SelectOption<T>;
+        }) => any;
+    };
+    emit: ((evt: "onAddItem") => void) & ((evt: "update:modelValue", value: any) => void);
+}>) => import("vue").VNode & {
+    __ctx?: Awaited<typeof __VLS_setup>;
 };
-type __VLS_ModelProps = {
-    modelValue?: any;
-};
-type __VLS_PublicProps = __VLS_Props & __VLS_ModelProps;
-declare var __VLS_25: {
-    option: SelectOption;
-};
-type __VLS_Slots = {} & {
-    option?: (props: typeof __VLS_25) => any;
-};
-declare const __VLS_base: import("vue").DefineComponent<__VLS_PublicProps, {}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
-    "update:modelValue": (value: any) => any;
-    onAddItem: () => any;
-}, string, import("vue").PublicProps, Readonly<__VLS_PublicProps> & Readonly<{
-    "onUpdate:modelValue"?: ((value: any) => any) | undefined;
-    onOnAddItem?: (() => any) | undefined;
-}>, {}, {}, {}, {}, string, import("vue").ComponentProvideOptions, false, {}, any>;
-declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;
 declare const _default: typeof __VLS_export;
 export default _default;
-type __VLS_WithSlots<T, S> = T & {
-    new (): {
-        $slots: S;
-    };
-};
+type __VLS_PrettifyLocal<T> = {
+    [K in keyof T as K]: T[K];
+} & {};

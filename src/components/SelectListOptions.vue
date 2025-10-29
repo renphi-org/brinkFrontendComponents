@@ -1,16 +1,17 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T = any">
 import type { MaybeRef } from 'vue'
 import { Check, Plus } from 'lucide-vue-next'
 import { ListboxContent, ListboxFilter, ListboxItem, ListboxItemIndicator, ListboxRoot, useFilter } from 'reka-ui'
 import { computed, ref, toValue } from 'vue'
 
+import { useI18n } from 'vue-i18n'
 import { cn } from '@/lib/utils'
 import Empty from './EmptyMini.vue'
 import Button from './ui/button/Button.vue'
 
-export interface SelectOption { value: any, label: string }
+export interface SelectOption<T = any> { value: any, label: string, data?: T }
 defineOptions({ inheritAttrs: false })
-const { addItemButtonLabel = 'Add Item', options, placeholder = 'Filter..' } = defineProps<{ placeholder?: string, addItemButtonLabel?: string, multiple?: boolean, options: MaybeRef<SelectOption[]>, showAddItemButton?: boolean }>()
+const { addItemButtonLabel = 'Add Item', options, placeholder = 'Filter..' } = defineProps<{ placeholder?: string, addItemButtonLabel?: string, multiple?: boolean, options: MaybeRef<SelectOption<T>[]>, showAddItemButton?: boolean }>()
 defineEmits<{ onAddItem: [] }>()
 const model = defineModel<any>()
 
@@ -21,19 +22,7 @@ const filteredOptions = computed(() => toValue(options).filter(options => starts
 
 const hasOptions = computed(() => !!toValue(options).length)
 
-// Simple translation
-function t(key: string, values?: Record<string, any>) {
-  const translations: Record<string, string> = {
-    'common.elementCountSelected': '{count} selected',
-  }
-  let result = translations[key] || key
-  if (values) {
-    Object.entries(values).forEach(([k, v]) => {
-      result = result.replace(`{${k}}`, String(v))
-    })
-  }
-  return result
-}
+const { t } = useI18n()
 </script>
 
 <template>
@@ -49,7 +38,7 @@ function t(key: string, values?: Record<string, any>) {
     <ListboxContent class="max-h-[400px] overflow-auto py-1">
       <ListboxItem
         v-for="option in filteredOptions" :key="String(option.value)" :value="option.value"
-        class="focus:bg-accent focus:text-accent-foreground data-[highlighted]:bg-accent [&[data-state='checked']]:bg-accent [&_svg:not([class*='text-'])]:text-muted-foreground relative flex w-full cursor-default items-center gap-2 rounded-sm py-1.5 pr-2 pl-2 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2 "
+        class="focus:bg-accent focus:text-accent-foreground data-[highlighted]:bg-accent [&_svg:not([class*='text-'])]:text-muted-foreground relative flex w-full cursor-default items-center gap-2 rounded-sm py-1.5 pr-2 pl-2 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2 "
       >
         <div class="flex-1">
           <slot name="option" :option>
@@ -69,7 +58,7 @@ function t(key: string, values?: Record<string, any>) {
         {{ addItemButtonLabel }}
       </Button>
     </div>
-    <div v-if="hasOptions && multiple" class="text-muted-foreground text-sm">
+    <div v-if="hasOptions && multiple" class="text-muted-foreground text-sm px-2">
       {{ t('common.elementCountSelected', { count: model.length }) }}
     </div>
   </div>

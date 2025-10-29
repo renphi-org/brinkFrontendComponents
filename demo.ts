@@ -22,6 +22,9 @@ const i18n = createI18n({
         totalElements: '{total} total elements',
         manageTranslations: 'Manage translations',
       },
+      common: {
+        elementCountSelected: '{count}  selected',
+      },
     },
   },
 })
