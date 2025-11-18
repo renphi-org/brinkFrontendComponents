@@ -53,7 +53,7 @@ const { t } = useI18n()
   </ListboxRoot>
   <div class="flex gap-1 items-center">
     <div v-if="showAddItemButton" class="flex-1">
-      <Button size="sm" class="sticky bottom-0" variant="ghost" @click="$emit('onAddItem')">
+      <Button size="sm" class="sticky bottom-0" variant="ghost" type="button" @click="$emit('onAddItem')">
         <Plus />
         {{ addItemButtonLabel }}
       </Button>

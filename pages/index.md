@@ -300,6 +300,7 @@ Listbox with search/filter functionality
 <div class="not-prose max-w-sm">
 <SelectListOptions :options="selectOptions" v-model="selectedMultiple" multiple  />
 </div>
+
 ### Example Usage
 
 ```vue

@@ -12330,6 +12330,7 @@ const Nu = (e) => {
             size: "sm",
             class: "sticky bottom-0",
             variant: "ghost",
+            type: "button",
             onClick: u[2] || (u[2] = (c) => l.$emit("onAddItem"))
           }, {
             default: p(() => [
