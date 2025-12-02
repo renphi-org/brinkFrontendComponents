@@ -9,17 +9,19 @@ declare const __VLS_export: <T extends ZodObjectOrWrapped>(__VLS_props: NonNulla
         fieldConfig?: Config<z.infer<T>>;
         dependencies?: Dependency<z.infer<T>>[];
     } & {
-        onSubmit?: ((event: z.TypeOf<T>) => any) | undefined;
-    }> & import("vue").PublicProps;
+        onSubmit?: ((event: z.core.output<T>) => any) | undefined;
+    }> & import("vue").PublicProps & (typeof globalThis extends {
+        __VLS_PROPS_FALLBACK: infer P;
+    } ? P : {});
     expose: (exposed: {}) => void;
     attrs: any;
-    slots: { [K in NonNullable<keyof z.TypeOf<T>>]?: ((props: {
+    slots: { [K in NonNullable<keyof z.core.output<T>>]?: ((props: {
         shape: { [key in keyof T]: Shape; }[keyof T];
         fieldName: string;
         config: ConfigItem;
     }) => any) | undefined; } & {
         customAutoForm?: (props: {
-            fields: { [key in keyof z.TypeOf<T>]: {
+            fields: { [key in keyof z.core.output<T>]: {
                 shape: Shape;
                 fieldName: string;
                 config: ConfigItem;
@@ -30,7 +32,7 @@ declare const __VLS_export: <T extends ZodObjectOrWrapped>(__VLS_props: NonNulla
             shapes: { [key in keyof T]: Shape; };
         }) => any;
     };
-    emit: (evt: "submit", event: z.TypeOf<T>) => void;
+    emit: (evt: "submit", event: z.core.output<T>) => void;
 }>) => import("vue").VNode & {
     __ctx?: Awaited<typeof __VLS_setup>;
 };

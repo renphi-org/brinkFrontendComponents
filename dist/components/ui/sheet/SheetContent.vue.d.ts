@@ -4,9 +4,9 @@ interface SheetContentProps extends DialogContentProps {
     class?: HTMLAttributes["class"];
     side?: "top" | "right" | "bottom" | "left";
 }
-declare var __VLS_16: {};
+declare var __VLS_19: {};
 type __VLS_Slots = {} & {
-    default?: (props: typeof __VLS_16) => any;
+    default?: (props: typeof __VLS_19) => any;
 };
 declare const __VLS_base: import("vue").DefineComponent<SheetContentProps, {}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
     escapeKeyDown: (event: KeyboardEvent) => any;

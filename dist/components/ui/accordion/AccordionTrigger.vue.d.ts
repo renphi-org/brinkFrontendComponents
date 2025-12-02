@@ -3,11 +3,11 @@ import type { HTMLAttributes } from "vue";
 type __VLS_Props = AccordionTriggerProps & {
     class?: HTMLAttributes["class"];
 };
-declare var __VLS_12: {}, __VLS_14: {};
+declare var __VLS_14: {}, __VLS_16: {};
 type __VLS_Slots = {} & {
-    default?: (props: typeof __VLS_12) => any;
+    default?: (props: typeof __VLS_14) => any;
 } & {
-    icon?: (props: typeof __VLS_14) => any;
+    icon?: (props: typeof __VLS_16) => any;
 };
 declare const __VLS_base: import("vue").DefineComponent<__VLS_Props, {}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").PublicProps, Readonly<__VLS_Props> & Readonly<{}>, {}, {}, {}, {}, string, import("vue").ComponentProvideOptions, false, {}, any>;
 declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;

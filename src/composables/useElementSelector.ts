@@ -1,11 +1,11 @@
-import type { Ref } from 'vue'
-import { onMounted, ref, watchEffect } from 'vue'
+import type { Ref, ShallowRef } from 'vue'
+import { onMounted, shallowRef, watchEffect } from 'vue'
 
 export function useElementSelector<T extends HTMLElement = HTMLElement>(
   parentRef: Ref<HTMLElement | null>,
   selector: string,
 ) {
-  const elementRef = ref<T | null>(null)
+  const elementRef = shallowRef<T | null>(null)
 
   const updateElements = () => {
     if (parentRef.value) {
@@ -22,5 +22,5 @@ export function useElementSelector<T extends HTMLElement = HTMLElement>(
     updateElements()
   })
 
-  return elementRef
+  return elementRef as ShallowRef<T | null>
 }

@@ -5,7 +5,9 @@ declare const __VLS_export: <U extends ZodAny>(__VLS_props: NonNullable<Awaited<
         fieldName: string;
         shape: Shape;
         config?: ConfigItem | Config<U>;
-    }> & import("vue").PublicProps;
+    }> & import("vue").PublicProps & (typeof globalThis extends {
+        __VLS_PROPS_FALLBACK: infer P;
+    } ? P : {});
     expose: (exposed: {}) => void;
     attrs: any;
     slots: {

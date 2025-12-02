@@ -3,9 +3,9 @@ import type { HTMLAttributes } from 'vue';
 type __VLS_Props = CheckboxRootProps & {
     class?: HTMLAttributes['class'];
 };
-declare var __VLS_12: {};
+declare var __VLS_14: {};
 type __VLS_Slots = {} & {
-    default?: (props: typeof __VLS_12) => any;
+    default?: (props: typeof __VLS_14) => any;
 };
 declare const __VLS_base: import("vue").DefineComponent<__VLS_Props, {}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
     "update:modelValue": (value: boolean | "indeterminate") => any;

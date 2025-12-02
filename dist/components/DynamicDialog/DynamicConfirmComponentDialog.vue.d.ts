@@ -8,7 +8,9 @@ declare const __VLS_export: <C extends Component>(__VLS_props: NonNullable<Await
         open?: boolean;
     }) & {
         "onUpdate:open"?: ((value: boolean | undefined) => any) | undefined;
-    }> & import("vue").PublicProps;
+    }> & import("vue").PublicProps & (typeof globalThis extends {
+        __VLS_PROPS_FALLBACK: infer P;
+    } ? P : {});
     expose: (exposed: {}) => void;
     attrs: any;
     slots: {};

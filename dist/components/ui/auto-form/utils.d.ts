@@ -1,5 +1,5 @@
 import type { z } from 'zod';
-export type ZodObjectOrWrapped = z.ZodObject<any, any> | z.ZodEffects<z.ZodObject<any, any>>;
+export type ZodObjectOrWrapped = z.ZodObject<any, any> | z.ZodAny;
 /**
  * Beautify a camelCase string.
  * e.g. "myString" -> "My String"
@@ -15,12 +15,12 @@ export declare function getIndexIfArray(string: string): number | undefined;
  * Get the lowest level Zod type.
  * This will unpack optionals, refinements, etc.
  */
-export declare function getBaseSchema<ChildType extends z.ZodAny | z.AnyZodObject = z.ZodAny>(schema: ChildType | z.ZodEffects<ChildType>): ChildType | null;
+export declare function getBaseSchema<ChildType extends z.ZodAny = z.ZodAny>(schema: ChildType | z.ZodAny): ChildType | null;
 /**
  * Get the type name of the lowest level Zod type.
  * This will unpack optionals, refinements, etc.
  */
-export declare function getBaseType(schema: z.ZodAny): "" | z.ZodFirstPartyTypeKind.ZodAny;
+export declare function getBaseType(schema: z.ZodAny): any;
 /**
  * Search for a "ZodDefault" in the Zod stack and return its value.
  */

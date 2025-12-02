@@ -1,10 +1,11 @@
-import type { MaybeRef } from '@vueuse/core'
 import type { Ref } from 'vue'
 import type { ZodObject, ZodTypeAny } from 'zod'
 import { useEventListener, useKeyModifier } from '@vueuse/core'
 import { diff, unique } from 'radash'
 import { watch } from 'vue'
 import z, { ZodNull, ZodString, ZodUnion } from 'zod'
+
+type MaybeRef<T> = T | Ref<T>
 
 export function useDelegatedClickEventListener(
   element: MaybeRef<HTMLElement | null>,
@@ -117,7 +118,8 @@ export function simplifySchema(schema: ZodTypeAny): ZodObject<any, any> {
     // datetimes to date()
     if (
       updateField instanceof ZodString
-      && updateField._def?.checks?.[0]?.kind === 'datetime'
+      && updateField._def?.checks?.[0]
+      && (updateField._def.checks[0] as any).kind === 'datetime'
     ) {
       updateField = z.date()
     }

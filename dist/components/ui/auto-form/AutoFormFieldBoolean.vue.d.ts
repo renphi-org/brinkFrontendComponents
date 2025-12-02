@@ -1,5 +1,5 @@
 import type { FieldProps } from './interface';
-declare var __VLS_17: {
+declare var __VLS_20: {
     field: import("vee-validate").FieldBindingObject<any>;
     componentField: import("vee-validate").ComponentFieldBindingObject<any>;
     value: any;
@@ -17,7 +17,7 @@ declare var __VLS_17: {
     setValue: (value: unknown, shouldValidate?: boolean) => void;
 };
 type __VLS_Slots = {} & {
-    default?: (props: typeof __VLS_17) => any;
+    default?: (props: typeof __VLS_20) => any;
 };
 declare const __VLS_base: import("vue").DefineComponent<FieldProps, {}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").PublicProps, Readonly<FieldProps> & Readonly<{}>, {}, {}, {}, {}, string, import("vue").ComponentProvideOptions, false, {}, any>;
 declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;

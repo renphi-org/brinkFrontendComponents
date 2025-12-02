@@ -1,9 +1,10 @@
 import type { z } from 'zod'
 
-// TODO: This should support recursive ZodEffects but TypeScript doesn't allow circular type definitions.
+// TODO: This should support recursive transforms/refines but TypeScript doesn't allow circular type definitions.
+// In Zod v4, ZodEffects was replaced with ZodTransform and ZodPipe
 export type ZodObjectOrWrapped =
   | z.ZodObject<any, any>
-  | z.ZodEffects<z.ZodObject<any, any>>
+  | z.ZodAny
 
 /**
  * Beautify a camelCase string.
@@ -36,8 +37,8 @@ export function getIndexIfArray(string: string) {
  * This will unpack optionals, refinements, etc.
  */
 export function getBaseSchema<
-  ChildType extends z.ZodAny | z.AnyZodObject = z.ZodAny,
->(schema: ChildType | z.ZodEffects<ChildType>): ChildType | null {
+  ChildType extends z.ZodAny = z.ZodAny,
+>(schema: ChildType | z.ZodAny): ChildType | null {
   if (!schema)
     return null
   if ('innerType' in schema._def)
@@ -55,7 +56,7 @@ export function getBaseSchema<
  */
 export function getBaseType(schema: z.ZodAny) {
   const baseSchema = getBaseSchema(schema)
-  return baseSchema ? baseSchema._def.typeName : ''
+  return baseSchema ? (baseSchema._def as any).typeName : ''
 }
 
 /**
@@ -66,8 +67,8 @@ export function getDefaultValueInZodStack(schema: z.ZodAny): any {
     z.ZodNumber | z.ZodString
   >
 
-  if (typedSchema._def.typeName === 'ZodDefault')
-    return typedSchema._def.defaultValue()
+  if ((typedSchema._def as any).typeName === 'ZodDefault')
+    return (typedSchema._def as any).defaultValue()
 
   if ('innerType' in typedSchema._def) {
     return getDefaultValueInZodStack(
@@ -86,9 +87,11 @@ export function getDefaultValueInZodStack(schema: z.ZodAny): any {
 export function getObjectFormSchema(
   schema: ZodObjectOrWrapped,
 ): z.ZodObject<any, any> {
-  if (schema?._def.typeName === 'ZodEffects') {
-    const typedSchema = schema as z.ZodEffects<z.ZodObject<any, any>>
-    return getObjectFormSchema(typedSchema._def.schema)
+  const typeName = (schema?._def as any).typeName
+  // In Zod v4, ZodEffects was replaced with ZodTransform and ZodPipe
+  if (typeName === 'ZodEffects' || typeName === 'ZodTransform' || typeName === 'ZodPipe') {
+    const typedSchema = schema as any
+    return getObjectFormSchema(typedSchema._def.schema || typedSchema._def.in)
   }
   return schema as z.ZodObject<any, any>
 }

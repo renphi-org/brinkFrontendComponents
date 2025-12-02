@@ -13,7 +13,9 @@ declare const __VLS_export: <T extends Record<string, any>>(__VLS_props: NonNull
         onClickRow?: ((id: string) => any) | undefined;
         "onUpdate:sortBy"?: ((value: SortBy | undefined) => any) | undefined;
         "onUpdate:selected"?: ((value: any[]) => any) | undefined;
-    }> & import("vue").PublicProps;
+    }> & import("vue").PublicProps & (typeof globalThis extends {
+        __VLS_PROPS_FALLBACK: infer P;
+    } ? P : {});
     expose: (exposed: import("vue").ShallowUnwrapRef<{
         selected: import("vue").ModelRef<any[], string, any[], any[]>;
         clearSelected: () => void;

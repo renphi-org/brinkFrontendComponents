@@ -5,7 +5,9 @@ declare const __VLS_export: <T extends GenericObject>(__VLS_props: NonNullable<A
         open?: boolean;
     }) & {
         "onUpdate:open"?: ((value: boolean | undefined) => any) | undefined;
-    }> & import("vue").PublicProps;
+    }> & import("vue").PublicProps & (typeof globalThis extends {
+        __VLS_PROPS_FALLBACK: infer P;
+    } ? P : {});
     expose: (exposed: {}) => void;
     attrs: any;
     slots: {};

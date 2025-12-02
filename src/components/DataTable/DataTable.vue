@@ -184,7 +184,7 @@ defineExpose({ selected, clearSelected: clear })
               </th>
               <th v-for="col in filteredColumns" :key="col.id">
                 <DataTableColumnHeader
-                  :title="col.title || title(col.id as string)"
+                  :title="col.title ?? title(col.id as string)"
                   :sortable="sortable && col.sortable" :sort-order="sortBy?.key === col.id ? sortBy.order : undefined"
                   :hideable="col.hideable ?? true"
                   @sort="(order) => order ? updateSort(col.id as string) : (sortBy = undefined)"

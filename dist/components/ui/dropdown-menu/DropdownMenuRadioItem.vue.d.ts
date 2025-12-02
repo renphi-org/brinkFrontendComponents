@@ -3,9 +3,9 @@ import { type DropdownMenuRadioItemProps } from 'reka-ui';
 type __VLS_Props = DropdownMenuRadioItemProps & {
     class?: HTMLAttributes['class'];
 };
-declare var __VLS_17: {};
+declare var __VLS_20: {};
 type __VLS_Slots = {} & {
-    default?: (props: typeof __VLS_17) => any;
+    default?: (props: typeof __VLS_20) => any;
 };
 declare const __VLS_base: import("vue").DefineComponent<__VLS_Props, {}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
     select: (event: Event) => any;

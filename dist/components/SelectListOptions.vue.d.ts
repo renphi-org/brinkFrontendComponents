@@ -16,7 +16,9 @@ declare const __VLS_export: <T = any>(__VLS_props: NonNullable<Awaited<typeof __
     }) & {
         "onUpdate:modelValue"?: ((value: any) => any) | undefined;
         onOnAddItem?: (() => any) | undefined;
-    }> & import("vue").PublicProps;
+    }> & import("vue").PublicProps & (typeof globalThis extends {
+        __VLS_PROPS_FALLBACK: infer P;
+    } ? P : {});
     expose: (exposed: {}) => void;
     attrs: any;
     slots: {

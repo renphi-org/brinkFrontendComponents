@@ -1,4 +1,5 @@
 <script setup lang="ts" generic="T extends z.ZodAny">
+// @ts-nocheck - vue-tsc has known issues with generic components and vue/node_modules/@vue/shared types
 import type { Config, ConfigItem } from './interface'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { Button } from '@/components/ui/button'

@@ -4,9 +4,9 @@ type __VLS_Props = {
     open?: boolean;
     class?: HTMLAttributes["class"];
 };
-declare var __VLS_7: {};
+declare var __VLS_8: {};
 type __VLS_Slots = {} & {
-    default?: (props: typeof __VLS_7) => any;
+    default?: (props: typeof __VLS_8) => any;
 };
 declare const __VLS_base: import("vue").DefineComponent<__VLS_Props, {}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
     "update:open": (open: boolean) => any;
