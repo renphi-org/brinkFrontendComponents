@@ -53,6 +53,7 @@ defineSlots<
     'header'?: any
     'bulk'?: (props: { selected: any[] }) => any
     'expanded-row'?: (props: { item: T }) => any
+    'expanded-row-raw'?: (props: { item: T, colNum: number }) => any
   }
 >()
 
@@ -301,19 +302,21 @@ defineExpose({ selected, clearSelected: clear })
                   </td>
                 </tr>
                 <!-- Expandable row -->
-                <tr v-if="expandable && expandedMap[item[idcol]]" class="hover:!bg-transparent">
-                  <td
-                    :colspan="colNum"
-                    class="bg-muted/30 p-0 [&_thead>tr:hover]:bg-transparent [&_th]:h-7  [&_td]:py-0.5 "
-                  >
-                    <slot name="expanded-row" :item>
-                      <!-- Default expanded content -->
-                      <div class="p-4">
-                        {{ t('dataTable.expandedContent', { id: item[idcol] }) }}
-                      </div>
-                    </slot>
-                  </td>
-                </tr>
+                <slot v-if="expandable && expandedMap[item[idcol]]" name="expanded-row-raw" :item :col-num>
+                  <tr class="hover:!bg-transparent">
+                    <td
+                      :colspan="colNum"
+                      class="bg-muted/30 p-0 [&_thead>tr:hover]:bg-transparent [&_th]:h-7  [&_td]:py-0.5 "
+                    >
+                      <slot name="expanded-row" :item>
+                        <!-- Default expanded content -->
+                        <div class="p-4">
+                          {{ t('dataTable.expandedContent', { id: item[idcol] }) }}
+                        </div>
+                      </slot>
+                    </td>
+                  </tr>
+                </slot>
               </template>
             </template>
 

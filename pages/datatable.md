@@ -278,7 +278,7 @@ Click on any row to expand and see additional details.
   :bordered="true"
 >
   <template #expanded-row="{ item }">
-    <div class="p-4 bg-muted/50 space-y-3">
+    <div class="p-4 space-y-3">
       <div>
         <span class="font-semibold">Description:</span>
         <p class="text-sm text-muted-foreground mt-1">{{ item.description }}</p>
@@ -290,6 +290,40 @@ Click on any row to expand and see additional details.
         </ul>
       </div>
     </div>
+  </template>
+</DataTable>
+</div>
+
+## Expandable Rows Raw Example
+
+Click on any row to expand and see additional details.
+
+<div class="not-prose">
+<DataTable
+  :items="expandableData"
+  :columns="expandableColumns"
+  :total="expandableData.length"
+  :expandable="true"
+  :bordered="true"
+  :hasActionsColumn='false'
+>
+  <template #expanded-row-raw="{ item }">
+   <tr>
+   <td> </td>
+   <td> 1 </td>
+   <td> 2 </td>
+   <td> 3 </td>
+   <td> 4 </td>
+   <td> 5 </td>
+   </tr>
+   <tr>
+   <td> </td>
+   <td> 1 </td>
+   <td> 2 </td>
+   <td> 3 </td>
+   <td> 3 </td>
+   <td> 3 </td>
+   </tr>
   </template>
 </DataTable>
 </div>
