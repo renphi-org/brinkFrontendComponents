@@ -16,9 +16,7 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from '@/components/ui/empty'
-import { useElementSelector } from '@/composables/useElementSelector'
 import { useEscapeKeyWhile } from '@/composables/useEscapeKey'
-import { useOverflowDetection } from '@/composables/useOverflowDetection'
 import { useDelegatedClickEventListener, useShiftKeyRangeSelect } from '@/utils'
 import { useToggleState } from '.'
 import DataTableColumnHeader from './DataTableColumnHeader.vue'
@@ -90,8 +88,6 @@ function updateSort(key: string) {
 }
 
 const containerRef = useTemplateRef('container')
-const element = useElementSelector(containerRef, '[data-slot="table-container"]')
-const overflow = useOverflowDetection(element as any)
 
 // handle column clicks
 useDelegatedClickEventListener(containerRef, '[data-col-id]', (el) => {
@@ -290,10 +286,7 @@ defineExpose({ selected, clearSelected: clear })
                       {{ item[col.id] }}
                     </slot>
                   </td>
-                  <td
-                    v-if="hasActionsColumn" class="sticky right-0"
-                    :class="{ 'bg-background/90  [[data-state=selected]_&]:bg-muted/90 ': !overflow.right }"
-                  >
+                  <td v-if="hasActionsColumn">
                     <div class="flex items-center gap-0.5">
                       <slot name="cell:actions" :item>
                         <!-- Default empty actions -->
@@ -342,6 +335,7 @@ defineExpose({ selected, clearSelected: clear })
     <div
       v-if="total && total > 0"
       class="@container sticky bottom-0 right-0 w-full gap-2 flex items-center bg-background px-0 py-3 z-10 transition-[left] duration-200 ease-linear"
+      :class="{ 'px-6': !bordered }"
     >
       <div v-if="selectMode === 'multiselect' && selected.length > 0">
         <div class="flex gap-2 items-center min-w-0">
