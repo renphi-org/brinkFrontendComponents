@@ -35,6 +35,7 @@ const {
   bordered = true,
   showOptions = true,
   expandable = false,
+  isRowExpandable,
   isGrouped = false,
   groups = {},
   groupByField,
@@ -133,6 +134,9 @@ const filteredColumns = computed(() => !visibleColumns.value ? columns : columns
 
 const colNum = computed(() => filteredColumns.value.length + (selectMode === 'multiselect' ? 1 : 0) + (hasActionsColumn ? 1 : 0) + (expandable ? 1 : 0))
 
+// Helper function to check if a row is expandable
+const isRowExpandableFn = (item: T) => isRowExpandable ? isRowExpandable(item) : true
+
 defineExpose({ selected, clearSelected: clear })
 </script>
 
@@ -214,7 +218,7 @@ defineExpose({ selected, clearSelected: clear })
                     :data-row-id="item.id"
                   >
                     <td v-if="expandable" class="!w-6 !pr-0">
-                      <Button size="sm" variant="ghost" class="h-6 w-6 p-0 -mr-1" @click="toggleExpand(item[idcol])">
+                      <Button v-if="isRowExpandableFn(item)" size="sm" variant="ghost" class="h-6 w-6 p-0 -mr-1" @click="toggleExpand(item[idcol])">
                         <component :is="expandedMap[item[idcol]] ? ChevronDown : ChevronRight" class="h-4 w-4" />
                       </Button>
                     </td>
@@ -244,7 +248,7 @@ defineExpose({ selected, clearSelected: clear })
                     </td>
                   </tr>
                   <!-- Expandable row -->
-                  <tr v-if="expandable && expandedMap[item[idcol]]" class="hover:!bg-transparent">
+                  <tr v-if="expandable && expandedMap[item[idcol]] && isRowExpandableFn(item)" class="hover:!bg-transparent">
                     <td
                       :colspan="colNum"
                       class="bg-muted/30 p-0 [&_thead>tr:hover]:bg-transparent [&_th]:h-7  [&_td]:py-0.5 "
@@ -269,7 +273,7 @@ defineExpose({ selected, clearSelected: clear })
                   :data-row-id="item.id"
                 >
                   <td v-if="expandable" class="!w-6 !pr-0">
-                    <Button size="sm" variant="ghost" class="h-6 w-6 p-0 -mr-1" @click="toggleExpand(item[idcol])">
+                    <Button v-if="isRowExpandableFn(item)" size="sm" variant="ghost" class="h-6 w-6 p-0 -mr-1" @click="toggleExpand(item[idcol])">
                       <component :is="expandedMap[item[idcol]] ? ChevronDown : ChevronRight" class="h-4 w-4" />
                     </Button>
                   </td>
@@ -296,7 +300,7 @@ defineExpose({ selected, clearSelected: clear })
                   </td>
                 </tr>
                 <!-- Expandable row -->
-                <slot v-if="expandable && expandedMap[item[idcol]]" name="expanded-row-raw" :item :col-num>
+                <slot v-if="expandable && expandedMap[item[idcol]] && isRowExpandableFn(item)" name="expanded-row-raw" :item :col-num>
                   <tr class="hover:!bg-transparent">
                     <td
                       :colspan="colNum"
@@ -336,7 +340,7 @@ defineExpose({ selected, clearSelected: clear })
     <div
       v-if="total && total > 0"
       class="@container sticky bottom-0 right-0 w-full gap-2 flex items-center bg-background px-0 py-3 z-10 transition-[left] duration-200 ease-linear"
-      :class="{ 'px-6': !bordered }"
+      :class="{ '!px-6': !bordered }"
     >
       <div v-if="selectMode === 'multiselect' && selected.length > 0">
         <div class="flex gap-2 items-center min-w-0">

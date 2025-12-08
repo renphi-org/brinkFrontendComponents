@@ -19,6 +19,7 @@ export interface DataTableProps<T> {
   sortable?: boolean
   bordered?: boolean
   expandable?: boolean
+  isRowExpandable?: (item: T) => boolean
   translatableConfig?: TranslatableConfig<T>
   pageSizeOptions?: number[]
   // For grouped data
