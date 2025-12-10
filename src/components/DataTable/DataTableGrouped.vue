@@ -240,7 +240,7 @@ defineExpose({ selected, clearSelected: clear })
             <template v-if="hasItems">
               <template v-for="(groupItems, groupKey) in groups" :key="groupKey">
                 <!-- Group header row -->
-                <tr class="bg-muted/50 hover:bg-muted/70">
+                <tr class="bg-muted/50 hover:bg-muted/70" :data-group-id="groupKey">
                   <!-- Group expand/collapse button column -->
                   <td class="!w-6 !pr-0">
                     <Button

@@ -21,7 +21,7 @@ const { t } = useI18n()
 
 <template>
   <div
-    v-if="total && total > 0"
+    v-if="ctx.hasItems.value"
     class="@container sticky bottom-0 right-0 w-full gap-2 flex items-center bg-background px-0 py-3 z-10 transition-[left] duration-200 ease-linear"
     :class="{ '!px-6': !bordered }"
   >
