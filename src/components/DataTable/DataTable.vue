@@ -189,12 +189,9 @@ defineExpose({ selected, clearSelected: clear })
                     <tr class="hover:!bg-transparent">
                       <td
                         :colspan="colNum"
-                        class="bg-muted/30 p-0 [&_thead>tr:hover]:bg-transparent [&_th]:h-7  [&_td]:py-0.5"
+                        class="bg-muted/30 p-0 [&_thead>tr:hover]:bg-transparent [&_th]:h-7 "
                       >
-                        <slot name="expanded-row" :item>
-                          <!-- Default expanded content -->
-                          ....
-                        </slot>
+                        <slot name="expanded-row" :item />
                       </td>
                     </tr>
                   </slot>
