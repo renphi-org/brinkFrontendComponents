@@ -5,20 +5,15 @@ import { injectDataTableContext } from './useDataTableContext'
 
 defineProps<{
   total?: number
-  page?: number
-  itemsPerPage?: number
   pageSizeOptions?: number[]
   bordered?: boolean
-}>()
-
-const emit = defineEmits<{
-  'update:page': [page: number]
-  'update:itemsPerPage': [size: number]
 }>()
 
 defineSlots<{
   bulk?: (_: { selected: any[] }) => any
 }>()
+const page = defineModel<number>('page')
+const itemsPerPage = defineModel<number>('itemsPerPage')
 
 const ctx = injectDataTableContext()
 const { t } = useI18n()
@@ -48,14 +43,13 @@ const { t } = useI18n()
     <!-- Pagination controls on the right -->
     <div v-if="total !== undefined" class="flex flex-1 justify-end items-center gap-4">
       <PaginationCustom
-        :model-value="page"
-        :items-per-page="itemsPerPage!"
+        v-if="itemsPerPage"
+        v-model:page="page"
+        v-model:items-per-page="itemsPerPage"
         :page-size-options="pageSizeOptions || []"
         :hide-items-per-page="ctx.selected.value.length > 0 || (pageSizeOptions && pageSizeOptions.length < 2)"
         :total="total"
         :disabled="ctx.isPending"
-        @update:model-value="(val: number | undefined) => val !== undefined && emit('update:page', val)"
-        @update:items-per-page="(val: number | undefined) => val !== undefined && emit('update:itemsPerPage', val)"
       />
     </div>
   </div>

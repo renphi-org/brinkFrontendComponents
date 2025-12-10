@@ -1,7 +1,5 @@
 type __VLS_Props = {
     total?: number;
-    page?: number;
-    itemsPerPage?: number;
     pageSizeOptions?: number[];
     bordered?: boolean;
 };
@@ -10,12 +8,17 @@ type __VLS_Slots = {
         selected: any[];
     }) => any;
 };
-declare const __VLS_base: import("vue").DefineComponent<__VLS_Props, {}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
-    "update:page": (page: number) => any;
-    "update:itemsPerPage": (size: number) => any;
-}, string, import("vue").PublicProps, Readonly<__VLS_Props> & Readonly<{
-    "onUpdate:page"?: ((page: number) => any) | undefined;
-    "onUpdate:itemsPerPage"?: ((size: number) => any) | undefined;
+type __VLS_ModelProps = {
+    'page'?: number;
+    'itemsPerPage'?: number;
+};
+type __VLS_PublicProps = __VLS_Props & __VLS_ModelProps;
+declare const __VLS_base: import("vue").DefineComponent<__VLS_PublicProps, {}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
+    "update:page": (value: number | undefined) => any;
+    "update:itemsPerPage": (value: number | undefined) => any;
+}, string, import("vue").PublicProps, Readonly<__VLS_PublicProps> & Readonly<{
+    "onUpdate:page"?: ((value: number | undefined) => any) | undefined;
+    "onUpdate:itemsPerPage"?: ((value: number | undefined) => any) | undefined;
 }>, {}, {}, {}, {}, string, import("vue").ComponentProvideOptions, false, {}, any>;
 declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;
 declare const _default: typeof __VLS_export;

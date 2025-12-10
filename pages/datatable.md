@@ -129,6 +129,57 @@ const groupedByCategory = computed(() => {
   })
   return groups
 })
+
+// Pagination example data - larger dataset
+type PaginatedData = {
+  id: number
+  name: string
+  email: string
+  department: string
+  salary: number
+}
+
+const paginatedData = ref<PaginatedData[]>(
+  Array.from({ length: 127 }, (_, i) => ({
+    id: i + 1,
+    name: `Employee ${i + 1}`,
+    email: `employee${i + 1}@company.com`,
+    department: ['Engineering', 'Marketing', 'Sales', 'HR', 'Finance'][i % 5],
+    salary: Math.floor(Math.random() * 80000) + 40000,
+  }))
+)
+
+const paginatedColumns: TableColumn<PaginatedData>[] = [
+  { id: 'id', title: 'ID', sortable: true },
+  { id: 'name', title: 'Name', sortable: true },
+  { id: 'email', title: 'Email', sortable: true },
+  { id: 'department', title: 'Department', sortable: true },
+  { id: 'salary', title: 'Salary', sortable: true },
+]
+
+const paginationPage = ref(1)
+const paginationItemsPerPage = ref(25)
+const paginationSortBy = ref<SortBy>()
+
+// Simulated server-side pagination
+const paginatedItems = computed(() => {
+  let items = [...paginatedData.value]
+
+  // Apply sorting
+  if (paginationSortBy.value) {
+    items.sort((a, b) => {
+      const aVal = a[paginationSortBy.value!.key as keyof PaginatedData]
+      const bVal = b[paginationSortBy.value!.key as keyof PaginatedData]
+      const order = paginationSortBy.value!.order === 'asc' ? 1 : -1
+      return aVal < bVal ? -order : aVal > bVal ? order : 0
+    })
+  }
+
+  // Apply pagination
+  const start = (paginationPage.value - 1) * paginationItemsPerPage.value
+  const end = start + paginationItemsPerPage.value
+  return items.slice(start, end)
+})
 </script>
 
 # DataTable Component
@@ -226,6 +277,116 @@ Simply click on any column header to access these options.
 ### View Options Button
 
 The "View" button in the top-right corner allows you to toggle column visibility. All columns with titles can be shown/hidden from this menu.
+
+---
+
+## Pagination Example
+
+DataTable with pagination support for large datasets. This example demonstrates client-side pagination with 127 items.
+
+<div class="not-prose">
+<DataTable
+  v-model:page="paginationPage"
+  v-model:items-per-page="paginationItemsPerPage"
+  v-model:sort-by="paginationSortBy"
+  :items="paginatedItems"
+  :columns="paginatedColumns"
+  :total="paginatedData.length"
+  :page-size-options="[10, 25, 50, 100]"
+  :bordered="true"
+>
+  <template #cell:salary="{ value }">
+    <span class="font-mono">${{ value.toLocaleString() }}</span>
+  </template>
+</DataTable>
+</div>
+
+<div class="not-prose mt-6 space-y-3">
+  <div class="text-sm font-semibold">Pagination State:</div>
+  <div class="space-y-2 text-sm font-mono bg-muted p-4 rounded-lg">
+    <div><span class="text-muted-foreground">Current Page:</span> <span class="text-foreground">{{ paginationPage }}</span></div>
+    <div><span class="text-muted-foreground">Items Per Page:</span> <span class="text-foreground">{{ paginationItemsPerPage }}</span></div>
+    <div><span class="text-muted-foreground">Total Items:</span> <span class="text-foreground">{{ paginatedData.length }}</span></div>
+    <div><span class="text-muted-foreground">Total Pages:</span> <span class="text-foreground">{{ Math.ceil(paginatedData.length / paginationItemsPerPage) }}</span></div>
+    <div><span class="text-muted-foreground">Showing Items:</span> <span class="text-foreground">{{ (paginationPage - 1) * paginationItemsPerPage + 1 }} - {{ Math.min(paginationPage * paginationItemsPerPage, paginatedData.length) }}</span></div>
+    <div><span class="text-muted-foreground">Sort By:</span> <span class="text-foreground">{{ paginationSortBy }}</span></div>
+  </div>
+</div>
+
+### Code Example
+
+```vue
+<script setup>
+import { DataTable } from '@brink-components/component-library'
+import { computed, ref } from 'vue'
+
+const paginatedData = ref(
+  Array.from({ length: 127 }, (_, i) => ({
+    id: i + 1,
+    name: `Employee ${i + 1}`,
+    email: `employee${i + 1}@company.com`,
+    department: ['Engineering', 'Marketing', 'Sales', 'HR', 'Finance'][i % 5],
+    salary: Math.floor(Math.random() * 80000) + 40000,
+  }))
+)
+
+const columns = [
+  { id: 'id', title: 'ID', sortable: true },
+  { id: 'name', title: 'Name', sortable: true },
+  { id: 'email', title: 'Email', sortable: true },
+  { id: 'department', title: 'Department', sortable: true },
+  { id: 'salary', title: 'Salary', sortable: true },
+]
+
+const page = ref(1)
+const itemsPerPage = ref(25)
+const sortBy = ref()
+
+// Simulated server-side pagination
+const paginatedItems = computed(() => {
+  let items = [...paginatedData.value]
+
+  // Apply sorting
+  if (sortBy.value) {
+    items.sort((a, b) => {
+      const aVal = a[sortBy.value.key]
+      const bVal = b[sortBy.value.key]
+      const order = sortBy.value.order === 'asc' ? 1 : -1
+      return aVal < bVal ? -order : aVal > bVal ? order : 0
+    })
+  }
+
+  // Apply pagination
+  const start = (page.value - 1) * itemsPerPage.value
+  const end = start + itemsPerPage.value
+  return items.slice(start, end)
+})
+</script>
+
+<template>
+  <DataTable
+    v-model:page="page"
+    v-model:items-per-page="itemsPerPage"
+    v-model:sort-by="sortBy"
+    :items="paginatedItems"
+    :columns="columns"
+    :total="paginatedData.length"
+    :page-size-options="[10, 25, 50, 100]"
+  >
+    <template #cell:salary="{ value }">
+      <span class="font-mono">${{ value.toLocaleString() }}</span>
+    </template>
+  </DataTable>
+</template>
+```
+
+**Key Points:**
+- Use `v-model:page` to bind the current page number
+- Use `v-model:items-per-page` to bind items per page
+- Set `:total` to the total count of items (not just the current page)
+- Pass only the current page's items to `:items`
+- Configure available page sizes with `:page-size-options`
+- The component handles all pagination UI and state automatically
 
 ---
 

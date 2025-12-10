@@ -7,7 +7,7 @@ declare const __VLS_export: <T extends Record<string, any>>(__VLS_props: NonNull
         sortBy?: SortBy;
         selected?: any[];
     }) & {
-        "onUpdate:page"?: ((value: number | undefined) => any) | undefined;
+        "onUpdate:page"?: ((value: number) => any) | undefined;
         "onUpdate:itemsPerPage"?: ((value: number | undefined) => any) | undefined;
         "onUpdate:visibleColumns"?: ((value: string[] | undefined) => any) | undefined;
         onClickRow?: ((id: string) => any) | undefined;
@@ -42,7 +42,7 @@ declare const __VLS_export: <T extends Record<string, any>>(__VLS_props: NonNull
             selected: boolean | undefined;
         }) => any;
     };
-    emit: ((evt: "clickRow", id: string) => void) & (((evt: "update:page", value: number | undefined) => void) & ((evt: "update:itemsPerPage", value: number | undefined) => void) & ((evt: "update:visibleColumns", value: string[] | undefined) => void) & ((evt: "update:sortBy", value: SortBy | undefined) => void) & ((evt: "update:selected", value: any[]) => void));
+    emit: ((evt: "clickRow", id: string) => void) & (((evt: "update:page", value: number) => void) & ((evt: "update:itemsPerPage", value: number | undefined) => void) & ((evt: "update:visibleColumns", value: string[] | undefined) => void) & ((evt: "update:sortBy", value: SortBy | undefined) => void) & ((evt: "update:selected", value: any[]) => void));
 }>) => import("vue").VNode & {
     __ctx?: Awaited<typeof __VLS_setup>;
 };

@@ -302,13 +302,11 @@ defineExpose({ selected, clearSelected: clear })
     </DataTableContainer>
 
     <DataTableFooter
+      v-model:page="page"
+      v-model:items-per-page="itemsPerPage"
       :total
-      :page
-      :items-per-page="itemsPerPage"
       :page-size-options="pageSizeOptions"
       :bordered
-      @update:page="(val) => page = val"
-      @update:items-per-page="(val) => itemsPerPage = val"
     >
       <template #bulk="slotData">
         <slot name="bulk" v-bind="slotData" />

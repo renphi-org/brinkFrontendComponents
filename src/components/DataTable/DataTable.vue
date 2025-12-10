@@ -50,7 +50,7 @@ defineSlots<
 // Models
 const visibleColumns = defineModel<string[]>('visibleColumns')
 const itemsPerPage = defineModel<number>('itemsPerPage')
-const page = defineModel<number>('page')
+const page = defineModel<number>('page', { default: 1 })
 const sortBy = defineModel<SortBy>('sortBy')
 const selected = defineModel<any[]>('selected', { default: () => [] })
 
@@ -95,7 +95,7 @@ useEscapeKeyWhile(() => {
 }, computed(() => selected.value.length > 0))
 
 // Clear selection on page change
-watch(page, () => clear())
+// watch(page, () => clear())
 
 const { stateMap: expandedMap, toggle: toggleExpand, allToggledState: allExpandedState, toggleAll: toggleExpandAll } = useToggleState(itemsRef, 'id', storagekey)
 
@@ -208,13 +208,11 @@ defineExpose({ selected, clearSelected: clear })
     </DataTableContainer>
 
     <DataTableFooter
+      v-model:page="page"
+      v-model:items-per-page="itemsPerPage"
       :total
-      :page
-      :items-per-page="itemsPerPage"
       :page-size-options="pageSizeOptions"
       :bordered
-      @update:page="(val) => page = val"
-      @update:items-per-page="(val) => itemsPerPage = val"
     >
       <template #bulk="slotData">
         <slot name="bulk" v-bind="slotData" />
