@@ -8729,7 +8729,6 @@ const Sf = /* @__PURE__ */ N({
   __name: "DataTableGrouped",
   props: /* @__PURE__ */ Se({
     groups: {},
-    items: {},
     columns: {},
     selectMode: {},
     storagekey: {},

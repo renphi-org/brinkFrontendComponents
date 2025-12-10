@@ -19,7 +19,7 @@ import DataTableRow from './DataTableRow.vue'
 import DataTableToolbar from './DataTableToolbar.vue'
 import { provideDataTableContext } from './useDataTableContext'
 
-export interface DataTableGroupedProps<T> extends Omit<DataTableProps<T>, 'isGrouped' | 'groups' | 'expandable' | 'isRowExpandable'> {
+export interface DataTableGroupedProps<T> extends Omit<DataTableProps<T>, 'isGrouped' | 'items' | 'groups' | 'expandable' | 'isRowExpandable'> {
   groups: Record<string, T[]>
 }
 
