@@ -7,13 +7,21 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./style.css": "./dist/style.css"
+    "./style.css": {
+      "import": "./dist/style.css",
+      "require": "./dist/style.css"
+    },
+    "./dist/style.css": "./dist/style.css"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
     "dist"
+  ],
+  "sideEffects": [
+    "*.css",
+    "*.vue"
   ],
   "scripts": {
     "build": "vite build && vue-tsc --declaration --emitDeclarationOnly || true",

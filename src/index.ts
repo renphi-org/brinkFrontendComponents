@@ -9,9 +9,10 @@ export type {
 // Layout components
 export { default as AppSidebar } from './components/AppSidebar.vue'
 export { default as ButtonSelect } from './components/ButtonSelect.vue'
-export { default as DataTable, useToggleState } from './components/DataTable'
+export { default as DataTable, DataTableGrouped, useToggleState } from './components/DataTable'
 export type {
   DataTableEmits,
+  DataTableGroupedProps,
   DataTableProps,
   SortBy,
   TableColumn,

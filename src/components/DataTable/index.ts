@@ -3,8 +3,11 @@ import { useSessionStorage } from '@vueuse/core'
 import { toggle as toggleRadash } from 'radash'
 import { computed, ref } from 'vue'
 import DataTable from './DataTable.vue'
+import DataTableGrouped from './DataTableGrouped.vue'
 
 export default DataTable
+export { DataTableGrouped }
+export type { DataTableGroupedProps } from './DataTableGrouped.vue'
 
 export interface DataTableProps<T> {
   items: T[]
