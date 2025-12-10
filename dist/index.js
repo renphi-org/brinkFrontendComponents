@@ -8876,19 +8876,21 @@ const Sf = /* @__PURE__ */ N({
                           size: "sm",
                           variant: "ghost",
                           class: "h-6 w-6 p-0",
+                          disabled: V.length === 0,
                           onClick: (Ae) => k(String(U))
                         }, {
                           default: h(() => [
                             (m(), P(Xe(A.value[String(U)] ? r(ma) : r(Ht)), { class: "h-4 w-4" }))
                           ]),
                           _: 2
-                        }, 1032, ["onClick"])
+                        }, 1032, ["disabled", "onClick"])
                       ]),
                       e.selectMode === "multiselect" ? (m(), R("td", Mp, [
                         w(r(In), {
-                          "model-value": J(V) ? !0 : le(V) ? "indeterminate" : !1,
+                          "model-value": V.length === 0 ? !1 : J(V) ? !0 : le(V) ? "indeterminate" : !1,
+                          disabled: V.length === 0,
                           "onUpdate:modelValue": (Ae) => Y(V)
-                        }, null, 8, ["model-value", "onUpdate:modelValue"])
+                        }, null, 8, ["model-value", "disabled", "onUpdate:modelValue"])
                       ])) : se("", !0),
                       Q("td", {
                         colspan: $.value - 1 - (e.selectMode === "multiselect" ? 1 : 0),

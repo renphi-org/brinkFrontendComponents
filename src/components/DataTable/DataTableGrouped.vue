@@ -247,6 +247,7 @@ defineExpose({ selected, clearSelected: clear })
                       size="sm"
                       variant="ghost"
                       class="h-6 w-6 p-0"
+                      :disabled="groupItems.length === 0"
                       @click="toggleExpand(String(groupKey))"
                     >
                       <component
@@ -258,7 +259,8 @@ defineExpose({ selected, clearSelected: clear })
                   <!-- Group selection checkbox column -->
                   <td v-if="selectMode === 'multiselect'" class="!w-6">
                     <Checkbox
-                      :model-value="isGroupSelected(groupItems) ? true : isGroupPartiallySelected(groupItems) ? 'indeterminate' : false"
+                      :model-value="groupItems.length === 0 ? false : isGroupSelected(groupItems) ? true : isGroupPartiallySelected(groupItems) ? 'indeterminate' : false"
+                      :disabled="groupItems.length === 0"
                       @update:model-value="toggleGroupSelection(groupItems)"
                     />
                   </td>
