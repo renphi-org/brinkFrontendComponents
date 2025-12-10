@@ -1,7 +1,5 @@
 import type { Component, MaybeRef } from 'vue';
 import type { ComponentProps } from 'vue-component-type-helpers';
-import type { Config } from '../ui/auto-form';
-import type { ZodObjectOrWrapped } from '../ui/auto-form/utils';
 import SelectListOptions from '../SelectListOptions.vue';
 import SelectOptions from '../SelectOptions.vue';
 type GenericObject = Record<string, any>;
@@ -23,17 +21,6 @@ export interface DynamicComponenWithModelDialogProps<C extends Component> {
     type?: 'drawer' | 'dialog';
 }
 export declare function openDynamicDialogComponent<C extends Component>(dialogConfig: DynamicDialogProps | string, componentConfig: DynamicComponenWithModelConfig<C>, type?: 'drawer' | 'dialog'): string;
-export interface GenericAutoFormConfig<T extends object = any> {
-    schema: ZodObjectOrWrapped;
-    onSubmit: OnGenericSubmitFn;
-    initialValues?: Partial<T>;
-    fieldConfig?: Config<T>;
-}
-export interface DynamicAutoFormDialogProps<T extends object> {
-    dialogConfig: DynamicDialogProps;
-    formConfig: GenericAutoFormConfig<T>;
-}
-export declare function openAutoFormDialog<T extends object = any>(dialogConfig: DynamicDialogProps | string, formConfig: GenericAutoFormConfig<T>): string;
 export declare function alert(onOk: OnOkFn, title?: string, description?: string): string;
 export declare function confirmGeneric<T extends Component>({ dialogConfig, initialValue, onOk, component, componentProps }: {
     dialogConfig: {

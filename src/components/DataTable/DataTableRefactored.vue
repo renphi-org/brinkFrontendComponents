@@ -8,6 +8,7 @@ import { useToggleState } from '.'
 import DataTableBody from './DataTableBody.vue'
 import DataTableContainer from './DataTableContainer.vue'
 import DataTableEmpty from './DataTableEmpty.vue'
+import DataTableExpandableRow from './DataTableExpandableRow.vue'
 import DataTableFooter from './DataTableFooter.vue'
 import DataTableHeader from './DataTableHeader.vue'
 import DataTableLoadingOverlay from './DataTableLoadingOverlay.vue'
@@ -181,26 +182,21 @@ defineExpose({ selected, clearSelected: clear })
                 </DataTableRow>
 
                 <!-- Expandable row -->
-
-                <!-- Expandable row -->
-
-                <template v-if="expandable && expandedMap[item[idcol]] && isRowExpandableFn(item)">
-                  <slot name="expanded-row-raw" :item :col-num="colNum">
-                    <tr class="hover:!bg-transparent">
-                      <td
-                        :colspan="colNum"
-                        class="bg-muted/30 p-0 [&_thead>tr:hover]:bg-transparent [&_th]:h-7  [&_td]:py-0.5"
-                      >
-                        <slot name="expanded-row" :item>
-                          <!-- Default expanded content -->
-                          ....
-                        </slot>
-                      </td>
-                    </tr>
-                  </slot>
-                </template>
+                <DataTableExpandableRow
+                  v-if="expandable && expandedMap[item[idcol]] && isRowExpandableFn(item)"
+                  :item
+                >
+                  <template #raw="slotData">
+                    <slot name="expanded-row-raw" v-bind="slotData">
+                      <slot name="expanded-row" :item>
+                        <!-- Default expanded content handled by component -->
+                      </slot>
+                    </slot>
+                  </template>
+                </DataTableExpandableRow>
               </template>
             </template>
+
             <DataTableEmpty v-else />
           </DataTableBody>
         </table>

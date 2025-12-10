@@ -9,7 +9,7 @@ import { Button } from '../src/components/ui/button'
 import InputSearch from '../src/components/InputSearch.vue'
 import SelectListOptions from '../src/components/SelectListOptions.vue'
 import { type SelectOption } from '../src/components/SelectOptions.vue'
-import { confirmSelect, confirmSelectList, confirmGeneric, alert, openAutoFormDialog, openDynamicDialogComponent } from '../src/components/DynamicDialog'
+import { confirmSelect, confirmSelectList, confirmGeneric, alert, openDynamicDialogComponent } from '../src/components/DynamicDialog'
 import { z } from 'zod'
 
 // Dynamic Dialog examples
@@ -72,28 +72,6 @@ async function handleAlert() {
   )
 }
 
-// AutoForm Dialog example
-const userSchema = z.object({
-  name: z.string().min(2, 'Name must be at least 2 characters'),
-  email: z.string().email('Invalid email address'),
-  age: z.number().min(18, 'Must be 18 or older').optional(),
-})
-
-async function handleAutoFormDialog() {
-  await openAutoFormDialog(
-    { title: 'User Information', description: 'Fill in your details' },
-    {
-      schema: userSchema,
-      initialValues: { name: '', email: '' },
-      onSubmit: async (values) => {
-        dialogResult.value = values
-        console.log('Form submitted:', values)
-        return true
-      }
-    }
-  )
-}
-
 // Dynamic Dialog Component example
 async function handleDynamicDialog() {
   await openDynamicDialogComponent(
@@ -140,7 +118,6 @@ Dynamic dialog system for programmatic dialogs and confirmations
 <div class="space-y-2">
 <div class="text-sm font-medium">Advanced Dialogs</div>
 <div class="flex flex-wrap gap-2">
-<Button @click="handleAutoFormDialog" variant="secondary">AutoForm Dialog</Button>
 <Button @click="handleDynamicDialog" variant="secondary">Dynamic Dialog</Button>
 <Button @click="handleDynamicDrawer" variant="outline">Dynamic Drawer</Button>
 </div>
@@ -156,7 +133,6 @@ Dynamic dialog system for programmatic dialogs and confirmations
 
 - 🎯 Programmatic dialog API
 - ✅ Confirmation dialogs with custom components
-- 📝 AutoForm integration for form dialogs
 - 🎨 Dialog and Drawer modes
 - 🔄 Async/await pattern
 - 🎭 Type-safe with TypeScript
@@ -167,9 +143,6 @@ Dynamic dialog system for programmatic dialogs and confirmations
 <script setup>
 import { alert, Button, confirmGeneric, confirmSelect, confirmSelectList, DynamicComponentProvider } from '@brink-components/component-library'
 import { ref } from 'vue'
-
-// AutoForm Dialog with Zod schema
-import { z } from 'zod'
 
 const options = [
   { value: '1', label: 'Option 1' },
@@ -220,26 +193,6 @@ async function showAlert() {
     },
     'Alert Title',
     'Alert description'
-  )
-}
-
-const userSchema = z.object({
-  name: z.string().min(2, 'Name must be at least 2 characters'),
-  email: z.string().email('Invalid email address'),
-  age: z.number().min(18, 'Must be 18 or older').optional(),
-})
-
-async function showAutoFormDialog() {
-  await openAutoFormDialog(
-    { title: 'User Information', description: 'Fill in your details' },
-    {
-      schema: userSchema,
-      initialValues: { name: '', email: '' },
-      onSubmit: async (values) => {
-        console.log('Form submitted:', values)
-        return true
-      }
-    }
   )
 }
 

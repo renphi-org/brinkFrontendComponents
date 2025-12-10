@@ -17,6 +17,7 @@
   ],
   "scripts": {
     "build": "vite build && vue-tsc --declaration --emitDeclarationOnly || true",
+    "tsc": "vue-tsc --declaration --emitDeclarationOnly || true",
     "dev": "vite",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",

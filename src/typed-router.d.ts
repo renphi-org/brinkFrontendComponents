@@ -30,16 +30,16 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       | never
     >,
-    '/autoform': RouteRecordInfo<
-      '/autoform',
-      '/autoform',
+    '/datatable': RouteRecordInfo<
+      '/datatable',
+      '/datatable',
       Record<never, never>,
       Record<never, never>,
       | never
     >,
-    '/datatable': RouteRecordInfo<
-      '/datatable',
-      '/datatable',
+    '/datatablegrouped': RouteRecordInfo<
+      '/datatablegrouped',
+      '/datatablegrouped',
       Record<never, never>,
       Record<never, never>,
       | never
@@ -77,15 +77,15 @@ declare module 'vue-router/auto-routes' {
       views:
         | never
     }
-    'pages/autoform.md': {
-      routes:
-        | '/autoform'
-      views:
-        | never
-    }
     'pages/datatable.md': {
       routes:
         | '/datatable'
+      views:
+        | never
+    }
+    'pages/datatablegrouped.md': {
+      routes:
+        | '/datatablegrouped'
       views:
         | never
     }

@@ -1,6 +1,9 @@
 import type { DataTableProps, SortBy } from '.';
+export interface DataTableGroupedProps<T> extends Omit<DataTableProps<T>, 'isGrouped' | 'groups' | 'expandable' | 'isRowExpandable'> {
+    groups: Record<string, T[]>;
+}
 declare const __VLS_export: <T extends Record<string, any>>(__VLS_props: NonNullable<Awaited<typeof __VLS_setup>>["props"], __VLS_ctx?: __VLS_PrettifyLocal<Pick<NonNullable<Awaited<typeof __VLS_setup>>, "attrs" | "emit" | "slots">>, __VLS_expose?: NonNullable<Awaited<typeof __VLS_setup>>["expose"], __VLS_setup?: Promise<{
-    props: __VLS_PrettifyLocal<(DataTableProps<T> & {
+    props: __VLS_PrettifyLocal<(DataTableGroupedProps<T> & {
         visibleColumns?: string[];
         itemsPerPage?: number;
         page?: number;
@@ -30,16 +33,12 @@ declare const __VLS_export: <T extends Record<string, any>>(__VLS_props: NonNull
         bulk?: (props: {
             selected: any[];
         }) => any;
-        'expanded-row'?: (props: {
-            item: T;
-        }) => any;
-        'expanded-row-raw'?: (props: {
-            item: T;
-            colNum: number;
-        }) => any;
-        'cell:checkbox'?: (props: {
-            item: T;
-            selected: boolean | undefined;
+        'group-header'?: (props: {
+            groupKey: string;
+            items: T[];
+            count: number;
+            isExpanded: boolean;
+            isSelected: boolean;
         }) => any;
     };
     emit: ((evt: "clickRow", id: string) => void) & (((evt: "update:page", value: number | undefined) => void) & ((evt: "update:itemsPerPage", value: number | undefined) => void) & ((evt: "update:visibleColumns", value: string[] | undefined) => void) & ((evt: "update:sortBy", value: SortBy | undefined) => void) & ((evt: "update:selected", value: any[]) => void));

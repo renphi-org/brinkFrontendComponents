@@ -446,3 +446,9 @@ const groupedByCategory = computed(() => {
   </DataTable>
 </template>
 ```
+
+---
+
+## DataTableGrouped Component
+
+For advanced grouped data display with expandable groups and group-level selection, see the [DataTableGrouped documentation](/datatablegrouped).

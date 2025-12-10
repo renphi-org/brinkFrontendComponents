@@ -41,20 +41,16 @@ export {
   confirmGeneric,
   confirmSelect,
   confirmSelectList,
-  openAutoFormDialog,
   openDynamicDialogComponent,
 } from './components/DynamicDialog'
 export type {
-  DynamicAutoFormDialogProps,
   DynamicComponenWithModelConfig,
   DynamicComponenWithModelDialogProps,
   DynamicDialogProps,
-  GenericAutoFormConfig,
   OnGenericSubmitFn,
   OnOkFn,
 } from './components/DynamicDialog'
 export { default as DynamicAlertDialog } from './components/DynamicDialog/DynamicAlertDialog.vue'
-export { default as DynamicAutoFormDialog } from './components/DynamicDialog/DynamicAutoFormDialog.vue'
 
 export { default as DynamicComponentDialog } from './components/DynamicDialog/DynamicComponentDialog.vue'
 

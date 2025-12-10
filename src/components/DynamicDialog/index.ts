@@ -1,12 +1,9 @@
 import type { Component, MaybeRef } from 'vue'
 import type { ComponentProps } from 'vue-component-type-helpers'
-import type { Config } from '../ui/auto-form'
-import type { ZodObjectOrWrapped } from '../ui/auto-form/utils'
 import { useDynamicComponent } from '../DynamicComponent'
 import SelectListOptions from '../SelectListOptions.vue'
 import SelectOptions from '../SelectOptions.vue'
 import DynamicAlertDialog from './DynamicAlertDialog.vue'
-import DynamicAutoFormDialog from './DynamicAutoFormDialog.vue'
 import DynamicComponentDialog from './DynamicComponentDialog.vue'
 import DynamicConfirmComponentDialog from './DynamicConfirmComponentDialog.vue'
 
@@ -42,31 +39,6 @@ export function openDynamicDialogComponent<C extends Component>(
       componentConfig,
       dialogConfig: (typeof dialogConfig === 'string' ? { title: dialogConfig } : dialogConfig),
       type,
-    },
-  })
-}
-
-export interface GenericAutoFormConfig<T extends object = any> {
-  schema: ZodObjectOrWrapped
-  onSubmit: OnGenericSubmitFn
-  initialValues?: Partial<T>
-  fieldConfig?: Config<T>
-}
-
-export interface DynamicAutoFormDialogProps<T extends object> {
-  dialogConfig: DynamicDialogProps
-  formConfig: GenericAutoFormConfig<T>
-}
-
-export function openAutoFormDialog<T extends object = any>(
-  dialogConfig: DynamicDialogProps | string,
-  formConfig: GenericAutoFormConfig<T>,
-) {
-  return dynamicComponent.open<typeof DynamicAutoFormDialog>({
-    component: DynamicAutoFormDialog,
-    componentProps: {
-      formConfig,
-      dialogConfig: (typeof dialogConfig === 'string' ? { title: dialogConfig } : dialogConfig),
     },
   })
 }

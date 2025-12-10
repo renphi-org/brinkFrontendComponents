@@ -22,10 +22,6 @@ export interface DataTableProps<T> {
   isRowExpandable?: (item: T) => boolean
   translatableConfig?: TranslatableConfig<T>
   pageSizeOptions?: number[]
-  // For grouped data
-  isGrouped?: boolean
-  groups?: Record<string, T[]>
-  groupByField?: string
   highlightedRow?: string
 }
 export interface DataTableEmits {

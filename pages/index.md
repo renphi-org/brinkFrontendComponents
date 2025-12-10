@@ -16,7 +16,6 @@ import InputRange, { type ValueRange } from '../src/components/InputRange.vue'
 import InputGraduated, { type ValueGraduated } from '../src/components/InputGraduated.vue'
 import InputBoolean from '../src/components/InputBoolean.vue'
 import { z } from 'zod'
-import AutoForm from '../src/components/ui/auto-form/AutoForm.vue'
 
 // DateFormat examples
 const now = new Date()
@@ -44,49 +43,7 @@ const graduatedValue = ref<ValueGraduated[]>([
 ])
 const booleanValue = ref(true)
 
-// AutoForm example
-const autoFormSchema = z.object({
-  username: z
-    .string({
-      required_error: 'Username is required.',
-    })
-    .min(2, {
-      message: 'Username must be at least 2 characters.',
-    }),
-  email: z
-    .string({
-      required_error: 'Email is required.',
-    })
-    .email({
-      message: 'Please enter a valid email address.',
-    }),
-  age: z.coerce
-    .number({
-      required_error: 'Age is required.',
-    })
-    .min(18, {
-      message: 'You must be at least 18 years old.',
-    })
-    .max(120, {
-      message: 'Please enter a valid age.',
-    }),
-  acceptTerms: z.boolean().refine((val) => val === true, {
-    message: 'You must accept the terms and conditions.',
-  }),
-  bio: z.string().min(10, {
-    message: 'Bio must be at least 10 characters.',
-  }).optional(),
-})
-
-const autoFormValues = ref<any>(null)
-
-function handleAutoFormSubmit(values: any) {
-  autoFormValues.value = values
-  console.log('Form submitted:', values)
-}
 </script>
-
-<<< @/index.ts
 
 # Brink Component Library
 
