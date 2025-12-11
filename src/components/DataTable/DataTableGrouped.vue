@@ -65,6 +65,7 @@ const selected = defineModel<any[]>('selected', { default: () => [] })
 const columnsMap = computed(() => objectify(columns, col => col.id))
 const itemsMap = computed(() => objectify(items.value, item => item.id))
 const hasItems = computed(() => items.value && items.value.length > 0)
+const hasGroups = computed(() => Object.values(groups).length > 0)
 const filteredColumns = computed(() => !visibleColumns.value ? columns : columns.filter(col => visibleColumns.value?.includes(col.id as string)))
 // Include column for group expand/collapse button
 const colNum = computed(() => filteredColumns.value.length + (selectMode === 'multiselect' ? 1 : 0) + (hasActionsColumn ? 1 : 0) + 1)
@@ -237,7 +238,7 @@ defineExpose({ selected, clearSelected: clear })
           />
 
           <DataTableBody>
-            <template v-if="hasItems">
+            <template v-if="hasGroups">
               <template v-for="(groupItems, groupKey) in groups" :key="groupKey">
                 <!-- Group header row -->
                 <tr class="bg-muted/50 hover:bg-muted/70" :data-group-id="groupKey">
