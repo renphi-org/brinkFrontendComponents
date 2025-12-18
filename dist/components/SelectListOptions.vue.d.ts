@@ -11,6 +11,7 @@ declare const __VLS_export: <T = any>(__VLS_props: NonNullable<Awaited<typeof __
         multiple?: boolean;
         options: MaybeRef<SelectOption<T>[]>;
         showAddItemButton?: boolean;
+        disabled?: boolean;
     } & {
         modelValue?: any;
     }) & {

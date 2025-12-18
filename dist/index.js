@@ -7791,6 +7791,7 @@ const Sf = /* @__PURE__ */ O({
     customValueComponent: {},
     label: {},
     customValueProps: {},
+    disabled: { type: Boolean },
     class: {}
   }, {
     modelValue: {},
@@ -7815,7 +7816,8 @@ const Sf = /* @__PURE__ */ O({
       w(r(Uf), {
         modelValue: n.value,
         "onUpdate:modelValue": u[1] || (u[1] = (v) => n.value = v),
-        multiple: e.multiple
+        multiple: e.multiple,
+        disabled: e.disabled
       }, {
         default: h(() => [
           w(r(il), G({
@@ -7823,7 +7825,10 @@ const Sf = /* @__PURE__ */ O({
               "w-full data-[placeholder]:text-muted-foreground ",
               t.class
             )
-          }, c.$attrs, { "as-child": "" }), {
+          }, c.$attrs, {
+            disabled: e.disabled,
+            "as-child": ""
+          }), {
             default: h(() => [
               w(ks, { variant: "outline" }, {
                 default: h(() => [
@@ -7847,25 +7852,27 @@ const Sf = /* @__PURE__ */ O({
               })
             ]),
             _: 3
-          }, 16, ["class"]),
+          }, 16, ["class", "disabled"]),
           w(r(zf), null, {
             default: h(() => [
               e.label ? (m(), V("div", Kf, te(e.label), 1)) : oe("", !0),
               (m(!0), V(he, null, Ve(ye(e.options), (v) => (m(), A(r(jf), {
                 key: String(v.value),
-                value: v.value
+                value: v.value,
+                disabled: e.disabled
               }, {
                 default: h(() => [
                   pe(te(v.label), 1)
                 ]),
                 _: 2
-              }, 1032, ["value"]))), 128)),
+              }, 1032, ["value", "disabled"]))), 128)),
               e.showResetButton && i.value ? (m(), V("div", Xf, [
                 w(Ln),
                 w(je, {
                   class: "w-full",
                   variant: "ghost",
                   size: "sm",
+                  disabled: e.disabled,
                   onClick: u[0] || (u[0] = (v) => l())
                 }, {
                   default: h(() => [
@@ -7873,19 +7880,20 @@ const Sf = /* @__PURE__ */ O({
                     pe(" " + te(a("common.reset")), 1)
                   ]),
                   _: 1
-                })
+                }, 8, ["disabled"])
               ])) : oe("", !0)
             ]),
             _: 1
           })
         ]),
         _: 3
-      }, 8, ["modelValue", "multiple"]),
+      }, 8, ["modelValue", "multiple", "disabled"]),
       e.showAddItemButton ? (m(), V("div", qf, [
         w(je, {
           size: "sm",
           class: "sticky bottom-0",
           variant: "ghost",
+          disabled: e.disabled,
           onClick: u[2] || (u[2] = (v) => c.$emit("onAddItem"))
         }, {
           default: h(() => [
@@ -7893,7 +7901,7 @@ const Sf = /* @__PURE__ */ O({
             pe(" " + te(a("common.addItem")), 1)
           ]),
           _: 1
-        })
+        }, 8, ["disabled"])
       ])) : oe("", !0)
     ], 64));
   }
@@ -9085,7 +9093,8 @@ const br = (e) => {
     addItemButtonLabel: { default: "Add Item" },
     multiple: { type: Boolean },
     options: {},
-    showAddItemButton: { type: Boolean }
+    showAddItemButton: { type: Boolean },
+    disabled: { type: Boolean, default: !1 }
   }, {
     modelValue: {},
     modelModifiers: {}
@@ -9097,14 +9106,15 @@ const br = (e) => {
       w(r(yl), {
         modelValue: t.value,
         "onUpdate:modelValue": c[1] || (c[1] = (u) => t.value = u),
-        multiple: e.multiple
+        multiple: e.multiple,
+        disabled: e.disabled
       }, {
         default: h(() => [
           w(r(wl), {
             modelValue: a.value,
             "onUpdate:modelValue": c[0] || (c[0] = (u) => a.value = u),
             autofocus: "",
-            disabled: !s.value,
+            disabled: !s.value || e.disabled,
             placeholder: e.placeholder,
             class: ee(r(U)(
               "file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
@@ -9118,6 +9128,7 @@ const br = (e) => {
               (m(!0), V(he, null, Ve(o.value, (u) => (m(), A(r(xl), {
                 key: String(u.value),
                 value: u.value,
+                disabled: e.disabled,
                 class: "focus:bg-accent focus:text-accent-foreground data-[highlighted]:bg-accent [&_svg:not([class*='text-'])]:text-muted-foreground relative flex w-full cursor-default items-center gap-2 rounded-sm py-1.5 pr-2 pl-2 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2"
               }, {
                 default: h(() => [
@@ -9134,13 +9145,13 @@ const br = (e) => {
                   })
                 ]),
                 _: 2
-              }, 1032, ["value"]))), 128))
+              }, 1032, ["value", "disabled"]))), 128))
             ]),
             _: 3
           })
         ]),
         _: 3
-      }, 8, ["modelValue", "multiple"]),
+      }, 8, ["modelValue", "multiple", "disabled"]),
       Z("div", Jp, [
         e.showAddItemButton ? (m(), V("div", Zp, [
           w(je, {
@@ -9148,6 +9159,7 @@ const br = (e) => {
             class: "sticky bottom-0",
             variant: "ghost",
             type: "button",
+            disabled: e.disabled,
             onClick: c[2] || (c[2] = (u) => i.$emit("onAddItem"))
           }, {
             default: h(() => [
@@ -9155,7 +9167,7 @@ const br = (e) => {
               pe(" " + te(e.addItemButtonLabel), 1)
             ]),
             _: 1
-          })
+          }, 8, ["disabled"])
         ])) : oe("", !0),
         s.value && e.multiple ? (m(), V("div", Qp, te(r(l)("common.elementCountSelected", { count: t.value.length })), 1)) : oe("", !0)
       ])

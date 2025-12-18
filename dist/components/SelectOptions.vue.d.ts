@@ -12,6 +12,7 @@ interface Props {
     customValueComponent?: Component;
     label?: string;
     customValueProps?: Record<string, any>;
+    disabled?: boolean;
 }
 type __VLS_Props = Props & {
     class?: HTMLAttributes['class'];

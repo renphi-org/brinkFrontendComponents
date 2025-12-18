@@ -30,6 +30,7 @@ const selectOptions: SelectOption[] = [
 ]
 const selectedOption = ref('option1')
 const selectedMultiple = ref(['option1', 'option2'])
+const disabledOption = ref('option2')
 
 // Search example
 const searchValue = ref('')
@@ -210,6 +211,12 @@ Advanced select with single and multiple selection support
 <SelectOptions v-model="selectedMultiple" :options="selectOptions" :multiple="true" placeholder="Choose options" />
 <div class="text-sm text-muted-foreground mt-2">Selected: {{ selectedMultiple.join(', ') }}</div>
 </div>
+
+<div class="not-prose">
+<div class="text-sm font-medium mb-2">Disabled State</div>
+<SelectOptions v-model="disabledOption" :options="selectOptions" placeholder="Cannot interact" :disabled="true" />
+<div class="text-sm text-muted-foreground mt-2">Selected: {{ disabledOption }}</div>
+</div>
 </div>
 
 ### Example Usage
@@ -228,16 +235,25 @@ const options = [
 </script>
 
 <template>
+  <!-- Single select -->
   <SelectOptions
     v-model="selected"
     :options="options"
     placeholder="Select an option"
   />
 
+  <!-- Multiple select -->
   <SelectOptions
     v-model="multiSelect"
     :options="options"
     :multiple="true"
+  />
+
+  <!-- Disabled state -->
+  <SelectOptions
+    v-model="selected"
+    :options="options"
+    :disabled="true"
   />
 </template>
 ```
@@ -258,18 +274,45 @@ Listbox with search/filter functionality
 <SelectListOptions :options="selectOptions" v-model="selectedMultiple" multiple  />
 </div>
 
+### Disabled State
+
+<div class="not-prose max-w-sm">
+<SelectListOptions :options="selectOptions" v-model="disabledOption" :disabled="true" />
+</div>
+
 ### Example Usage
 
 ```vue
 <script setup>
 import { SelectListOptions } from '@brink-components/component-library'
+import { ref } from 'vue'
+
+const selected = ref([])
+const options = [
+  { value: '1', label: 'Option 1' },
+  { value: '2', label: 'Option 2' }
+]
 </script>
 
 <template>
+  <!-- Single select with filter -->
+  <SelectListOptions
+    v-model="selected"
+    :options="options"
+  />
+
+  <!-- Multiple select -->
   <SelectListOptions
     v-model="selected"
     :options="options"
     :multiple="true"
+  />
+
+  <!-- Disabled state -->
+  <SelectListOptions
+    v-model="selected"
+    :options="options"
+    :disabled="true"
   />
 </template>
 ```

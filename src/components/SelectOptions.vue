@@ -23,6 +23,7 @@ interface Props {
   customValueComponent?: Component
   label?: string
   customValueProps?: Record<string, any>
+  disabled?: boolean
 }
 defineOptions({ inheritAttrs: false })
 
@@ -60,11 +61,11 @@ const hasChanges = computed(() => props.initialValues === undefined ? model.valu
 </script>
 
 <template>
-  <Select v-model="model" :multiple>
+  <Select v-model="model" :multiple :disabled="disabled">
     <SelectTrigger
       :class="cn(
         'w-full data-[placeholder]:text-muted-foreground ',
-        props.class)" v-bind="$attrs" as-child
+        props.class)" v-bind="$attrs" :disabled="disabled" as-child
     >
       <ButtonSelect variant="outline">
         <slot :selected-options>
@@ -83,12 +84,12 @@ const hasChanges = computed(() => props.initialValues === undefined ? model.valu
       <div v-if="label" class="text-xs font-semibold px-2 py-2">
         {{ label }}
       </div>
-      <SelectItem v-for="option in toValue(options)" :key="String(option.value)" :value="option.value">
+      <SelectItem v-for="option in toValue(options)" :key="String(option.value)" :value="option.value" :disabled="disabled">
         {{ option.label }}
       </SelectItem>
       <div v-if="showResetButton && hasChanges">
         <DropdownMenuSeparator />
-        <Button class="w-full" variant="ghost" size="sm" @click="reset()">
+        <Button class="w-full" variant="ghost" size="sm" :disabled="disabled" @click="reset()">
           <RotateCcw />
           {{ t('common.reset') }}
         </Button>
@@ -96,7 +97,7 @@ const hasChanges = computed(() => props.initialValues === undefined ? model.valu
     </SelectContent>
   </Select>
   <div v-if="showAddItemButton" class="-mt-2">
-    <Button size="sm" class="sticky bottom-0" variant="ghost" @click="$emit('onAddItem')">
+    <Button size="sm" class="sticky bottom-0" variant="ghost" :disabled="disabled" @click="$emit('onAddItem')">
       <Plus />
       {{ t('common.addItem') }}
     </Button>
