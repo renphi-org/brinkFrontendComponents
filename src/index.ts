@@ -75,4 +75,8 @@ export type {
 } from './components/types'
 
 export { Button } from './components/ui/button'
+// Composables
+export { escapeKey, useEscapeKey, useEscapeKeyWhile } from './composables/useEscapeKey'
+export type { EscapeKeyCallback, EscapeKeyObject } from './composables/useEscapeKey'
+
 export { Tag } from './Tag'

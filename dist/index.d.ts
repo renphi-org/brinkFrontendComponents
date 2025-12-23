@@ -27,4 +27,6 @@ export { default as SelectListOptions } from './components/SelectListOptions.vue
 export { default as SelectOptions } from './components/SelectOptions.vue';
 export type { SelectOption, ValueGraduated, ValueRange, } from './components/types';
 export { Button } from './components/ui/button';
+export { escapeKey, useEscapeKey, useEscapeKeyWhile } from './composables/useEscapeKey';
+export type { EscapeKeyCallback, EscapeKeyObject } from './composables/useEscapeKey';
 export { Tag } from './Tag';
