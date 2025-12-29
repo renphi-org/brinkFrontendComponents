@@ -3,6 +3,7 @@ import type { ComponentProps } from 'vue-component-type-helpers'
 import { useDynamicComponent } from '../DynamicComponent'
 import SelectListOptions from '../SelectListOptions.vue'
 import SelectOptions from '../SelectOptions.vue'
+import Input from '../ui/input/Input.vue'
 import DynamicAlertDialog from './DynamicAlertDialog.vue'
 import DynamicComponentDialog from './DynamicComponentDialog.vue'
 import DynamicConfirmComponentDialog from './DynamicConfirmComponentDialog.vue'
@@ -82,6 +83,28 @@ export function confirmSelectList<T = any>(dialogConfig: { description?: string,
     component: DynamicConfirmComponentDialog,
     componentProps: {
       componentConfig: { component: SelectListOptions, componentProps: { multiple: true, options, ...componentProps } },
+      initialValue,
+      dialogConfig: { ...(typeof dialogConfig === 'string' ? { title: dialogConfig } : dialogConfig), onOk },
+    },
+  })
+}
+
+export function confirmText(dialogConfig: { description?: string, title: string } | string, initialValue: string, onOk: OnOkFn<string>, componentProps?: Partial<ComponentProps<typeof Input>>) {
+  return dynamicComponent.open<typeof DynamicConfirmComponentDialog>({
+    component: DynamicConfirmComponentDialog,
+    componentProps: {
+      componentConfig: { component: Input, componentProps: { type: 'text', ...componentProps } },
+      initialValue,
+      dialogConfig: { ...(typeof dialogConfig === 'string' ? { title: dialogConfig } : dialogConfig), onOk },
+    },
+  })
+}
+
+export function confirmNumber(dialogConfig: { description?: string, title: string } | string, initialValue: number, onOk: OnOkFn<number>, componentProps?: Partial<ComponentProps<typeof Input>>) {
+  return dynamicComponent.open<typeof DynamicConfirmComponentDialog>({
+    component: DynamicConfirmComponentDialog,
+    componentProps: {
+      componentConfig: { component: Input, componentProps: { type: 'number', ...componentProps } },
       initialValue,
       dialogConfig: { ...(typeof dialogConfig === 'string' ? { title: dialogConfig } : dialogConfig), onOk },
     },

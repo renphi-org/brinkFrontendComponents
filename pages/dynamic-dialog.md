@@ -9,7 +9,7 @@ import { Button } from '../src/components/ui/button'
 import InputSearch from '../src/components/InputSearch.vue'
 import SelectListOptions from '../src/components/SelectListOptions.vue'
 import { type SelectOption } from '../src/components/SelectOptions.vue'
-import { confirmSelect, confirmSelectList, confirmGeneric, alert, openDynamicDialogComponent } from '../src/components/DynamicDialog'
+import { confirmSelect, confirmSelectList, confirmGeneric, confirmText, confirmNumber, alert, openDynamicDialogComponent } from '../src/components/DynamicDialog'
 import { z } from 'zod'
 
 // Dynamic Dialog examples
@@ -61,6 +61,32 @@ async function handleConfirmGeneric() {
   })
 }
 
+async function handleConfirmText() {
+  await confirmText(
+    { title: 'Enter Name', description: 'Please enter your name' },
+    'John Doe',
+    async (value) => {
+      dialogResult.value = value
+      console.log('Entered name:', value)
+      return true
+    },
+    { placeholder: 'Enter your name...' }
+  )
+}
+
+async function handleConfirmNumber() {
+  await confirmNumber(
+    { title: 'Enter Quantity', description: 'How many items do you want?' },
+    10,
+    async (value) => {
+      dialogResult.value = value
+      console.log('Entered quantity:', value)
+      return true
+    },
+    { placeholder: 'Enter quantity...' }
+  )
+}
+
 async function handleAlert() {
   await alert(
     async () => {
@@ -110,6 +136,8 @@ Dynamic dialog system for programmatic dialogs and confirmations
 <div class="flex flex-wrap gap-2">
 <Button @click="handleConfirmSelect" variant="default">Confirm Select</Button>
 <Button @click="handleConfirmSelectList" variant="default">Confirm Select List</Button>
+<Button @click="handleConfirmText" variant="default">Confirm Text</Button>
+<Button @click="handleConfirmNumber" variant="default">Confirm Number</Button>
 <Button @click="handleConfirmGeneric" variant="default">Confirm Generic</Button>
 <Button @click="handleAlert" variant="destructive">Show Alert</Button>
 </div>
@@ -141,7 +169,16 @@ Dynamic dialog system for programmatic dialogs and confirmations
 
 ```vue
 <script setup>
-import { alert, Button, confirmGeneric, confirmSelect, confirmSelectList, DynamicComponentProvider } from '@brink-components/component-library'
+import {
+  alert,
+  Button,
+  confirmGeneric,
+  confirmNumber,
+  confirmSelect,
+  confirmSelectList,
+  confirmText,
+  DynamicComponentProvider
+} from '@brink-components/component-library'
 import { ref } from 'vue'
 
 const options = [
@@ -149,6 +186,7 @@ const options = [
   { value: '2', label: 'Option 2' }
 ]
 
+// Confirm Select - Multi-select dropdown dialog
 async function showConfirmDialog() {
   await confirmSelect(
     { title: 'Select Items', description: 'Choose items' },
@@ -161,6 +199,7 @@ async function showConfirmDialog() {
   )
 }
 
+// Confirm Select List - Filterable list dialog
 async function showConfirmList() {
   await confirmSelectList(
     'Select from List',
@@ -173,6 +212,41 @@ async function showConfirmList() {
   )
 }
 
+// Confirm Text - Text input dialog
+async function showConfirmText() {
+  await confirmText(
+    { title: 'Enter Name', description: 'Please enter your name' },
+    'John Doe',
+    async (value) => {
+      if (!value || value.trim() === '') {
+        alert(() => true, 'Error', 'Name is required')
+        return false // Return false to keep dialog open
+      }
+      console.log('Name:', value)
+      return true
+    },
+    { placeholder: 'Enter your name...' }
+  )
+}
+
+// Confirm Number - Number input dialog
+async function showConfirmNumber() {
+  await confirmNumber(
+    { title: 'Enter Quantity', description: 'How many items?' },
+    1,
+    async (value) => {
+      if (value < 1 || value > 100) {
+        alert(() => true, 'Error', 'Quantity must be between 1 and 100')
+        return false // Return false to keep dialog open
+      }
+      console.log('Quantity:', value)
+      return true
+    },
+    { placeholder: 'Enter quantity...', min: 1, max: 100 }
+  )
+}
+
+// Generic Dialog - Use any component
 async function showGenericDialog() {
   await confirmGeneric({
     dialogConfig: { title: 'Enter Value' },
@@ -185,6 +259,7 @@ async function showGenericDialog() {
   })
 }
 
+// Alert - Simple confirmation
 async function showAlert() {
   await alert(
     async () => {
@@ -229,12 +304,65 @@ async function showDynamicDrawer() {
 
 <template>
   <div>
-    <Button @click="showConfirmDialog">
-      Confirm Select
-    </Button>
+    <Button @click="showConfirmDialog">Confirm Select</Button>
+    <Button @click="showConfirmList">Confirm List</Button>
+    <Button @click="showConfirmText">Confirm Text</Button>
+    <Button @click="showConfirmNumber">Confirm Number</Button>
+    <Button @click="showGenericDialog">Generic Dialog</Button>
+    <Button @click="showAlert">Show Alert</Button>
+
+    <!-- Required: Add this to your app root -->
     <DynamicComponentProvider />
   </div>
 </template>
+```
+
+## API Reference
+
+### confirmText
+
+Text input confirmation dialog.
+
+**Parameters:**
+- `dialogConfig`: `{ title: string, description?: string } | string` - Dialog configuration or title
+- `initialValue`: `string` - Initial text value
+- `onOk`: `(value: string) => Promise<boolean> | boolean` - Callback when OK is clicked. Return `true` to close, `false` to keep open
+- `componentProps?`: `Partial<ComponentProps<typeof Input>>` - Optional props for the Input component
+
+```ts
+await confirmText(
+  'Enter Email',
+  '',
+  async (email) => {
+    if (!email.includes('@')) return false
+    await saveEmail(email)
+    return true
+  },
+  { placeholder: 'email@example.com', type: 'email' }
+)
+```
+
+### confirmNumber
+
+Number input confirmation dialog.
+
+**Parameters:**
+- `dialogConfig`: `{ title: string, description?: string } | string` - Dialog configuration or title
+- `initialValue`: `number` - Initial number value
+- `onOk`: `(value: number) => Promise<boolean> | boolean` - Callback when OK is clicked
+- `componentProps?`: `Partial<ComponentProps<typeof Input>>` - Optional props for the Input component
+
+```ts
+await confirmNumber(
+  { title: 'Set Price', description: 'Enter the product price' },
+  0,
+  async (price) => {
+    if (price <= 0) return false
+    await updatePrice(price)
+    return true
+  },
+  { min: 0, max: 9999, step: 0.01 }
+)
 ```
 
 **Important:** You must include `<DynamicComponentProvider />` in your app root (e.g., App.vue) for dynamic dialogs to work.

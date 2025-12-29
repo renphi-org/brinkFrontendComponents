@@ -4,7 +4,6 @@ import type { ComponentProps } from 'vue-component-type-helpers'
 
 import type { DynamicComponenWithModelDialogProps } from '.'
 import { ref } from 'vue'
-import { useI18n } from 'vue-i18n'
 import Button from '../ui/button/Button.vue'
 import DynamicDialog from './DynamicDialog.vue'
 
@@ -12,8 +11,6 @@ const { dialogConfig, componentConfig, initialValue } = defineProps<DynamicCompo
 const open = defineModel<boolean>('open')
 
 const model = ref<any>(initialValue)
-
-const { t } = useI18n()
 
 const isPending = ref<boolean>(false)
 
@@ -32,7 +29,7 @@ async function onOk() {
     <component :is="componentConfig.component" v-bind="componentConfig.componentProps" v-model="model" />
     <div class="mt-1">
       <Button type="Submit" :disabled="isPending" size="sm" @click="onOk">
-        {{ dialogConfig.okButtonText || t('common.save') }}
+        {{ dialogConfig.okButtonText || 'Ok' }}
       </Button>
     </div>
   </DynamicDialog>

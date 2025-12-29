@@ -11,7 +11,7 @@ export { default as DisplayGraduated } from './components/DisplayGraduated.vue';
 export { dynamicComponent, useDynamicComponent, } from './components/DynamicComponent';
 export type { CloseDynamicComponentFn, DynamicComponentConfig, OpenDynamicComponentFn, } from './components/DynamicComponent';
 export { default as DynamicComponentProvider } from './components/DynamicComponent/DynamicComponentProvider.vue';
-export { alert, confirmGeneric, confirmSelect, confirmSelectList, openDynamicDialogComponent, } from './components/DynamicDialog';
+export { alert, confirmGeneric, confirmNumber, confirmSelect, confirmSelectList, confirmText, openDynamicDialogComponent, } from './components/DynamicDialog';
 export type { DynamicComponenWithModelConfig, DynamicComponenWithModelDialogProps, DynamicDialogProps, OnGenericSubmitFn, OnOkFn, } from './components/DynamicDialog';
 export { default as DynamicAlertDialog } from './components/DynamicDialog/DynamicAlertDialog.vue';
 export { default as DynamicComponentDialog } from './components/DynamicDialog/DynamicComponentDialog.vue';

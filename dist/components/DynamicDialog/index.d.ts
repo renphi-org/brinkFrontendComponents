@@ -2,6 +2,7 @@ import type { Component, MaybeRef } from 'vue';
 import type { ComponentProps } from 'vue-component-type-helpers';
 import SelectListOptions from '../SelectListOptions.vue';
 import SelectOptions from '../SelectOptions.vue';
+import Input from '../ui/input/Input.vue';
 type GenericObject = Record<string, any>;
 export type OnOkFn<T = any> = (value?: T) => Promise<boolean> | boolean;
 export type OnGenericSubmitFn = (obj: GenericObject) => Promise<boolean> | boolean;
@@ -46,4 +47,12 @@ export declare function confirmSelectList<T = any>(dialogConfig: {
     value: any;
     label: string;
 }[]>, initialValue: T, onOk: OnOkFn<T>, componentProps?: Partial<ComponentProps<typeof SelectListOptions>>): string;
+export declare function confirmText(dialogConfig: {
+    description?: string;
+    title: string;
+} | string, initialValue: string, onOk: OnOkFn<string>, componentProps?: Partial<ComponentProps<typeof Input>>): string;
+export declare function confirmNumber(dialogConfig: {
+    description?: string;
+    title: string;
+} | string, initialValue: number, onOk: OnOkFn<number>, componentProps?: Partial<ComponentProps<typeof Input>>): string;
 export {};

@@ -40,8 +40,10 @@ export { default as DynamicComponentProvider } from './components/DynamicCompone
 export {
   alert,
   confirmGeneric,
+  confirmNumber,
   confirmSelect,
   confirmSelectList,
+  confirmText,
   openDynamicDialogComponent,
 } from './components/DynamicDialog'
 export type {
