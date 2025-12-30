@@ -55,4 +55,11 @@ export declare function confirmNumber(dialogConfig: {
     description?: string;
     title: string;
 } | string, initialValue: number, onOk: OnOkFn<number>, componentProps?: Partial<ComponentProps<typeof Input>>): string;
+export declare function confirmBoolean(dialogConfig: {
+    description?: string;
+    title: string;
+} | string, initialValue: boolean, onOk: OnOkFn<boolean>, options?: {
+    trueLabel?: string;
+    falseLabel?: string;
+}, componentProps?: Partial<ComponentProps<typeof SelectOptions>>): string;
 export {};

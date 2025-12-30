@@ -9,7 +9,7 @@ import { Button } from '../src/components/ui/button'
 import InputSearch from '../src/components/InputSearch.vue'
 import SelectListOptions from '../src/components/SelectListOptions.vue'
 import { type SelectOption } from '../src/components/SelectOptions.vue'
-import { confirmSelect, confirmSelectList, confirmGeneric, confirmText, confirmNumber, alert, openDynamicDialogComponent } from '../src/components/DynamicDialog'
+import { confirmSelect, confirmSelectList, confirmGeneric, confirmText, confirmNumber, confirmBoolean, alert, openDynamicDialogComponent } from '../src/components/DynamicDialog'
 import { z } from 'zod'
 
 // Dynamic Dialog examples
@@ -87,6 +87,18 @@ async function handleConfirmNumber() {
   )
 }
 
+async function handleConfirmBoolean() {
+  await confirmBoolean(
+    { title: 'Enable Feature', description: 'Do you want to enable this feature?' },
+    false,
+    async (value) => {
+      dialogResult.value = value
+      console.log('User choice:', value)
+      return true
+    }
+  )
+}
+
 async function handleAlert() {
   await alert(
     async () => {
@@ -138,6 +150,7 @@ Dynamic dialog system for programmatic dialogs and confirmations
 <Button @click="handleConfirmSelectList" variant="default">Confirm Select List</Button>
 <Button @click="handleConfirmText" variant="default">Confirm Text</Button>
 <Button @click="handleConfirmNumber" variant="default">Confirm Number</Button>
+<Button @click="handleConfirmBoolean" variant="default">Confirm Boolean</Button>
 <Button @click="handleConfirmGeneric" variant="default">Confirm Generic</Button>
 <Button @click="handleAlert" variant="destructive">Show Alert</Button>
 </div>
@@ -172,6 +185,7 @@ Dynamic dialog system for programmatic dialogs and confirmations
 import {
   alert,
   Button,
+  confirmBoolean,
   confirmGeneric,
   confirmNumber,
   confirmSelect,
@@ -246,6 +260,31 @@ async function showConfirmNumber() {
   )
 }
 
+// Confirm Boolean - Yes/No choice dialog
+async function showConfirmBoolean() {
+  await confirmBoolean(
+    { title: 'Enable Feature', description: 'Do you want to enable this feature?' },
+    false,
+    async (value) => {
+      console.log('User selected:', value ? 'Yes' : 'No')
+      return true
+    }
+  )
+}
+
+// Confirm Boolean with custom labels
+async function showConfirmBooleanCustom() {
+  await confirmBoolean(
+    'Change Status',
+    true,
+    async (value) => {
+      console.log('Status:', value ? 'Active' : 'Inactive')
+      return true
+    },
+    { trueLabel: 'Active', falseLabel: 'Inactive' }
+  )
+}
+
 // Generic Dialog - Use any component
 async function showGenericDialog() {
   await confirmGeneric({
@@ -308,6 +347,7 @@ async function showDynamicDrawer() {
     <Button @click="showConfirmList">Confirm List</Button>
     <Button @click="showConfirmText">Confirm Text</Button>
     <Button @click="showConfirmNumber">Confirm Number</Button>
+    <Button @click="showConfirmBoolean">Confirm Boolean</Button>
     <Button @click="showGenericDialog">Generic Dialog</Button>
     <Button @click="showAlert">Show Alert</Button>
 
@@ -362,6 +402,51 @@ await confirmNumber(
     return true
   },
   { min: 0, max: 9999, step: 0.01 }
+)
+```
+
+### confirmBoolean
+
+Boolean choice confirmation dialog (Yes/No).
+
+**Parameters:**
+- `dialogConfig`: `{ title: string, description?: string } | string` - Dialog configuration or title
+- `initialValue`: `boolean` - Initial boolean value
+- `onOk`: `(value: boolean) => Promise<boolean> | boolean` - Callback when OK is clicked
+- `options?`: `{ trueLabel?: string, falseLabel?: string }` - Custom labels for true/false options (defaults to "Yes"/"No")
+- `componentProps?`: `Partial<ComponentProps<typeof SelectOptions>>` - Optional props for the SelectOptions component
+
+```ts
+// Simple Yes/No
+await confirmBoolean(
+  'Are you sure?',
+  false,
+  async (value) => {
+    console.log('User confirmed:', value)
+    return true
+  }
+)
+
+// Custom labels
+await confirmBoolean(
+  { title: 'Change Status', description: 'Update the item status' },
+  true,
+  async (value) => {
+    await updateStatus(value ? 'active' : 'inactive')
+    return true
+  },
+  { trueLabel: 'Active', falseLabel: 'Inactive' }
+)
+
+// Enable/Disable example
+await confirmBoolean(
+  'Feature Toggle',
+  false,
+  async (enabled) => {
+    await toggleFeature(enabled)
+    return true
+  },
+  { trueLabel: 'Enable', falseLabel: 'Disable' }
 )
 ```
 

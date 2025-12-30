@@ -110,3 +110,18 @@ export function confirmNumber(dialogConfig: { description?: string, title: strin
     },
   })
 }
+
+export function confirmBoolean(dialogConfig: { description?: string, title: string } | string, initialValue: boolean, onOk: OnOkFn<boolean>, options?: { trueLabel?: string, falseLabel?: string }, componentProps?: Partial<ComponentProps<typeof SelectOptions>>) {
+  const booleanOptions = [
+    { value: true, label: options?.trueLabel || 'Yes' },
+    { value: false, label: options?.falseLabel || 'No' },
+  ]
+
+  return confirmSelect(
+    dialogConfig,
+    booleanOptions,
+    initialValue,
+    onOk,
+    { ...componentProps, multiple: false },
+  )
+}

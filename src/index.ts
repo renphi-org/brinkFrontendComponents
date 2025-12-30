@@ -39,6 +39,7 @@ export { default as DynamicComponentProvider } from './components/DynamicCompone
 // Dynamic dialogs
 export {
   alert,
+  confirmBoolean,
   confirmGeneric,
   confirmNumber,
   confirmSelect,

@@ -4260,7 +4260,7 @@ const iu = /* @__PURE__ */ O({
 ), uu = {
   key: 0,
   class: "font-semibold text-sm mt-4 ml-2 truncate"
-}, du = { key: 1 }, lg = /* @__PURE__ */ O({
+}, du = { key: 1 }, ig = /* @__PURE__ */ O({
   __name: "AppSidebar",
   props: {
     config: {},
@@ -4481,7 +4481,7 @@ document.body.addEventListener("keydown", (e) => {
   e.key === "Escape" && $t.value.length > 0 && (e.stopPropagation(), !e.target || !["INPUT"].includes(e.target?.tagName) ? Nn() : e.target.blur());
 });
 const Os = { add: Sn, remove: On, invokeLatest: Nn };
-function ig(e) {
+function cg(e) {
   Kt(() => Sn(e)), gn(() => On(e));
 }
 function Ns(e, t) {
@@ -8547,7 +8547,7 @@ const Sf = /* @__PURE__ */ O({
       }, null, 8, ["columns", "visible-columns"])
     ]));
   }
-}), Tp = { class: "flex flex-col flex-1 min-w-0 min-h-0 relative" }, Ap = { class: "hover:!bg-transparent" }, Pp = ["colspan"], cg = /* @__PURE__ */ O({
+}), Tp = { class: "flex flex-col flex-1 min-w-0 min-h-0 relative" }, Ap = { class: "hover:!bg-transparent" }, Pp = ["colspan"], ug = /* @__PURE__ */ O({
   __name: "DataTable",
   props: /* @__PURE__ */ Oe({
     items: {},
@@ -8736,7 +8736,7 @@ const Sf = /* @__PURE__ */ O({
 }), Lp = { class: "flex flex-col flex-1 min-w-0 min-h-0 relative" }, $p = ["data-group-id"], Ip = { class: "!w-6 !pr-0" }, Mp = {
   key: 0,
   class: "!w-6"
-}, Rp = ["colspan"], Bp = { class: "flex items-center gap-2" }, Vp = { class: "text-sm" }, ug = /* @__PURE__ */ O({
+}, Rp = ["colspan"], Bp = { class: "flex items-center gap-2" }, Vp = { class: "text-sm" }, dg = /* @__PURE__ */ O({
   __name: "DataTableGrouped",
   props: /* @__PURE__ */ Oe({
     groups: {},
@@ -8987,7 +8987,7 @@ function mn(e, t, a, n) {
     clear: c
   };
 }
-const Fp = ["datetime", "title"], dg = /* @__PURE__ */ O({
+const Fp = ["datetime", "title"], fg = /* @__PURE__ */ O({
   __name: "DateFormat",
   props: {
     date: {},
@@ -9054,7 +9054,7 @@ function hr(e) {
 }
 const br = (e) => {
   Fn.value[e] = !1, Gp.value[e]?.onClose?.(), setTimeout(() => hr(e), 600);
-}, Hp = (e) => (e.key = e.key ?? `${Math.random()}`, Ht.value.push(e), ts(Ht), Fn.value[e.key] = !0, Os.add(() => (br(e.key), !0), e.key), e.key), Yp = { close: br, visible: Fn, open: Hp, instances: Ht, removeInstance: hr }, _r = () => Yp, fg = /* @__PURE__ */ O({
+}, Hp = (e) => (e.key = e.key ?? `${Math.random()}`, Ht.value.push(e), ts(Ht), Fn.value[e.key] = !0, Os.add(() => (br(e.key), !0), e.key), e.key), Yp = { close: br, visible: Fn, open: Hp, instances: Ht, removeInstance: hr }, _r = () => Yp, pg = /* @__PURE__ */ O({
   __name: "DynamicComponentProvider",
   setup(e) {
     const { close: t, visible: a, instances: n } = _r();
@@ -10641,7 +10641,7 @@ const Lm = /* @__PURE__ */ O({
     }, 16, ["open"]));
   }
 }), Ft = _r();
-function pg(e, t, a = "dialog") {
+function mg(e, t, a = "dialog") {
   return Ft.open({
     component: Wm,
     componentProps: {
@@ -10651,7 +10651,7 @@ function pg(e, t, a = "dialog") {
     }
   });
 }
-function mg(e, t = "Achtung", a = "Sind Sie sicher?") {
+function gg(e, t = "Achtung", a = "Sind Sie sicher?") {
   return Ft.open({
     component: cm,
     componentProps: {
@@ -10661,7 +10661,7 @@ function mg(e, t = "Achtung", a = "Sind Sie sicher?") {
     }
   });
 }
-function gg({ dialogConfig: e, initialValue: t, onOk: a, component: n, componentProps: o }) {
+function vg({ dialogConfig: e, initialValue: t, onOk: a, component: n, componentProps: o }) {
   return Ft.open({
     component: ha,
     componentProps: {
@@ -10671,7 +10671,7 @@ function gg({ dialogConfig: e, initialValue: t, onOk: a, component: n, component
     }
   });
 }
-function vg(e, t, a, n, o) {
+function Gm(e, t, a, n, o) {
   return Ft.open({
     component: ha,
     componentProps: {
@@ -10711,7 +10711,20 @@ function _g(e, t, a, n) {
     }
   });
 }
-const yg = /* @__PURE__ */ O({
+function yg(e, t, a, n, o) {
+  const s = [
+    { value: !0, label: n?.trueLabel || "Yes" },
+    { value: !1, label: n?.falseLabel || "No" }
+  ];
+  return Gm(
+    e,
+    s,
+    t,
+    a,
+    { ...o, multiple: !1 }
+  );
+}
+const wg = /* @__PURE__ */ O({
   inheritAttrs: !1,
   __name: "InputBoolean",
   props: /* @__PURE__ */ Oe({
@@ -10731,7 +10744,7 @@ const yg = /* @__PURE__ */ O({
       options: [{ value: !0, label: "True" }, { value: !1, label: "False" }]
     }, null, 8, ["modelValue", "class"]));
   }
-}), Gm = /* @__PURE__ */ O({
+}), Hm = /* @__PURE__ */ O({
   __name: "Popover",
   props: {
     defaultOpen: { type: Boolean },
@@ -10748,7 +10761,7 @@ const yg = /* @__PURE__ */ O({
       _: 3
     }, 16));
   }
-}), Hm = /* @__PURE__ */ O({
+}), Ym = /* @__PURE__ */ O({
   inheritAttrs: !1,
   __name: "PopoverContent",
   props: {
@@ -10795,7 +10808,7 @@ const yg = /* @__PURE__ */ O({
       _: 3
     }));
   }
-}), Ym = /* @__PURE__ */ O({
+}), Km = /* @__PURE__ */ O({
   __name: "PopoverTrigger",
   props: {
     asChild: { type: Boolean },
@@ -10810,7 +10823,7 @@ const yg = /* @__PURE__ */ O({
       _: 3
     }, 16));
   }
-}), Km = { key: 0 }, Xm = { class: "text-xs" }, qm = { class: "text-xs" }, Jm = { class: "flex gap-2" }, wg = /* @__PURE__ */ O({
+}), Xm = { key: 0 }, qm = { class: "text-xs" }, Jm = { class: "text-xs" }, Zm = { class: "flex gap-2" }, Eg = /* @__PURE__ */ O({
   __name: "InputGraduated",
   props: /* @__PURE__ */ Oe({
     class: {},
@@ -10831,9 +10844,9 @@ const yg = /* @__PURE__ */ O({
       }[c] || c;
     }
     const n = (c) => typeof c == "string", o = ve(e, "modelValue"), s = () => o.value?.push({ from: 0, value: 0 }), r = (c) => o.value.splice(c, 1), i = () => o.value = [];
-    return (c, u) => (m(), A(l(Gm), null, {
+    return (c, u) => (m(), A(l(Hm), null, {
       default: h(() => [
-        w(l(Ym), { "as-child": "" }, {
+        w(l(Km), { "as-child": "" }, {
           default: h(() => [
             w(Ss, {
               class: ee(t.class),
@@ -10844,7 +10857,7 @@ const yg = /* @__PURE__ */ O({
                   key: 0,
                   value: o.value
                 }, null, 8, ["value"])) : e.placeholder ? (m(), V(he, { key: 1 }, [
-                  n(e.placeholder) ? (m(), V("span", Km)) : (m(), A(Go, {
+                  n(e.placeholder) ? (m(), V("span", Xm)) : (m(), A(Go, {
                     key: 1,
                     value: e.placeholder,
                     class: "text-muted-foreground"
@@ -10856,7 +10869,7 @@ const yg = /* @__PURE__ */ O({
           ]),
           _: 1
         }),
-        w(l(Hm), {
+        w(l(Ym), {
           class: "w-80 flex flex-col gap-2 min-w-[var(--reka-popper-anchor-width)]",
           align: "end"
         }, {
@@ -10865,13 +10878,13 @@ const yg = /* @__PURE__ */ O({
               key: g,
               class: "flex gap-2 items-center"
             }, [
-              Z("label", Xm, te(a("common.from")) + ":", 1),
+              Z("label", qm, te(a("common.from")) + ":", 1),
               w(Mt, {
                 modelValue: o.value[g].from,
                 "onUpdate:modelValue": (p) => o.value[g].from = p,
                 type: "number"
               }, null, 8, ["modelValue", "onUpdate:modelValue"]),
-              Z("label", qm, te(a("common.value")) + ":", 1),
+              Z("label", Jm, te(a("common.value")) + ":", 1),
               w(Mt, {
                 modelValue: o.value[g].value,
                 "onUpdate:modelValue": (p) => o.value[g].value = p,
@@ -10889,7 +10902,7 @@ const yg = /* @__PURE__ */ O({
                 _: 1
               }, 8, ["onClick"])
             ]))), 128)),
-            Z("div", Jm, [
+            Z("div", Zm, [
               w(je, {
                 size: "sm",
                 variant: "ghost",
@@ -10923,7 +10936,7 @@ const yg = /* @__PURE__ */ O({
       _: 1
     }));
   }
-}), Eg = /* @__PURE__ */ O({
+}), xg = /* @__PURE__ */ O({
   __name: "InputRange",
   props: /* @__PURE__ */ Oe({
     modelValue: {},
@@ -10961,7 +10974,7 @@ const yg = /* @__PURE__ */ O({
       }, null, 8, ["model-value", "placeholder", "disabled"])
     ], 2));
   }
-}), Zm = /* @__PURE__ */ O({
+}), Qm = /* @__PURE__ */ O({
   __name: "InputGroup",
   props: {
     class: {}
@@ -10989,7 +11002,7 @@ const yg = /* @__PURE__ */ O({
       L(a.$slots, "default")
     ], 2));
   }
-}), Qm = ["data-align"], Xo = /* @__PURE__ */ O({
+}), eg = ["data-align"], Xo = /* @__PURE__ */ O({
   __name: "InputGroupAddon",
   props: {
     align: { default: "inline-start" },
@@ -11005,13 +11018,13 @@ const yg = /* @__PURE__ */ O({
       role: "group",
       "data-slot": "input-group-addon",
       "data-align": t.align,
-      class: ee(l(U)(l(ag)({ align: t.align }), t.class)),
+      class: ee(l(U)(l(ng)({ align: t.align }), t.class)),
       onClick: a
     }, [
       L(n.$slots, "default")
-    ], 10, Qm));
+    ], 10, eg));
   }
-}), eg = /* @__PURE__ */ O({
+}), tg = /* @__PURE__ */ O({
   __name: "InputGroupButton",
   props: {
     variant: { default: "ghost" },
@@ -11023,7 +11036,7 @@ const yg = /* @__PURE__ */ O({
     return (a, n) => (m(), A(l(je), {
       "data-size": t.size,
       variant: t.variant,
-      class: ee(l(U)(l(ng)({ size: t.size }), t.class))
+      class: ee(l(U)(l(og)({ size: t.size }), t.class))
     }, {
       default: h(() => [
         L(a.$slots, "default")
@@ -11031,7 +11044,7 @@ const yg = /* @__PURE__ */ O({
       _: 3
     }, 8, ["data-size", "variant", "class"]));
   }
-}), tg = /* @__PURE__ */ O({
+}), ag = /* @__PURE__ */ O({
   __name: "InputGroupInput",
   props: {
     class: {}
@@ -11046,7 +11059,7 @@ const yg = /* @__PURE__ */ O({
       ))
     }, null, 8, ["class"]));
   }
-}), ag = Vt(
+}), ng = Vt(
   "text-muted-foreground flex h-auto cursor-text items-center justify-center gap-2 py-1.5 text-sm font-medium select-none [&>svg:not([class*='size-'])]:size-4 [&>kbd]:rounded-[calc(var(--radius)-5px)] group-data-[disabled=true]/input-group:opacity-50",
   {
     variants: {
@@ -11061,7 +11074,7 @@ const yg = /* @__PURE__ */ O({
       align: "inline-start"
     }
   }
-), ng = Vt(
+), og = Vt(
   "text-sm shadow-none flex gap-2 items-center",
   {
     variants: {
@@ -11076,7 +11089,7 @@ const yg = /* @__PURE__ */ O({
       size: "xs"
     }
   }
-), xg = /* @__PURE__ */ O({
+), kg = /* @__PURE__ */ O({
   inheritAttrs: !1,
   __name: "InputSearch",
   props: /* @__PURE__ */ Oe({
@@ -11097,7 +11110,7 @@ const yg = /* @__PURE__ */ O({
     function i() {
       o.value = "", n.value = "", a("onClear", "");
     }
-    return (c, u) => (m(), A(l(Zm), null, {
+    return (c, u) => (m(), A(l(Qm), null, {
       default: h(() => [
         w(l(Xo), { align: "inline-start" }, {
           default: h(() => [
@@ -11105,7 +11118,7 @@ const yg = /* @__PURE__ */ O({
           ]),
           _: 1
         }),
-        w(l(tg), G({
+        w(l(ag), G({
           modelValue: n.value,
           "onUpdate:modelValue": u[0] || (u[0] = (v) => n.value = v),
           type: "text",
@@ -11118,7 +11131,7 @@ const yg = /* @__PURE__ */ O({
           align: "inline-end"
         }, {
           default: h(() => [
-            w(l(eg), {
+            w(l(tg), {
               variant: "ghost",
               size: "icon-xs",
               onClick: i
@@ -11135,7 +11148,7 @@ const yg = /* @__PURE__ */ O({
       _: 1
     }));
   }
-}), kg = /* @__PURE__ */ O({
+}), Cg = /* @__PURE__ */ O({
   __name: "Tag",
   props: {
     variant: {},
@@ -11146,12 +11159,12 @@ const yg = /* @__PURE__ */ O({
   setup(e) {
     const t = e;
     return (a, n) => (m(), V("span", {
-      class: ee(l(U)(l(og)({ variant: e.variant }), t.class))
+      class: ee(l(U)(l(sg)({ variant: e.variant }), t.class))
     }, [
       L(a.$slots, "default")
     ], 2));
   }
-}), og = Vt(
+}), sg = Vt(
   "!text-[10px] inline-flex empty:hidden min-w-6 content-center items-center justify-center gap-1 truncate rounded  px-[5px] py-[3px] text-center text-sm leading-snug font-semibold [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
@@ -11184,40 +11197,41 @@ const yg = /* @__PURE__ */ O({
   }
 );
 export {
-  lg as AppSidebar,
+  ig as AppSidebar,
   je as Button,
   Ss as ButtonSelect,
-  cg as DataTable,
+  ug as DataTable,
   fp as DataTableColumnHeader,
-  ug as DataTableGrouped,
+  dg as DataTableGrouped,
   Op as DataTableViewOptions,
-  dg as DateFormat,
+  fg as DateFormat,
   Go as DisplayGraduated,
   cm as DynamicAlertDialog,
   Wm as DynamicComponentDialog,
-  fg as DynamicComponentProvider,
+  pg as DynamicComponentProvider,
   ha as DynamicConfirmComponentDialog,
   yr as DynamicDialog,
   zm as DynamicDrawer,
   Xp as EmptyMini,
-  yg as InputBoolean,
-  wg as InputGraduated,
-  Eg as InputRange,
-  xg as InputSearch,
+  wg as InputBoolean,
+  Eg as InputGraduated,
+  xg as InputRange,
+  kg as InputSearch,
   em as SelectListOptions,
   Bn as SelectOptions,
-  kg as Tag,
-  mg as alert,
-  gg as confirmGeneric,
+  Cg as Tag,
+  gg as alert,
+  yg as confirmBoolean,
+  vg as confirmGeneric,
   _g as confirmNumber,
-  vg as confirmSelect,
+  Gm as confirmSelect,
   hg as confirmSelectList,
   bg as confirmText,
   Yp as dynamicComponent,
   Os as escapeKey,
-  pg as openDynamicDialogComponent,
+  mg as openDynamicDialogComponent,
   _r as useDynamicComponent,
-  ig as useEscapeKey,
+  cg as useEscapeKey,
   Ns as useEscapeKeyWhile,
   mn as useToggleState
 };
