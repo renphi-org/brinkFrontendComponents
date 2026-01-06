@@ -8,6 +8,7 @@ import { ref } from 'vue'
 import { Button } from '../src/components/ui/button'
 import InputSearch from '../src/components/InputSearch.vue'
 import SelectListOptions from '../src/components/SelectListOptions.vue'
+import TestInput from '../src/components/DynamicDialog/TestInput.vue'
 import { type SelectOption } from '../src/components/SelectOptions.vue'
 import { confirmSelect, confirmSelectList, confirmGeneric, confirmText, confirmNumber, confirmBoolean, alert, openDynamicDialogComponent } from '../src/components/DynamicDialog'
 import { z } from 'zod'
@@ -49,7 +50,7 @@ async function handleConfirmSelectList() {
 async function handleConfirmGeneric() {
   await confirmGeneric({
     dialogConfig: { title: 'Enter Value', description: 'Type something' },
-    component: InputSearch,
+    component: TestInput,
     initialValue: '',
     onOk: async (value) => {
       dialogResult.value = value

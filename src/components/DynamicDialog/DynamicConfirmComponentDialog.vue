@@ -23,7 +23,7 @@ const errors = ref<SubmitErrors | undefined>()
 
 async function onOk() {
   isPending.value = true
-  const result = dialogConfig.onOk ? await dialogConfig.onOk().catch((e: any) => e) : undefined
+  const result = dialogConfig.onOk ? await dialogConfig.onOk(model.value).catch((e: any) => e) : undefined
   if (result === true || result === undefined) {
     open.value = false
   }

@@ -10591,10 +10591,10 @@ const $m = /* @__PURE__ */ O({
   emits: ["update:open"],
   setup(e) {
     const t = ve(e, "open"), a = se(!1), n = se();
-    async function o() {
+    async function o(s) {
       a.value = !0;
-      const s = e.dialogConfig.onOk ? await e.dialogConfig.onOk().catch((r) => r) : void 0;
-      s === !0 || s === void 0 ? t.value = !1 : zn(s) && (n.value = s), a.value = !1;
+      const r = e.dialogConfig.onOk ? await e.dialogConfig.onOk(s).catch((c) => c) : void 0;
+      r === !0 || r === void 0 ? t.value = !1 : zn(r) && (n.value = r), a.value = !1;
     }
     return (s, r) => (m(), A(Xe(e.type === "drawer" ? Wm : Er), G(e.dialogConfig, {
       open: t.value,
@@ -10629,7 +10629,7 @@ const $m = /* @__PURE__ */ O({
     const s = se();
     async function r() {
       n.value = !0;
-      const c = e.dialogConfig.onOk ? await e.dialogConfig.onOk().catch((i) => i) : void 0;
+      const c = e.dialogConfig.onOk ? await e.dialogConfig.onOk(a.value).catch((i) => i) : void 0;
       c === !0 || c === void 0 ? t.value = !1 : zn(c) && (s.value = c), n.value = !1;
     }
     return (c, i) => (m(), A(Er, G(e.dialogConfig, {
