@@ -14,6 +14,10 @@ const model = ref<any>(initialValue)
 
 const isPending = ref<boolean>(false)
 
+function onCancel() {
+  open.value = false
+}
+
 async function onOk() {
   isPending.value = true
   const isOk = await dialogConfig.onOk?.(model.value) ?? true
@@ -26,11 +30,16 @@ async function onOk() {
 
 <template>
   <DynamicDialog v-bind="dialogConfig" v-model:open="open">
-    <component :is="componentConfig.component" v-bind="componentConfig.componentProps" v-model="model" />
-    <div class="mt-1">
-      <Button type="Submit" :disabled="isPending" size="sm" @click="onOk">
-        {{ dialogConfig.okButtonText || 'Ok' }}
-      </Button>
-    </div>
+    <form @submit="onOk()">
+      <component :is="componentConfig.component" v-bind="componentConfig.componentProps" v-model="model" />
+      <div class="pt-3 flex gap-2 justify-end">
+        <Button type="button" variant="secondary" size="sm" @click="onCancel()">
+          {{ dialogConfig.cancelButtonText || 'Cancel' }}
+        </Button>
+        <Button type="submit" :disabled="isPending" size="sm">
+          {{ dialogConfig.okButtonText || 'Ok' }}
+        </Button>
+      </div>
+    </form>
   </DynamicDialog>
 </template>

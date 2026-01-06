@@ -14,7 +14,7 @@ type GenericObject = Record<string, any>
 export type OnOkFn<T = any> = (value?: T) => Promise<boolean> | boolean
 export type OnGenericSubmitFn = (obj: GenericObject) => Promise<boolean> | boolean
 
-export interface DynamicDialogProps<T = any> { description?: string, title: string, okButtonText?: string, onOk?: OnOkFn<T> }
+export interface DynamicDialogProps<T = any> { description?: string, title: string, okButtonText?: string, cancelButtonText?: string, onOk?: OnOkFn<T> }
 
 export interface DynamicComponenWithModelConfig<C extends Component> {
   component: C
