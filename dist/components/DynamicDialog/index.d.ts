@@ -10,6 +10,7 @@ export interface DynamicDialogProps<T = any> {
     description?: string;
     title: string;
     okButtonText?: string;
+    cancelButtonText?: string;
     onOk?: OnOkFn<T>;
 }
 export interface DynamicComponenWithModelConfig<C extends Component> {

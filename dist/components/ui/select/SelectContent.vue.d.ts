@@ -3,9 +3,9 @@ import { type SelectContentProps } from 'reka-ui';
 type __VLS_Props = SelectContentProps & {
     class?: HTMLAttributes['class'];
 };
-declare var __VLS_26: {};
+declare var __VLS_25: {};
 type __VLS_Slots = {} & {
-    default?: (props: typeof __VLS_26) => any;
+    default?: (props: typeof __VLS_25) => any;
 };
 declare const __VLS_base: import("vue").DefineComponent<__VLS_Props, {}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
     escapeKeyDown: (event: KeyboardEvent) => any;

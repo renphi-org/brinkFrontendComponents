@@ -1,11 +1,11 @@
 import type { SidebarProps } from ".";
-declare var __VLS_1: {}, __VLS_33: {}, __VLS_35: {};
+declare var __VLS_1: {}, __VLS_36: {}, __VLS_38: {};
 type __VLS_Slots = {} & {
     default?: (props: typeof __VLS_1) => any;
 } & {
-    default?: (props: typeof __VLS_33) => any;
+    default?: (props: typeof __VLS_36) => any;
 } & {
-    default?: (props: typeof __VLS_35) => any;
+    default?: (props: typeof __VLS_38) => any;
 };
 declare const __VLS_base: import("vue").DefineComponent<SidebarProps, {}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").PublicProps, Readonly<SidebarProps> & Readonly<{}>, {
     collapsible: "offcanvas" | "icon" | "none";

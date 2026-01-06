@@ -21,11 +21,11 @@ type __VLS_ModelProps = {
     modelValue?: any;
 };
 type __VLS_PublicProps = __VLS_Props & __VLS_ModelProps;
-declare var __VLS_18: {
+declare var __VLS_19: {
     selectedOptions: any[];
 };
 type __VLS_Slots = {} & {
-    default?: (props: typeof __VLS_18) => any;
+    default?: (props: typeof __VLS_19) => any;
 };
 declare const __VLS_base: import("vue").DefineComponent<__VLS_PublicProps, {}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
     "update:modelValue": (value: any) => any;

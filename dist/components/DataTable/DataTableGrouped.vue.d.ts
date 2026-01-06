@@ -2,8 +2,8 @@ import type { DataTableProps, SortBy } from '.';
 export interface DataTableGroupedProps<T> extends Omit<DataTableProps<T>, 'isGrouped' | 'items' | 'groups' | 'expandable' | 'isRowExpandable'> {
     groups: Record<string, T[]>;
 }
-declare const __VLS_export: <T extends Record<string, any>>(__VLS_props: NonNullable<Awaited<typeof __VLS_setup>>["props"], __VLS_ctx?: __VLS_PrettifyLocal<Pick<NonNullable<Awaited<typeof __VLS_setup>>, "attrs" | "emit" | "slots">>, __VLS_expose?: NonNullable<Awaited<typeof __VLS_setup>>["expose"], __VLS_setup?: Promise<{
-    props: __VLS_PrettifyLocal<(DataTableGroupedProps<T> & {
+declare const __VLS_export: <T extends Record<string, any>>(__VLS_props: NonNullable<Awaited<typeof __VLS_setup>>["props"], __VLS_ctx?: __VLS_PrettifyLocal<Pick<NonNullable<Awaited<typeof __VLS_setup>>, "attrs" | "emit" | "slots">>, __VLS_exposed?: NonNullable<Awaited<typeof __VLS_setup>>["expose"], __VLS_setup?: Promise<{
+    props: import("vue").PublicProps & __VLS_PrettifyLocal<(DataTableGroupedProps<T> & {
         visibleColumns?: string[];
         itemsPerPage?: number;
         page?: number;
@@ -16,7 +16,7 @@ declare const __VLS_export: <T extends Record<string, any>>(__VLS_props: NonNull
         onClickRow?: ((id: string) => any) | undefined;
         "onUpdate:sortBy"?: ((value: SortBy | undefined) => any) | undefined;
         "onUpdate:selected"?: ((value: any[]) => any) | undefined;
-    }> & import("vue").PublicProps & (typeof globalThis extends {
+    }> & (typeof globalThis extends {
         __VLS_PROPS_FALLBACK: infer P;
     } ? P : {});
     expose: (exposed: import("vue").ShallowUnwrapRef<{
@@ -47,6 +47,8 @@ declare const __VLS_export: <T extends Record<string, any>>(__VLS_props: NonNull
 };
 declare const _default: typeof __VLS_export;
 export default _default;
-type __VLS_PrettifyLocal<T> = {
+type __VLS_PrettifyLocal<T> = (T extends any ? {
+    [K in keyof T]: T[K];
+} : {
     [K in keyof T as K]: T[K];
-} & {};
+}) & {};
