@@ -30,7 +30,6 @@ async function handleConfirmSelect() {
     async (value) => {
       dialogResult.value = value
       console.log('Selected:', value)
-      return true
     }
   )
 }
@@ -43,7 +42,6 @@ async function handleConfirmSelectList() {
     async (value) => {
       dialogResult.value = value
       console.log('Selected:', value)
-      return true
     }
   )
 }
@@ -56,7 +54,7 @@ async function handleConfirmGeneric() {
     onOk: async (value) => {
       dialogResult.value = value
       console.log('Entered:', value)
-      return true
+      throw {field1: ['error1', 'error2']}
     }
   })
 }
@@ -267,7 +265,6 @@ async function showConfirmBoolean() {
     false,
     async (value) => {
       console.log('User selected:', value ? 'Yes' : 'No')
-      return true
     }
   )
 }
@@ -279,7 +276,6 @@ async function showConfirmBooleanCustom() {
     true,
     async (value) => {
       console.log('Status:', value ? 'Active' : 'Inactive')
-      return true
     },
     { trueLabel: 'Active', falseLabel: 'Inactive' }
   )
@@ -293,7 +289,7 @@ async function showGenericDialog() {
     initialValue: '',
     onOk: async (value) => {
       console.log('Value:', value)
-      return true
+
     }
   })
 }
@@ -303,7 +299,7 @@ async function showAlert() {
   await alert(
     async () => {
       console.log('Alert confirmed')
-      return true
+      
     },
     'Alert Title',
     'Alert description'

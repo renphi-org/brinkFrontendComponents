@@ -10,7 +10,7 @@ import {
 
 withDefaults(defineProps<DynamicDialogProps>(), {
   title: 'Are you absolutely sure?',
-  onOk: () => true,
+  onOk: async () => true,
 })
 
 const open = defineModel<boolean>('open')

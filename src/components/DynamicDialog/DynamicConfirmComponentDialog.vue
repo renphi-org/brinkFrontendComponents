@@ -2,8 +2,9 @@
 import type { Component } from 'vue'
 import type { ComponentProps } from 'vue-component-type-helpers'
 
-import type { DynamicComponenWithModelDialogProps } from '.'
+import type { DynamicComponenWithModelDialogProps, SubmitErrors } from '.'
 import { ref } from 'vue'
+import { isSubmitErrors } from '.'
 import Button from '../ui/button/Button.vue'
 import DynamicDialog from './DynamicDialog.vue'
 
@@ -18,20 +19,25 @@ function onCancel() {
   open.value = false
 }
 
+const errors = ref<SubmitErrors | undefined>()
+
 async function onOk() {
   isPending.value = true
-  const isOk = await dialogConfig.onOk?.(model.value) ?? true
-  if (isOk)
+  const result = dialogConfig.onOk ? await dialogConfig.onOk().catch((e: any) => e) : undefined
+  if (result === true || result === undefined) {
     open.value = false
-
+  }
+  else if (isSubmitErrors(result)) {
+    errors.value = result
+  }
   isPending.value = false
 }
 </script>
 
 <template>
   <DynamicDialog v-bind="dialogConfig" v-model:open="open">
-    <form @submit="onOk()">
-      <component :is="componentConfig.component" v-bind="componentConfig.componentProps" v-model="model" />
+    <form @submit.prevent="onOk()">
+      <component :is="componentConfig.component" v-bind="componentConfig.componentProps" v-model="model" :errors />
       <div class="pt-3 flex gap-2 justify-end">
         <Button type="button" variant="secondary" size="sm" @click="onCancel()">
           {{ dialogConfig.cancelButtonText || 'Cancel' }}

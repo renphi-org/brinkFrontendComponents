@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { DynamicDialogProps } from '.'
+import type { DynamicDialogProps, SubmitErrors } from '.'
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import {
@@ -12,16 +12,22 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
+import { isSubmitErrors } from '.'
 
 const props = defineProps<DynamicDialogProps>()
 const open = defineModel<boolean>('open')
 
 const isPending = ref<boolean>(false)
+const errors = ref<SubmitErrors | undefined>()
 async function onOk() {
   isPending.value = true
-  const isOk: boolean = props.onOk ? await props.onOk() : true
-  if (isOk)
+  const result = props.onOk ? await props.onOk().catch((e: any) => e) : undefined
+  if (result === true || result === undefined) {
     close()
+  }
+  else if (isSubmitErrors(result)) {
+    errors.value = result
+  }
   isPending.value = false
 }
 const { t } = useI18n()

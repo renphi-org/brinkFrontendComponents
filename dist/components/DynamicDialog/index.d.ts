@@ -4,7 +4,9 @@ import SelectListOptions from '../SelectListOptions.vue';
 import SelectOptions from '../SelectOptions.vue';
 import Input from '../ui/input/Input.vue';
 type GenericObject = Record<string, any>;
-export type OnOkFn<T = any> = (value?: T) => Promise<boolean> | boolean;
+export type SubmitErrors = Record<string, string[]>;
+export declare function isSubmitErrors(value: unknown): value is SubmitErrors;
+export type OnOkFn<T = any> = (value?: T) => Promise<boolean | SubmitErrors | void>;
 export type OnGenericSubmitFn = (obj: GenericObject) => Promise<boolean> | boolean;
 export interface DynamicDialogProps<T = any> {
     description?: string;

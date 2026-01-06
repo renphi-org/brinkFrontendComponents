@@ -11,7 +11,20 @@ import DynamicConfirmComponentDialog from './DynamicConfirmComponentDialog.vue'
 // GenericObject type from vee-validate
 type GenericObject = Record<string, any>
 
-export type OnOkFn<T = any> = (value?: T) => Promise<boolean> | boolean
+export type SubmitErrors = Record<string, string[]>
+export function isSubmitErrors(value: unknown): value is SubmitErrors {
+  if (typeof value !== 'object' || value === null || Array.isArray(value)) {
+    return false
+  }
+
+  return Object.values(value).every(
+    v =>
+      Array.isArray(v)
+      && v.every(item => typeof item === 'string'),
+  )
+}
+
+export type OnOkFn<T = any> = (value?: T) => Promise<boolean | SubmitErrors | void>
 export type OnGenericSubmitFn = (obj: GenericObject) => Promise<boolean> | boolean
 
 export interface DynamicDialogProps<T = any> { description?: string, title: string, okButtonText?: string, cancelButtonText?: string, onOk?: OnOkFn<T> }
