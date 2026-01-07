@@ -67,6 +67,7 @@ export { default as InputBoolean } from './components/InputBoolean.vue'
 export { default as InputGraduated } from './components/InputGraduated.vue'
 // Input components
 export { default as InputRange } from './components/InputRange.vue'
+
 export { default as InputSearch } from './components/InputSearch.vue'
 export { default as SelectListOptions } from './components/SelectListOptions.vue'
 export { default as SelectOptions } from './components/SelectOptions.vue'
@@ -76,8 +77,9 @@ export type {
   ValueGraduated,
   ValueRange,
 } from './components/types'
-
 export { Button } from './components/ui/button'
+
+export { default as Checkbox } from './components/ui/checkbox/Checkbox.vue'
 // Composables
 export { escapeKey, useEscapeKey, useEscapeKeyWhile } from './composables/useEscapeKey'
 export type { EscapeKeyCallback, EscapeKeyObject } from './composables/useEscapeKey'
