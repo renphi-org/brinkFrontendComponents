@@ -9,6 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { useComponentTranslation } from '@/composables/useComponentTranslation'
 import { cn } from '@/lib/utils'
 
 interface Props {
@@ -27,6 +28,8 @@ const emit = defineEmits<{
   sort: [order: 'asc' | 'desc' | undefined]
   hide: []
 }>()
+
+const t = useComponentTranslation()
 
 const sortIcon = computed(() => {
   if (!props.sortOrder)
@@ -63,21 +66,21 @@ function handleHide() {
         <template v-if="sortable">
           <DropdownMenuItem @click="handleSort('asc')">
             <ArrowUp class="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-            Asc
+            {{ t('datatable.sort.asc', 'Asc') }}
           </DropdownMenuItem>
           <DropdownMenuItem @click="handleSort('desc')">
             <ArrowDown class="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-            Desc
+            {{ t('datatable.sort.desc', 'Desc') }}
           </DropdownMenuItem>
           <DropdownMenuItem v-if="sortOrder" @click="handleSort(undefined)">
             <ArrowUpDown class="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-            Clear sort
+            {{ t('datatable.sort.clear', 'Clear sort') }}
           </DropdownMenuItem>
         </template>
         <DropdownMenuSeparator v-if="sortable && hideable" />
         <DropdownMenuItem v-if="hideable" @click="handleHide">
           <EyeOff class="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-          Hide
+          {{ t('datatable.hide', 'Hide') }}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

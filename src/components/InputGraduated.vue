@@ -7,6 +7,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
+import { useComponentTranslation } from '@/composables/useComponentTranslation'
 import ButtonSelect from './ButtonSelect.vue'
 import DisplayGraduated from './DisplayGraduated.vue'
 import Button from './ui/button/Button.vue'
@@ -18,16 +19,7 @@ const props = defineProps<{
   placeholder?: string | ValueGraduated[]
 }>()
 
-// Simple translations
-function t(key: string) {
-  const translations: Record<string, string> = {
-    'common.from': 'From',
-    'common.value': 'Value',
-    'common.add': 'Add',
-    'common.clear': 'Clear All',
-  }
-  return translations[key] || key
-}
+const t = useComponentTranslation()
 
 const isString = (val: any): val is string => typeof val === 'string'
 const model = defineModel<ValueGraduated[]>({ default: () => [] })
@@ -49,9 +41,9 @@ const clear = () => model.value = []
     </PopoverTrigger>
     <PopoverContent class="w-80 flex flex-col gap-2 min-w-[var(--reka-popper-anchor-width)]" align="end">
       <div v-for="(_, index) in model" :key="index" class="flex gap-2 items-center">
-        <label class="text-xs">{{ t("common.from") }}:</label>
+        <label class="text-xs">{{ t("common.from", "From") }}:</label>
         <Input v-model="model[index].from" type="number" />
-        <label class="text-xs">{{ t("common.value") }}:</label>
+        <label class="text-xs">{{ t("common.value", "Value") }}:</label>
         <Input v-model="model[index].value" type="number" />
         <Button variant="ghost" size="sm" class="px-1" @click="remove(index)">
           <X />
@@ -60,11 +52,11 @@ const clear = () => model.value = []
       <div class="flex gap-2">
         <Button size="sm" variant="ghost" class="!justify-start -mx-2 flex-1" @click="add()">
           <Plus />
-          {{ t("common.add") }}
+          {{ t("common.add", "Add") }}
         </Button>
         <Button v-if="model.length > 0" size="sm" variant="ghost" class="!justify-start -mx-2" @click="clear()">
           <Trash2 />
-          {{ t("common.clear") }}
+          {{ t("common.clear", "Clear All") }}
         </Button>
       </div>
     </PopoverContent>

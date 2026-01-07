@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useComponentTranslation } from '@/composables/useComponentTranslation'
+
 export interface ValueGraduated {
   from: number
   value: number
@@ -10,13 +12,7 @@ interface Props {
 
 defineProps<Props>()
 
-// Simple translation
-function t(key: string) {
-  const translations: Record<string, string> = {
-    'common.novalue': 'No value',
-  }
-  return translations[key] || key
-}
+const t = useComponentTranslation()
 </script>
 
 <template>
@@ -27,7 +23,7 @@ function t(key: string) {
       </span>
     </template>
     <span v-else class="text-muted-foreground">
-      {{ t('common.novalue') }}
+      {{ t('common.novalue', 'No value') }}
     </span>
   </div>
 </template>

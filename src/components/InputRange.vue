@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { ValueRange } from './types'
-import { triggerRef } from 'vue'
+import { computed, triggerRef } from 'vue'
+import { useComponentTranslation } from '@/composables/useComponentTranslation'
 import { cn } from '@/lib/utils'
 import { Input } from './ui/input'
 
@@ -14,6 +15,10 @@ interface Props {
 
 const props = defineProps<Props>()
 const modelValue = defineModel<ValueRange>()
+const t = useComponentTranslation()
+
+const minPlaceholder = computed(() => props.placeholder?.[0] ?? t('input.range.min', 'Min'))
+const maxPlaceholder = computed(() => props.placeholder?.[1] ?? t('input.range.max', 'Max'))
 
 function update(index: 0 | 1, value: number | string) {
   if (!modelValue.value) {
@@ -28,7 +33,7 @@ function update(index: 0 | 1, value: number | string) {
   <div :class="cn('flex items-center gap-0', props.class)">
     <Input
       :model-value="modelValue?.[0]"
-      :placeholder="placeholder?.[0] || 'Min'"
+      :placeholder="minPlaceholder"
       :disabled="disabled"
       type="number"
       class="flex-1 rounded-r-none pr-1"
@@ -36,7 +41,7 @@ function update(index: 0 | 1, value: number | string) {
     />
     <Input
       :model-value="modelValue?.[1]"
-      :placeholder="placeholder?.[1] || 'Max'"
+      :placeholder="maxPlaceholder"
       :disabled="disabled"
       type="number"
       class="flex-1  rounded-l-none pr-1"

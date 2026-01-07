@@ -11,6 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { useComponentTranslation } from '@/composables/useComponentTranslation'
 
 interface Props {
   columns: TableColumn<any>[]
@@ -18,10 +19,11 @@ interface Props {
 }
 
 const props = defineProps<Props>()
-
 const emit = defineEmits<{
   'update:visibleColumns': [columns: string[]]
 }>()
+
+const t = useComponentTranslation()
 
 const hideableColumns = computed(() =>
   props.columns.filter(col => col.title && col.hideable !== false),
@@ -61,11 +63,11 @@ function toggleColumn(columnId: string, visible: boolean | 'indeterminate') {
     <DropdownMenuTrigger as-child>
       <Button variant="outline" size="sm" class="ml-auto h-8">
         <Settings2 class="mr-2 h-4 w-4" />
-        View
+        {{ t('datatable.view', 'View') }}
       </Button>
     </DropdownMenuTrigger>
     <DropdownMenuContent align="end" class="w-[150px]">
-      <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
+      <DropdownMenuLabel>{{ t('datatable.toggleColumns', 'Toggle columns') }}</DropdownMenuLabel>
       <DropdownMenuSeparator />
       <DropdownMenuCheckboxItem
         v-for="column in hideableColumns" :key="column.id as string"

@@ -5,6 +5,7 @@ import { Plus, RotateCcw } from 'lucide-vue-next'
 import { SelectTrigger } from 'reka-ui'
 import { computed, toValue } from 'vue'
 import { Select, SelectContent, SelectItem, SelectValue } from '@/components/ui/select'
+import { useComponentTranslation } from '@/composables/useComponentTranslation'
 import { cn } from '@/lib/utils'
 import ButtonSelect from './ButtonSelect.vue'
 import Button from './ui/button/Button.vue'
@@ -31,16 +32,7 @@ const props = defineProps<Props & { class?: HTMLAttributes['class'] }>()
 
 defineEmits<{ onAddItem: [] }>()
 
-// Simple translations
-function t(key: string) {
-  const translations: Record<string, string> = {
-    'common.select': 'Select',
-    'common.reset': 'Reset',
-    'common.addItem': 'Add Item',
-  }
-  return translations[key] || key
-}
-
+const t = useComponentTranslation()
 const model = defineModel<any>()
 
 const optionsAsMap = computed(() => Object.fromEntries(toValue(props.options).map(o => [o.value, o])))
@@ -69,7 +61,7 @@ const hasChanges = computed(() => props.initialValues === undefined ? model.valu
     >
       <ButtonSelect variant="outline">
         <slot :selected-options>
-          <SelectValue :placeholder="placeholder || t('common.select')" class="flex-wrap ">
+          <SelectValue :placeholder="placeholder || t('common.select', 'Select')" class="flex-wrap ">
             <template v-if="customValueComponent && selectedOptions.length > 0">
               <component
                 :is="customValueComponent" v-for="option in selectedOptions" :key="option.value"
@@ -91,7 +83,7 @@ const hasChanges = computed(() => props.initialValues === undefined ? model.valu
         <DropdownMenuSeparator />
         <Button class="w-full" variant="ghost" size="sm" :disabled="disabled" @click="reset()">
           <RotateCcw />
-          {{ t('common.reset') }}
+          {{ t('common.reset', 'Reset') }}
         </Button>
       </div>
     </SelectContent>
@@ -99,7 +91,7 @@ const hasChanges = computed(() => props.initialValues === undefined ? model.valu
   <div v-if="showAddItemButton" class="-mt-2">
     <Button size="sm" class="sticky bottom-0" variant="ghost" :disabled="disabled" @click="$emit('onAddItem')">
       <Plus />
-      {{ t('common.addItem') }}
+      {{ t('common.addItem', 'Add Item') }}
     </Button>
   </div>
 </template>

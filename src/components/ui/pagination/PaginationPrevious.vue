@@ -4,6 +4,7 @@ import type { HTMLAttributes } from 'vue'
 import { reactiveOmit } from '@vueuse/core'
 import { ChevronLeftIcon } from 'lucide-vue-next'
 import { PaginationPrev, useForwardProps } from 'reka-ui'
+import { useComponentTranslation } from '@/composables/useComponentTranslation'
 import { cn } from '@/lib/utils'
 import { buttonVariants, type ButtonVariants } from '@/components/ui/button'
 
@@ -16,6 +17,7 @@ const props = withDefaults(defineProps<PaginationPrevProps & {
 
 const delegatedProps = reactiveOmit(props, 'class', 'size')
 const forwarded = useForwardProps(delegatedProps)
+const t = useComponentTranslation()
 </script>
 
 <template>
@@ -26,7 +28,7 @@ const forwarded = useForwardProps(delegatedProps)
   >
     <slot>
       <ChevronLeftIcon />
-      <span class="hidden sm:block">Previous</span>
+      <span class="hidden sm:block">{{ t('pagination.previous', 'Previous') }}</span>
     </slot>
   </PaginationPrev>
 </template>

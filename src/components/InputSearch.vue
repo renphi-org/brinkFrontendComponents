@@ -1,18 +1,20 @@
 <script setup lang="ts">
 import { Search, X } from 'lucide-vue-next'
 import { computed } from 'vue'
+import { useComponentTranslation } from '@/composables/useComponentTranslation'
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from './ui/input-group'
 
 defineOptions({
   inheritAttrs: false,
 })
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   showClearButton: true,
-  placeholder: 'Search...',
 })
 
 const emit = defineEmits<{ onSubmit: [value: string], onClear: [value: string] }>()
+const t = useComponentTranslation()
+const defaultPlaceholder = computed(() => props.placeholder ?? t('input.search.placeholder', 'Search...'))
 
 interface Props {
   showClearButton?: boolean
@@ -44,7 +46,7 @@ function clear() {
     <InputGroupInput
       v-model="model"
       type="text"
-      :placeholder="placeholder"
+      :placeholder="defaultPlaceholder"
       v-bind="$attrs"
       @keydown.enter="submit"
     />

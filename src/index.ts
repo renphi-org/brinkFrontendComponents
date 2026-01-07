@@ -19,8 +19,8 @@ export type {
   TranslatableConfig,
 } from './components/DataTable'
 export { default as DataTableColumnHeader } from './components/DataTable/DataTableColumnHeader.vue'
-
 export { default as DataTableViewOptions } from './components/DataTable/DataTableViewOptions.vue'
+
 // Additional components
 export { default as DateFormat } from './components/DateFormat.vue'
 export { default as DisplayGraduated } from './components/DisplayGraduated.vue'
@@ -35,7 +35,6 @@ export type {
   OpenDynamicComponentFn,
 } from './components/DynamicComponent'
 export { default as DynamicComponentProvider } from './components/DynamicComponent/DynamicComponentProvider.vue'
-
 // Dynamic dialogs
 export {
   alert,
@@ -47,6 +46,7 @@ export {
   confirmText,
   openDynamicDialogComponent,
 } from './components/DynamicDialog'
+
 export type {
   DynamicComponenWithModelConfig,
   DynamicComponenWithModelDialogProps,
@@ -55,20 +55,21 @@ export type {
   OnOkFn,
 } from './components/DynamicDialog'
 export { default as DynamicAlertDialog } from './components/DynamicDialog/DynamicAlertDialog.vue'
-
 export { default as DynamicComponentDialog } from './components/DynamicDialog/DynamicComponentDialog.vue'
 
 export { default as DynamicConfirmComponentDialog } from './components/DynamicDialog/DynamicConfirmComponentDialog.vue'
+
 export { default as DynamicDialog } from './components/DynamicDialog/DynamicDialog.vue'
 export { default as DynamicDrawer } from './components/DynamicDialog/DynamicDrawer.vue'
-
 export { default as EmptyMini } from './components/EmptyMini.vue'
+
 export { default as InputBoolean } from './components/InputBoolean.vue'
 export { default as InputGraduated } from './components/InputGraduated.vue'
 // Input components
 export { default as InputRange } from './components/InputRange.vue'
-
 export { default as InputSearch } from './components/InputSearch.vue'
+
+export { default as PaginationCustom } from './components/PaginationCustom.vue'
 export { default as SelectListOptions } from './components/SelectListOptions.vue'
 export { default as SelectOptions } from './components/SelectOptions.vue'
 // Component types
@@ -80,6 +81,8 @@ export type {
 export { Button } from './components/ui/button'
 
 export { default as Checkbox } from './components/ui/checkbox/Checkbox.vue'
+export { TranslationKey, useComponentTranslation } from './composables/useComponentTranslation'
+export type { TranslationFunction } from './composables/useComponentTranslation'
 // Composables
 export { escapeKey, useEscapeKey, useEscapeKeyWhile } from './composables/useEscapeKey'
 export type { EscapeKeyCallback, EscapeKeyObject } from './composables/useEscapeKey'

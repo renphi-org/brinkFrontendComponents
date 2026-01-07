@@ -19,7 +19,6 @@ declare const __VLS_export: import("vue").DefineComponent<__VLS_PublicProps, {},
     onOnClear?: ((value: string) => any) | undefined;
     "onUpdate:modelSubmit"?: ((value: string) => any) | undefined;
 }>, {
-    placeholder: string;
     showClearButton: boolean;
 }, {}, {}, {}, string, import("vue").ComponentProvideOptions, false, {}, any>;
 declare const _default: typeof __VLS_export;
