@@ -1,4 +1,4 @@
-import { type InjectionKey } from 'vue';
+import type { InjectionKey } from 'vue';
 /**
  * Function type for translating component text
  * @param key - The translation key (e.g., 'input.range.min')

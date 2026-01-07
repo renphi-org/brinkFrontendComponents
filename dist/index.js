@@ -8048,7 +8048,7 @@ const Uf = { class: "hidden sm:block" }, zf = /* @__PURE__ */ O({
     const a = e, n = t, o = ue(a, "class"), s = Te(o, n);
     return (r, i) => (g(), A(l(dl), G(l(s), {
       class: l(z)(
-        "grid place-content-center peer h-4.5 w-4.5 shrink-0 rounded-sm  border-border border  focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground",
+        "grid place-content-center peer h-4.5 w-4.5 shrink-0 rounded-sm border-input border  focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground",
         a.class
       )
     }), {
@@ -8471,7 +8471,7 @@ const Uf = { class: "hidden sm:block" }, zf = /* @__PURE__ */ O({
   },
   emits: ["update:visibleColumns"],
   setup(e, { emit: t }) {
-    const a = e, n = je(), o = t, s = U(
+    const a = e, n = t, o = je(), s = U(
       () => a.columns.filter((u) => u.title && u.hideable !== !1)
     ), r = U(() => !a.visibleColumns || a.visibleColumns.length === 0 ? a.columns.map((u) => u.id) : a.visibleColumns);
     function i(u) {
@@ -8479,7 +8479,7 @@ const Uf = { class: "hidden sm:block" }, zf = /* @__PURE__ */ O({
     }
     function c(u, v) {
       const p = r.value;
-      (typeof v == "boolean" ? v : !1) ? p.includes(u) || o("update:visibleColumns", [...p, u]) : o("update:visibleColumns", p.filter((C) => C !== u));
+      (typeof v == "boolean" ? v : !1) ? p.includes(u) || n("update:visibleColumns", [...p, u]) : n("update:visibleColumns", p.filter((C) => C !== u));
     }
     return (u, v) => (g(), A(l(pr), null, {
       default: h(() => [
@@ -8492,7 +8492,7 @@ const Uf = { class: "hidden sm:block" }, zf = /* @__PURE__ */ O({
             }, {
               default: h(() => [
                 w(l(ql), { class: "mr-2 h-4 w-4" }),
-                fe(" " + Z(l(n)("datatable.view", "View")), 1)
+                fe(" " + Z(l(o)("datatable.view", "View")), 1)
               ]),
               _: 1
             })
@@ -8506,7 +8506,7 @@ const Uf = { class: "hidden sm:block" }, zf = /* @__PURE__ */ O({
           default: h(() => [
             w(l(_p), null, {
               default: h(() => [
-                fe(Z(l(n)("datatable.toggleColumns", "Toggle columns")), 1)
+                fe(Z(l(o)("datatable.toggleColumns", "Toggle columns")), 1)
               ]),
               _: 1
             }),
@@ -11124,12 +11124,12 @@ const Ng = /* @__PURE__ */ O({
   }),
   emits: /* @__PURE__ */ Oe(["onSubmit", "onClear"], ["update:modelValue", "update:modelSubmit"]),
   setup(e, { emit: t }) {
-    const a = e, n = je(), o = U(() => a.placeholder ?? n("input.search.placeholder", "Search...")), s = t, r = ve(e, "modelValue"), i = ve(e, "modelSubmit"), c = U(() => !!r.value && r.value.length > 0);
+    const a = e, n = t, o = je(), s = U(() => a.placeholder ?? o("input.search.placeholder", "Search...")), r = ve(e, "modelValue"), i = ve(e, "modelSubmit"), c = U(() => !!r.value && r.value.length > 0);
     function u() {
-      i.value = r.value || "", s("onSubmit", r.value || "");
+      i.value = r.value || "", n("onSubmit", r.value || "");
     }
     function v() {
-      i.value = "", r.value = "", s("onClear", "");
+      i.value = "", r.value = "", n("onClear", "");
     }
     return (p, f) => (g(), A(l(lg), null, {
       default: h(() => [
@@ -11143,7 +11143,7 @@ const Ng = /* @__PURE__ */ O({
           modelValue: r.value,
           "onUpdate:modelValue": f[0] || (f[0] = (C) => r.value = C),
           type: "text",
-          placeholder: o.value
+          placeholder: s.value
         }, p.$attrs, {
           onKeydown: Rr(u, ["enter"])
         }), null, 16, ["modelValue", "placeholder"]),
