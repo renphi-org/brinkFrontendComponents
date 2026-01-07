@@ -9,15 +9,8 @@ import Empty from './EmptyMini.vue'
 import Button from './ui/button/Button.vue'
 
 export interface SelectOption<T = any> { value: any, label: string, data?: T }
-defineOptions({ inheritAttrs: false })
 
-const props = withDefaults(defineProps<Props>(), {
-  disabled: false,
-})
-
-defineEmits<{ onAddItem: [] }>()
-
-interface Props {
+export interface SelectListProps {
   placeholder?: string
   addItemButtonLabel?: string
   multiple?: boolean
@@ -25,6 +18,12 @@ interface Props {
   showAddItemButton?: boolean
   disabled?: boolean
 }
+
+defineOptions({ inheritAttrs: false })
+const props = withDefaults(defineProps<SelectListProps>(), {
+  disabled: false,
+})
+defineEmits<{ onAddItem: [] }>()
 
 const model = defineModel<any>()
 const t = useComponentTranslation()
