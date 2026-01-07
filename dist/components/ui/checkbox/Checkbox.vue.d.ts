@@ -3,10 +3,7 @@ import type { HTMLAttributes } from "vue";
 type __VLS_Props = CheckboxRootProps & {
     class?: HTMLAttributes["class"];
 };
-declare var __VLS_14: {
-    modelValue: import("reka-ui").CheckboxCheckedState;
-    state: import("reka-ui").CheckboxCheckedState;
-};
+declare var __VLS_14: {};
 type __VLS_Slots = {} & {
     default?: (props: typeof __VLS_14) => any;
 };

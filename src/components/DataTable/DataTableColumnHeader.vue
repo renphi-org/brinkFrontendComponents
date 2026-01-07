@@ -44,7 +44,7 @@ function handleHide() {
 </script>
 
 <template>
-  <div v-if="!sortable && !hideable" :class="cn('flex items-center space-x-2')">
+  <div v-if="!sortable && !hideable" :class="cn('flex items-center font-normal text-xs space-x-2')">
     <span>{{ title }}</span>
   </div>
 

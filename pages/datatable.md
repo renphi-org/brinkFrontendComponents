@@ -28,7 +28,7 @@ const tableData = ref<TableData[]>([
 ])
 
 const tableColumns: TableColumn<TableData>[] = [
-  { id: 'id', title: 'ID', sortable: true,  hideable: false},
+  { id: 'id', title: 'ID',  hideable: false},
   { id: 'name', title: 'Name', sortable: true },
   { id: 'email', title: 'Email', sortable: true },
   { id: 'role', title: 'Role', sortable: true },
