@@ -7,6 +7,7 @@ import { computed, ref } from 'vue'
 import { useComponentTranslation } from '@/composables/useComponentTranslation'
 import { isSubmitErrors } from '.'
 import Button from '../ui/button/Button.vue'
+import Spinner from '../ui/spinner/Spinner.vue'
 import DynamicDialog from './DynamicDialog.vue'
 
 const props = defineProps<DynamicComponenWithModelDialogProps<C> & { initialValue: ComponentProps<C>['modelValue'] }>()
@@ -44,11 +45,12 @@ async function onOk() {
     <form @submit.prevent="onOk()">
       <component :is="props.componentConfig.component" v-bind="props.componentConfig.componentProps" v-model="model" :errors />
       <div class="pt-3 flex gap-2 justify-end">
-        <Button type="button" variant="secondary" size="sm" @click="onCancel()">
+        <Button type="button" variant="secondary" @click="onCancel()">
           {{ cancelText }}
         </Button>
-        <Button type="submit" :disabled="isPending" size="sm">
-          {{ okText }}
+        <Button type="submit" :disabled="isPending">
+          <span>{{ okText }}</span>
+          <Spinner v-if="isPending" />
         </Button>
       </div>
     </form>

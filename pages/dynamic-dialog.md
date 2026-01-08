@@ -12,6 +12,7 @@ import TestInput from '../src/components/DynamicDialog/TestInput.vue'
 import { type SelectOption } from '../src/components/SelectOptions.vue'
 import { confirmSelect, confirmSelectList, confirmGeneric, confirmText, confirmNumber, confirmBoolean, alert, openDynamicDialogComponent } from '../src/components/DynamicDialog'
 import { z } from 'zod'
+import {sleep} from 'radash'
 
 // Dynamic Dialog examples
 const dialogOptions: SelectOption[] = [
@@ -31,6 +32,7 @@ async function handleConfirmSelect() {
     async (value) => {
       dialogResult.value = value
       console.log('Selected:', value)
+      await sleep(400)
     }
   )
 }
