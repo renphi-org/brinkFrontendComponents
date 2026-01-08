@@ -1,5 +1,8 @@
 import type { DialogRootProps } from "reka-ui";
-declare var __VLS_8: {};
+declare var __VLS_8: {
+    open: boolean;
+    close: () => void;
+};
 type __VLS_Slots = {} & {
     default?: (props: typeof __VLS_8) => any;
 };

@@ -2,6 +2,7 @@ import type { DialogContentProps } from "reka-ui";
 import type { HTMLAttributes } from "vue";
 type __VLS_Props = DialogContentProps & {
     class?: HTMLAttributes["class"];
+    showCloseButton?: boolean;
 };
 declare var __VLS_19: {};
 type __VLS_Slots = {} & {
@@ -21,7 +22,9 @@ declare const __VLS_base: import("vue").DefineComponent<__VLS_Props, {}, {}, {},
     onInteractOutside?: ((event: import("reka-ui").PointerDownOutsideEvent | import("reka-ui").FocusOutsideEvent) => any) | undefined;
     onOpenAutoFocus?: ((event: Event) => any) | undefined;
     onCloseAutoFocus?: ((event: Event) => any) | undefined;
-}>, {}, {}, {}, {}, string, import("vue").ComponentProvideOptions, false, {}, any>;
+}>, {
+    showCloseButton: boolean;
+}, {}, {}, {}, string, import("vue").ComponentProvideOptions, false, {}, any>;
 declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;
 declare const _default: typeof __VLS_export;
 export default _default;
