@@ -4,7 +4,7 @@ export interface SelectOption<T = any> {
     label: string;
     data?: T;
 }
-export interface SelectListProps {
+export interface SelectListProps<T> {
     placeholder?: string;
     addItemButtonLabel?: string;
     multiple?: boolean;
@@ -13,7 +13,7 @@ export interface SelectListProps {
     disabled?: boolean;
 }
 declare const __VLS_export: <T = any>(__VLS_props: NonNullable<Awaited<typeof __VLS_setup>>["props"], __VLS_ctx?: __VLS_PrettifyLocal<Pick<NonNullable<Awaited<typeof __VLS_setup>>, "attrs" | "emit" | "slots">>, __VLS_exposed?: NonNullable<Awaited<typeof __VLS_setup>>["expose"], __VLS_setup?: Promise<{
-    props: import("vue").PublicProps & __VLS_PrettifyLocal<(SelectListProps & {
+    props: import("vue").PublicProps & __VLS_PrettifyLocal<(SelectListProps<T> & {
         modelValue?: any;
     }) & {
         "onUpdate:modelValue"?: ((value: any) => any) | undefined;

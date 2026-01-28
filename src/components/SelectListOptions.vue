@@ -10,7 +10,7 @@ import Button from './ui/button/Button.vue'
 
 export interface SelectOption<T = any> { value: any, label: string, data?: T }
 
-export interface SelectListProps {
+export interface SelectListProps<T> {
   placeholder?: string
   addItemButtonLabel?: string
   multiple?: boolean
@@ -20,7 +20,7 @@ export interface SelectListProps {
 }
 
 defineOptions({ inheritAttrs: false })
-const props = withDefaults(defineProps<SelectListProps>(), {
+const props = withDefaults(defineProps<SelectListProps<T>>(), {
   disabled: false,
 })
 defineEmits<{ onAddItem: [] }>()

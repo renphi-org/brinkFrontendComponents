@@ -9344,13 +9344,16 @@ const Er = (e) => {
     const t = e, a = ve(e, "open"), n = se(!1), o = se();
     async function s() {
       n.value = !0;
-      const i = t.onOk ? await t.onOk().catch((c) => c) : void 0;
-      i === !0 || i === void 0 ? close() : jn(i) && (o.value = i), n.value = !1;
+      const c = t.onOk ? await t.onOk().catch((u) => u) : void 0;
+      c === !0 || c === void 0 ? close() : jn(c) && (o.value = c), n.value = !1;
     }
-    const { t: r } = St();
-    return (i, c) => (g(), A(l(cm), {
+    function r() {
+      a.value = !1;
+    }
+    const { t: i } = St();
+    return (c, u) => (g(), A(l(cm), {
       open: a.value,
-      "onUpdate:open": c[2] || (c[2] = (u) => a.value = u)
+      "onUpdate:open": u[2] || (u[2] = (v) => a.value = v)
     }, {
       default: h(() => [
         w(l(fm), null, {
@@ -9359,13 +9362,13 @@ const Er = (e) => {
               default: h(() => [
                 w(l(vm), null, {
                   default: h(() => [
-                    pe(Z(e.title || l(r)("dialog.alert.defaultTitle")), 1)
+                    pe(Z(e.title || l(i)("dialog.alert.defaultTitle")), 1)
                   ]),
                   _: 1
                 }),
                 w(l(pm), null, {
                   default: h(() => [
-                    pe(Z(e.description || l(r)("dialog.alert.defaultDescription")), 1)
+                    pe(Z(e.description || l(i)("dialog.alert.defaultDescription")), 1)
                   ]),
                   _: 1
                 })
@@ -9376,19 +9379,19 @@ const Er = (e) => {
               default: h(() => [
                 w(l(dm), {
                   disabled: n.value,
-                  onClick: c[0] || (c[0] = (u) => a.value = !1)
+                  onClick: u[0] || (u[0] = (v) => r())
                 }, {
                   default: h(() => [
-                    pe(Z(l(r)("common.cancel")), 1)
+                    pe(Z(l(i)("common.cancel")), 1)
                   ]),
                   _: 1
                 }, 8, ["disabled"]),
                 w(l(um), {
                   loading: n.value,
-                  onClick: c[1] || (c[1] = (u) => s())
+                  onClick: u[1] || (u[1] = (v) => s())
                 }, {
                   default: h(() => [
-                    pe(Z(l(r)("common.continue")), 1)
+                    pe(Z(l(i)("common.continue")), 1)
                   ]),
                   _: 1
                 }, 8, ["loading"])
@@ -10681,77 +10684,84 @@ function Eg(e, t, a = "dialog") {
     }
   });
 }
-function xg(e, t = "Achtung", a = "Sind Sie sicher?") {
+function xg(e, t = "Achtung", a = "Sind Sie sicher?", n) {
   return zt.open({
     component: hm,
     componentProps: {
       title: t,
       description: a,
       onOk: e
-    }
+    },
+    onClose: n
   });
 }
-function kg({ dialogConfig: e, initialValue: t, onOk: a, component: n, componentProps: o }) {
+function kg({ dialogConfig: e, initialValue: t, onOk: a, component: n, componentProps: o, onClose: s }) {
   return zt.open({
     component: ba,
     componentProps: {
       componentConfig: { component: n, componentProps: o },
       initialValue: t,
       dialogConfig: { ...typeof e == "string" ? { title: e } : e, onOk: a }
-    }
+    },
+    onClose: s
   });
 }
-function Qm(e, t, a, n, o) {
+function Qm(e, t, a, n, o, s) {
   return zt.open({
     component: ba,
     componentProps: {
       componentConfig: { component: Vn, componentProps: { multiple: !0, options: t, ...o } },
       initialValue: a,
       dialogConfig: { ...typeof e == "string" ? { title: e } : e, onOk: n }
-    }
+    },
+    onClose: s
   });
 }
-function Cg(e, t, a, n, o) {
+function Cg(e, t, a, n, o, s) {
   return zt.open({
     component: ba,
     componentProps: {
       componentConfig: { component: im, componentProps: { multiple: !0, options: t, ...o } },
       initialValue: a,
       dialogConfig: { ...typeof e == "string" ? { title: e } : e, onOk: n }
-    }
+    },
+    onClose: s
   });
 }
-function Sg(e, t, a, n) {
+function Sg(e, t, a, n, o) {
   return zt.open({
     component: ba,
     componentProps: {
       componentConfig: { component: Bt, componentProps: { type: "text", ...n } },
       initialValue: t,
       dialogConfig: { ...typeof e == "string" ? { title: e } : e, onOk: a }
-    }
+    },
+    onClose: o
   });
 }
-function Og(e, t, a, n) {
+function Og(e, t, a, n, o) {
   return zt.open({
     component: ba,
     componentProps: {
       componentConfig: { component: Bt, componentProps: { type: "number", ...n } },
       initialValue: t,
       dialogConfig: { ...typeof e == "string" ? { title: e } : e, onOk: a }
-    }
+    },
+    onClose: o
   });
 }
-function Tg(e, t, a, n, o) {
-  const s = [
+function Tg(e, t, a, n, o, s) {
+  const r = [
     { value: !0, label: n?.trueLabel || "Yes" },
     { value: !1, label: n?.falseLabel || "No" }
   ];
   return Qm(
     e,
-    s,
+    r,
     t,
     a,
-    { ...o, multiple: !1 }
+    { ...o, multiple: !1 },
+    s
   );
 }
 const Ng = /* @__PURE__ */ O({
