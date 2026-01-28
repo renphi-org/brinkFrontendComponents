@@ -19,7 +19,7 @@ const open = defineModel<boolean>('open')
 
 const isPending = ref<boolean>(false)
 const errors = ref<SubmitErrors | undefined>()
-async function onOk() {
+async function handleOk() {
   isPending.value = true
   const result = props.onOk ? await props.onOk().catch((e: any) => e) : undefined
   if (result === true || result === undefined) {
@@ -30,6 +30,11 @@ async function onOk() {
   }
   isPending.value = false
 }
+
+function handleCancel() {
+  open.value = false
+}
+
 const { t } = useI18n()
 </script>
 
@@ -45,10 +50,10 @@ const { t } = useI18n()
         </AlertDialogDescription>
       </AlertDialogHeader>
       <AlertDialogFooter>
-        <AlertDialogCancel :disabled="isPending" @click="open = false">
+        <AlertDialogCancel :disabled="isPending" @click="handleCancel()">
           {{ t('common.cancel') }}
         </AlertDialogCancel>
-        <AlertDialogAction :loading="isPending" @click="onOk()">
+        <AlertDialogAction :loading="isPending" @click="handleOk()">
           {{ t('common.continue') }}
         </AlertDialogAction>
       </AlertDialogFooter>

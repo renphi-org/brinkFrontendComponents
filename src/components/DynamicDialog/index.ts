@@ -57,7 +57,7 @@ export function openDynamicDialogComponent<C extends Component>(
   })
 }
 
-export function alert(onOk: OnOkFn, title: string = 'Achtung', description: string = 'Sind Sie sicher?') {
+export function alert(onOk: OnOkFn, title: string = 'Achtung', description: string = 'Sind Sie sicher?', onClose?: () => any) {
   return dynamicComponent.open<typeof DynamicAlertDialog>({
     component: DynamicAlertDialog,
     componentProps: {
@@ -65,11 +65,12 @@ export function alert(onOk: OnOkFn, title: string = 'Achtung', description: stri
       description,
       onOk,
     },
+    onClose,
   })
 }
 
-export function confirmGeneric<T extends Component>({ dialogConfig, initialValue, onOk, component, componentProps }:
-{ dialogConfig: { description?: string, title: string } | string, initialValue: ComponentProps<T>['modelValue'], onOk: OnOkFn<ComponentProps<T>['modelValue']>, component: T, componentProps?: Partial<ComponentProps<T>> }) {
+export function confirmGeneric<T extends Component>({ dialogConfig, initialValue, onOk, component, componentProps, onClose}:
+{ dialogConfig: { description?: string, title: string } | string, initialValue: ComponentProps<T>['modelValue'], onOk: OnOkFn<ComponentProps<T>['modelValue']>, onClose?: () => any, component: T, componentProps?: Partial<ComponentProps<T>> }) {
   return dynamicComponent.open<typeof DynamicConfirmComponentDialog>({
     component: DynamicConfirmComponentDialog,
     componentProps: {
@@ -77,10 +78,11 @@ export function confirmGeneric<T extends Component>({ dialogConfig, initialValue
       initialValue,
       dialogConfig: { ...(typeof dialogConfig === 'string' ? { title: dialogConfig } : dialogConfig), onOk },
     },
+    onClose,
   })
 }
 
-export function confirmSelect<T = any>(dialogConfig: { description?: string, title: string } | string, options: MaybeRef<{ value: any, label: string }[]>, initialValue: T, onOk: OnOkFn<T>, componentProps?: Partial<ComponentProps<typeof SelectOptions>>) {
+export function confirmSelect<T = any>(dialogConfig: { description?: string, title: string } | string, options: MaybeRef<{ value: any, label: string }[]>, initialValue: T, onOk: OnOkFn<T>, componentProps?: Partial<ComponentProps<typeof SelectOptions>>, onClose?: () => any) {
   return dynamicComponent.open<typeof DynamicConfirmComponentDialog>({
     component: DynamicConfirmComponentDialog,
     componentProps: {
@@ -88,10 +90,11 @@ export function confirmSelect<T = any>(dialogConfig: { description?: string, tit
       initialValue,
       dialogConfig: { ...(typeof dialogConfig === 'string' ? { title: dialogConfig } : dialogConfig), onOk },
     },
+    onClose,
   })
 }
 
-export function confirmSelectList<T = any>(dialogConfig: { description?: string, title: string } | string, options: MaybeRef<{ value: any, label: string }[]>, initialValue: T, onOk: OnOkFn<T>, componentProps?: Partial<ComponentProps<typeof SelectListOptions>>) {
+export function confirmSelectList<T = any>(dialogConfig: { description?: string, title: string } | string, options: MaybeRef<{ value: any, label: string }[]>, initialValue: T, onOk: OnOkFn<T>, componentProps?: Partial<ComponentProps<typeof SelectListOptions>>, onClose?: () => any) {
   return dynamicComponent.open<typeof DynamicConfirmComponentDialog>({
     component: DynamicConfirmComponentDialog,
     componentProps: {
@@ -99,10 +102,11 @@ export function confirmSelectList<T = any>(dialogConfig: { description?: string,
       initialValue,
       dialogConfig: { ...(typeof dialogConfig === 'string' ? { title: dialogConfig } : dialogConfig), onOk },
     },
+    onClose,
   })
 }
 
-export function confirmText(dialogConfig: { description?: string, title: string } | string, initialValue: string, onOk: OnOkFn<string>, componentProps?: Partial<ComponentProps<typeof Input>>) {
+export function confirmText(dialogConfig: { description?: string, title: string } | string, initialValue: string, onOk: OnOkFn<string>, componentProps?: Partial<ComponentProps<typeof Input>>, onClose?: () => any) {
   return dynamicComponent.open<typeof DynamicConfirmComponentDialog>({
     component: DynamicConfirmComponentDialog,
     componentProps: {
@@ -110,10 +114,11 @@ export function confirmText(dialogConfig: { description?: string, title: string 
       initialValue,
       dialogConfig: { ...(typeof dialogConfig === 'string' ? { title: dialogConfig } : dialogConfig), onOk },
     },
+    onClose,
   })
 }
 
-export function confirmNumber(dialogConfig: { description?: string, title: string } | string, initialValue: number, onOk: OnOkFn<number>, componentProps?: Partial<ComponentProps<typeof Input>>) {
+export function confirmNumber(dialogConfig: { description?: string, title: string } | string, initialValue: number, onOk: OnOkFn<number>, componentProps?: Partial<ComponentProps<typeof Input>>, onClose?: () => any) {
   return dynamicComponent.open<typeof DynamicConfirmComponentDialog>({
     component: DynamicConfirmComponentDialog,
     componentProps: {
@@ -121,10 +126,11 @@ export function confirmNumber(dialogConfig: { description?: string, title: strin
       initialValue,
       dialogConfig: { ...(typeof dialogConfig === 'string' ? { title: dialogConfig } : dialogConfig), onOk },
     },
+    onClose,
   })
 }
 
-export function confirmBoolean(dialogConfig: { description?: string, title: string } | string, initialValue: boolean, onOk: OnOkFn<boolean>, options?: { trueLabel?: string, falseLabel?: string }, componentProps?: Partial<ComponentProps<typeof SelectOptions>>) {
+export function confirmBoolean(dialogConfig: { description?: string, title: string } | string, initialValue: boolean, onOk: OnOkFn<boolean>, options?: { trueLabel?: string, falseLabel?: string }, componentProps?: Partial<ComponentProps<typeof SelectOptions>>, onClose?: () => any) {
   const booleanOptions = [
     { value: true, label: options?.trueLabel || 'Yes' },
     { value: false, label: options?.falseLabel || 'No' },
@@ -136,5 +142,6 @@ export function confirmBoolean(dialogConfig: { description?: string, title: stri
     initialValue,
     onOk,
     { ...componentProps, multiple: false },
+    onClose,
   )
 }

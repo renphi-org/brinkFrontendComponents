@@ -34,6 +34,8 @@ async function handleConfirmSelect() {
       console.log('Selected:', value)
       await sleep(400)
     }
+    , undefined,
+    () => console.log('onClose')
   )
 }
 
@@ -45,7 +47,8 @@ async function handleConfirmSelectList() {
     async (value) => {
       dialogResult.value = value
       console.log('Selected:', value)
-    }
+    }, undefined,
+    () => console.log('onClose')
   )
 }
 
@@ -56,9 +59,11 @@ async function handleConfirmGeneric() {
     initialValue: '',
     onOk: async (value) => {
       dialogResult.value = value
-      console.log('Entered:', value)
+      console.log('Entered::', value)
       throw {field1: ['error1', 'error2']}
-    }
+    },
+    onClose: () => console.log('onClose')
+
   })
 }
 
@@ -291,9 +296,8 @@ async function showGenericDialog() {
     component: InputSearch,
     initialValue: '',
     onOk: async (value) => {
-      console.log('Value:', value)
-
-    }
+      return true
+    },
   })
 }
 

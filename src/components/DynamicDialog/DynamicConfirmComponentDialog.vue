@@ -21,13 +21,13 @@ const isPending = ref<boolean>(false)
 const cancelText = computed(() => props.dialogConfig.cancelButtonText ?? t('common.cancel', 'Cancel'))
 const okText = computed(() => props.dialogConfig.okButtonText ?? t('common.ok', 'Ok'))
 
-function onCancel() {
+function handleCancel() {
   open.value = false
 }
 
 const errors = ref<SubmitErrors | undefined>()
 
-async function onOk() {
+async function handleSubmit() {
   isPending.value = true
   const result = props.dialogConfig.onOk ? await props.dialogConfig.onOk(model.value).catch((e: any) => e) : undefined
   if (result === true || result === undefined) {
@@ -42,10 +42,10 @@ async function onOk() {
 
 <template>
   <DynamicDialog v-bind="props.dialogConfig" v-model:open="open">
-    <form @submit.prevent="onOk()">
+    <form @submit.prevent="handleSubmit()">
       <component :is="props.componentConfig.component" v-bind="props.componentConfig.componentProps" v-model="model" :errors />
       <div class="pt-3 flex gap-2 justify-end">
-        <Button type="button" variant="secondary" @click="onCancel()">
+        <Button type="button" variant="secondary" @click="handleCancel()">
           {{ cancelText }}
         </Button>
         <Button type="submit" :disabled="isPending">
