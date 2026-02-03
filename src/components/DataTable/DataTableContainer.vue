@@ -32,7 +32,7 @@ const containerClasses = computed(() => ({
 <template>
   <div
     ref="container"
-    class="min-w-0 min-h-0 relative flex flex-col"
+    class="min-w-0 min-h-0 relative flex-1 flex flex-col"
     :class="containerClasses"
   >
     <slot />
