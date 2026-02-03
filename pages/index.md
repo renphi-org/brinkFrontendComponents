@@ -33,7 +33,7 @@ const selectedMultiple = ref(['option1', 'option2'])
 const disabledOption = ref('option2')
 
 // Search example
-const searchValue = ref('')
+const searchValue = ref('Search Value..')
 
 // Input examples
 const rangeValue = ref<ValueRange>([10, 100])
@@ -171,7 +171,7 @@ import { DateFormat } from '@brink-components/component-library'
 Search input with icon and submit on enter
 
 <div class="not-prose">
-<InputSearch v-model="searchValue" placeholder="Search components..." />
+<InputSearch v-model:modelSubmit="searchValue" placeholder="Search components..." />
 <div v-if="searchValue" class="text-sm text-muted-foreground mt-2">Search value: {{ searchValue }}</div>
 </div>
 

@@ -4,20 +4,20 @@ interface Props {
     placeholder?: string;
 }
 type __VLS_ModelProps = {
-    modelValue?: string;
     'modelSubmit'?: string;
+    ''?: string;
 };
 type __VLS_PublicProps = __VLS_Props & __VLS_ModelProps;
 declare const __VLS_export: import("vue").DefineComponent<__VLS_PublicProps, {}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
     onSubmit: (value: string) => any;
-    "update:modelValue": (value: string | undefined) => any;
     onClear: (value: string) => any;
     "update:modelSubmit": (value: string) => any;
+    "update:": (value: string | undefined) => any;
 }, string, import("vue").PublicProps, Readonly<__VLS_PublicProps> & Readonly<{
     onOnSubmit?: ((value: string) => any) | undefined;
-    "onUpdate:modelValue"?: ((value: string | undefined) => any) | undefined;
     onOnClear?: ((value: string) => any) | undefined;
     "onUpdate:modelSubmit"?: ((value: string) => any) | undefined;
+    "onUpdate:"?: ((value: string | undefined) => any) | undefined;
 }>, {
     showClearButton: boolean;
 }, {}, {}, {}, string, import("vue").ComponentProvideOptions, false, {}, any>;

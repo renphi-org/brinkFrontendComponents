@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Search, X } from 'lucide-vue-next'
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useComponentTranslation } from '@/composables/useComponentTranslation'
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from './ui/input-group'
 
@@ -21,11 +21,16 @@ interface Props {
   placeholder?: string
 }
 
-const model = defineModel<string>()
 const modelSubmit = defineModel<string>('modelSubmit', { default: '' })
+const model = defineModel<string>('')
 
 const hasValue = computed(() => !!model.value && model.value.length > 0)
 
+onMounted(() => {
+  if (modelSubmit.value) {
+    model.value = modelSubmit.value
+  }
+})
 function submit() {
   modelSubmit.value = model.value || ''
   emit('onSubmit', model.value || '')
