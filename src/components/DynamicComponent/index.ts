@@ -22,6 +22,11 @@ export type OpenDynamicComponentFn = <F extends Component = any, C = ComponentPr
 
 export type RemoveInstanceFn = (key: string) => void
 
+export type UpdateDynamicComponentFn = <F extends Component = any, C = ComponentProps<F>, D = ComponentEmit<F>>(
+  key: string,
+  config: Partial<Omit<DynamicComponentConfig<F, C, D>, 'key'>>,
+) => void
+
 const instances = shallowRef<DynamicComponentConfig[]>([])
 const instancesMap = computed(() => objectify(instances.value, instance => instance.key))
 const visible = ref<Record<string, boolean>>({})
@@ -54,6 +59,14 @@ const open: OpenDynamicComponentFn = (config) => {
   return config.key
 }
 
-export const dynamicComponent = { close, visible, open, instances, removeInstance }
+const update: UpdateDynamicComponentFn = (key, config) => {
+  const instance = instancesMap.value[key]
+  if (instance) {
+    Object.assign(instance, config)
+    triggerRef(instances)
+  }
+}
+
+export const dynamicComponent = { close, visible, open, update, instances, removeInstance }
 
 export const useDynamicComponent = () => dynamicComponent

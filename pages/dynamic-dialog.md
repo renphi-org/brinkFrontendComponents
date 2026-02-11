@@ -9,8 +9,10 @@ import { Button } from '../src/components/ui/button'
 import InputSearch from '../src/components/InputSearch.vue'
 import SelectListOptions from '../src/components/SelectListOptions.vue'
 import TestInput from '../src/components/DynamicDialog/TestInput.vue'
+import UpdateDemo from '../src/components/DynamicDialog/UpdateDemo.vue'
 import { type SelectOption } from '../src/components/SelectOptions.vue'
 import { confirmSelect, confirmSelectList, confirmGeneric, confirmText, confirmNumber, confirmBoolean, alert, openDynamicDialogComponent } from '../src/components/DynamicDialog'
+import { useDynamicComponent } from '../src/components/DynamicComponent'
 import { z } from 'zod'
 import {sleep} from 'radash'
 
@@ -142,6 +144,42 @@ async function handleDynamicDrawer() {
     'drawer'
   )
 }
+
+// Update Dynamic Component example
+const { update } = useDynamicComponent()
+const updateCount = ref(0)
+
+function handleOpenUpdatable() {
+  updateCount.value = 0
+  let key: string
+
+  const doUpdate = () => {
+    updateCount.value++
+    update(key, {
+      componentProps: {
+        componentConfig: {
+          component: UpdateDemo,
+          componentProps: {
+            placeholder: `Updated ${updateCount.value} time(s)!`,
+            onUpdate: doUpdate
+          }
+        }
+      }
+    })
+  }
+
+  key = openDynamicDialogComponent(
+    { title: 'Updatable Dialog', description: 'Click the button inside to update the placeholder' },
+    {
+      component: UpdateDemo,
+      componentProps: {
+        placeholder: 'Initial placeholder...',
+        onUpdate: doUpdate
+      }
+    },
+    'dialog'
+  )
+}
 </script>
 
 # DynamicDialog System
@@ -167,6 +205,13 @@ Dynamic dialog system for programmatic dialogs and confirmations
 <div class="flex flex-wrap gap-2">
 <Button @click="handleDynamicDialog" variant="secondary">Dynamic Dialog</Button>
 <Button @click="handleDynamicDrawer" variant="outline">Dynamic Drawer</Button>
+</div>
+</div>
+
+<div class="space-y-2">
+<div class="text-sm font-medium">Update Dynamic Component</div>
+<div class="flex flex-wrap gap-2">
+<Button @click="handleOpenUpdatable" variant="default">Open Updatable Dialog</Button>
 </div>
 </div>
 
@@ -342,6 +387,38 @@ async function showDynamicDrawer() {
     'drawer' // Opens as a side drawer
   )
 }
+
+// Update Dynamic Component - Modify props of an open dialog
+import { useDynamicComponent, openDynamicDialogComponent } from '@brink-components/component-library'
+
+const { update, close } = useDynamicComponent()
+
+function updateExample() {
+  // Open a dialog and store its key
+  const key = openDynamicDialogComponent(
+    { title: 'My Dialog', description: 'Description here' },
+    { component: InputSearch, componentProps: { placeholder: 'Initial value...' } },
+    'dialog'
+  )
+
+  // Later, update the nested component's props
+  update(key, {
+    componentProps: {
+      componentConfig: {
+        component: InputSearch,
+        componentProps: { placeholder: 'Updated value!' }
+      }
+    }
+  })
+
+  // You can also update onClose callback
+  update(key, {
+    onClose: () => console.log('Component closed!')
+  })
+
+  // Close when done
+  close(key)
+}
 </script>
 
 <template>
@@ -451,6 +528,48 @@ await confirmBoolean(
   },
   { trueLabel: 'Enable', falseLabel: 'Disable' }
 )
+```
+
+### useDynamicComponent
+
+Access the dynamic component API for programmatic control.
+
+**Returns:**
+- `open`: `(config) => string` - Opens a new dynamic component, returns its key
+- `update`: `(key, config) => void` - Updates an existing component's props/emits/onClose
+- `close`: `(key) => void` - Closes a component by key
+- `instances`: `Ref<DynamicComponentConfig[]>` - Reactive list of all instances
+- `visible`: `Ref<Record<string, boolean>>` - Visibility state of each instance
+
+```ts
+import { useDynamicComponent, openDynamicDialogComponent } from '@brink-components/component-library'
+
+const { update, close } = useDynamicComponent()
+
+// Open a dialog with a component inside
+const key = openDynamicDialogComponent(
+  { title: 'My Dialog', description: 'Optional description' },
+  { component: MyComponent, componentProps: { initialProp: 'value' } },
+  'dialog' // or 'drawer'
+)
+
+// Update the nested component's props later
+update(key, {
+  componentProps: {
+    componentConfig: {
+      component: MyComponent,
+      componentProps: { initialProp: 'new value' }
+    }
+  }
+})
+
+// Update the onClose callback
+update(key, {
+  onClose: () => console.log('closed')
+})
+
+// Close when done
+close(key)
 ```
 
 **Important:** You must include `<DynamicComponentProvider />` in your app root (e.g., App.vue) for dynamic dialogs to work.
