@@ -26,10 +26,11 @@ async function onOk(value: any) {
   }
   isPending.value = false
 }
+const close = () => open.value = false
 </script>
 
 <template>
   <component :is="type === 'drawer' ? DynamicDrawer : DynamicDialog" v-bind="dialogConfig" v-model:open="open">
-    <component :is="componentConfig.component" v-bind="componentConfig.componentProps" :errors @submit-success="onOk" />
+    <component :is="componentConfig.component" v-bind="componentConfig.componentProps" :errors @submit-success="onOk" @close="close" />
   </component>
 </template>
