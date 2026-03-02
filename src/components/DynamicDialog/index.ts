@@ -17,17 +17,19 @@ export function isSubmitErrors(value: unknown): value is SubmitErrors {
     return false
   }
 
-  return Object.values(value).every(
-    v =>
-      Array.isArray(v)
-      && v.every(item => typeof item === 'string'),
-  )
+  return Object.values(value).every((v) => Array.isArray(v) && v.every((item) => typeof item === 'string'))
 }
 
-export type OnOkFn<T = any> = (value?: T) => Promise<boolean | SubmitErrors | void>
+export type OnOkFn<T = any> = (value?: T) => Promise<boolean | SubmitErrors | undefined>
 export type OnGenericSubmitFn = (obj: GenericObject) => Promise<boolean> | boolean
 
-export interface DynamicDialogProps<T = any> { description?: string, title: string, okButtonText?: string, cancelButtonText?: string, onOk?: OnOkFn<T> }
+export interface DynamicDialogProps<T = any> {
+  description?: string
+  title: string
+  okButtonText?: string
+  cancelButtonText?: string
+  onOk?: OnOkFn<T>
+}
 
 export interface DynamicComponenWithModelConfig<C extends Component> {
   component: C
@@ -51,13 +53,13 @@ export function openDynamicDialogComponent<C extends Component>(
     component: DynamicComponentDialog,
     componentProps: {
       componentConfig,
-      dialogConfig: (typeof dialogConfig === 'string' ? { title: dialogConfig } : dialogConfig),
+      dialogConfig: typeof dialogConfig === 'string' ? { title: dialogConfig } : dialogConfig,
       type,
     },
   })
 }
 
-export function alert(onOk: OnOkFn, title: string = 'Achtung', description: string = 'Sind Sie sicher?', onClose?: () => any) {
+export function alert(onOk: OnOkFn, title = 'Achtung', description = 'Sind Sie sicher?', onClose?: () => any) {
   return dynamicComponent.open<typeof DynamicAlertDialog>({
     component: DynamicAlertDialog,
     componentProps: {
@@ -69,8 +71,21 @@ export function alert(onOk: OnOkFn, title: string = 'Achtung', description: stri
   })
 }
 
-export function confirmGeneric<T extends Component>({ dialogConfig, initialValue, onOk, component, componentProps, onClose}:
-{ dialogConfig: { description?: string, title: string } | string, initialValue: ComponentProps<T>['modelValue'], onOk: OnOkFn<ComponentProps<T>['modelValue']>, onClose?: () => any, component: T, componentProps?: Partial<ComponentProps<T>> }) {
+export function confirmGeneric<T extends Component>({
+  dialogConfig,
+  initialValue,
+  onOk,
+  component,
+  componentProps,
+  onClose,
+}: {
+  dialogConfig: { description?: string; title: string } | string
+  initialValue: ComponentProps<T>['modelValue']
+  onOk: OnOkFn<ComponentProps<T>['modelValue']>
+  onClose?: () => any
+  component: T
+  componentProps?: Partial<ComponentProps<T>>
+}) {
   return dynamicComponent.open<typeof DynamicConfirmComponentDialog>({
     component: DynamicConfirmComponentDialog,
     componentProps: {
@@ -82,7 +97,14 @@ export function confirmGeneric<T extends Component>({ dialogConfig, initialValue
   })
 }
 
-export function confirmSelect<T = any>(dialogConfig: { description?: string, title: string } | string, options: MaybeRef<{ value: any, label: string }[]>, initialValue: T, onOk: OnOkFn<T>, componentProps?: Partial<ComponentProps<typeof SelectOptions>>, onClose?: () => any) {
+export function confirmSelect<T = any>(
+  dialogConfig: { description?: string; title: string } | string,
+  options: MaybeRef<{ value: any; label: string }[]>,
+  initialValue: T,
+  onOk: OnOkFn<T>,
+  componentProps?: Partial<ComponentProps<typeof SelectOptions>>,
+  onClose?: () => any,
+) {
   return dynamicComponent.open<typeof DynamicConfirmComponentDialog>({
     component: DynamicConfirmComponentDialog,
     componentProps: {
@@ -94,7 +116,14 @@ export function confirmSelect<T = any>(dialogConfig: { description?: string, tit
   })
 }
 
-export function confirmSelectList<T = any>(dialogConfig: { description?: string, title: string } | string, options: MaybeRef<{ value: any, label: string }[]>, initialValue: T, onOk: OnOkFn<T>, componentProps?: Partial<ComponentProps<typeof SelectListOptions>>, onClose?: () => any) {
+export function confirmSelectList<T = any>(
+  dialogConfig: { description?: string; title: string } | string,
+  options: MaybeRef<{ value: any; label: string }[]>,
+  initialValue: T,
+  onOk: OnOkFn<T>,
+  componentProps?: Partial<ComponentProps<typeof SelectListOptions>>,
+  onClose?: () => any,
+) {
   return dynamicComponent.open<typeof DynamicConfirmComponentDialog>({
     component: DynamicConfirmComponentDialog,
     componentProps: {
@@ -106,7 +135,13 @@ export function confirmSelectList<T = any>(dialogConfig: { description?: string,
   })
 }
 
-export function confirmText(dialogConfig: { description?: string, title: string } | string, initialValue: string, onOk: OnOkFn<string>, componentProps?: Partial<ComponentProps<typeof Input>>, onClose?: () => any) {
+export function confirmText(
+  dialogConfig: { description?: string; title: string } | string,
+  initialValue: string,
+  onOk: OnOkFn<string>,
+  componentProps?: Partial<ComponentProps<typeof Input>>,
+  onClose?: () => any,
+) {
   return dynamicComponent.open<typeof DynamicConfirmComponentDialog>({
     component: DynamicConfirmComponentDialog,
     componentProps: {
@@ -118,7 +153,13 @@ export function confirmText(dialogConfig: { description?: string, title: string 
   })
 }
 
-export function confirmNumber(dialogConfig: { description?: string, title: string } | string, initialValue: number, onOk: OnOkFn<number>, componentProps?: Partial<ComponentProps<typeof Input>>, onClose?: () => any) {
+export function confirmNumber(
+  dialogConfig: { description?: string; title: string } | string,
+  initialValue: number,
+  onOk: OnOkFn<number>,
+  componentProps?: Partial<ComponentProps<typeof Input>>,
+  onClose?: () => any,
+) {
   return dynamicComponent.open<typeof DynamicConfirmComponentDialog>({
     component: DynamicConfirmComponentDialog,
     componentProps: {
@@ -130,7 +171,14 @@ export function confirmNumber(dialogConfig: { description?: string, title: strin
   })
 }
 
-export function confirmBoolean(dialogConfig: { description?: string, title: string } | string, initialValue: boolean, onOk: OnOkFn<boolean>, options?: { trueLabel?: string, falseLabel?: string }, componentProps?: Partial<ComponentProps<typeof SelectOptions>>, onClose?: () => any) {
+export function confirmBoolean(
+  dialogConfig: { description?: string; title: string } | string,
+  initialValue: boolean,
+  onOk: OnOkFn<boolean>,
+  options?: { trueLabel?: string; falseLabel?: string },
+  componentProps?: Partial<ComponentProps<typeof SelectOptions>>,
+  onClose?: () => any,
+) {
   const booleanOptions = [
     { value: true, label: options?.trueLabel || 'Yes' },
     { value: false, label: options?.falseLabel || 'No' },

@@ -1,19 +1,21 @@
 <script setup lang="ts" generic="T extends Record<string, any>">
-import { ChevronDown, ChevronRight } from 'lucide-vue-next'
-import { computed } from 'vue'
 import Button from '@/components/ui/button/Button.vue'
 import { Checkbox } from '@/components/ui/checkbox'
+import { ChevronDown, ChevronRight } from 'lucide-vue-next'
+import { computed } from 'vue'
 import { injectDataTableContext } from './useDataTableContext'
 
 const props = defineProps<{
   item: T
 }>()
 
-defineSlots<
-  {
-    [K in keyof T as K extends string ? `cell:${K | 'actions'}` : never]?: (_: { item: T, value?: T[K], expanded?: boolean }) => any
-  }
->()
+defineSlots<{
+  [K in keyof T as K extends string ? `cell:${K | 'actions'}` : never]?: (_: {
+    item: T
+    value?: T[K]
+    expanded?: boolean
+  }) => any
+}>()
 
 const ctx = injectDataTableContext()
 

@@ -1,14 +1,7 @@
 <script setup lang="ts">
+import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from '@/components/ui/empty'
 import { Frown } from 'lucide-vue-next'
 import { useI18n } from 'vue-i18n'
-import {
-  Empty,
-  EmptyContent,
-  EmptyDescription,
-  EmptyHeader,
-  EmptyMedia,
-  EmptyTitle,
-} from '@/components/ui/empty'
 import { injectDataTableContext } from './useDataTableContext'
 
 const ctx = injectDataTableContext()

@@ -1,6 +1,6 @@
+import { createContext } from 'reka-ui'
 import type { ComputedRef, Ref } from 'vue'
 import type { SortBy, TableColumn } from './index'
-import { createContext } from 'reka-ui'
 
 export interface DataTableContext<T = any> {
   // Props

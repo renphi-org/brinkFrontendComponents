@@ -1,10 +1,10 @@
 <script setup lang="ts">
+import { cn } from '@/lib/utils'
+import { ChevronDown } from 'lucide-vue-next'
 import type { PrimitiveProps } from 'reka-ui'
+import { Primitive } from 'reka-ui'
 import type { HTMLAttributes } from 'vue'
 import type { ButtonVariants } from './ui/button'
-import { ChevronDown } from 'lucide-vue-next'
-import { Primitive } from 'reka-ui'
-import { cn } from '@/lib/utils'
 import { buttonVariants } from './ui/button'
 
 interface Props extends PrimitiveProps {

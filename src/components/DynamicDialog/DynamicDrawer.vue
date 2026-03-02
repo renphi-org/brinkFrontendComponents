@@ -1,13 +1,7 @@
 <script setup lang="ts">
-import type { DynamicDialogProps } from '.'
+import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle } from '@/components/ui/drawer'
 import { X } from 'lucide-vue-next'
-import {
-  Drawer,
-  DrawerContent,
-  DrawerDescription,
-  DrawerHeader,
-  DrawerTitle,
-} from '@/components/ui/drawer'
+import type { DynamicDialogProps } from '.'
 import Button from '../ui/button/Button.vue'
 
 defineProps<DynamicDialogProps>()

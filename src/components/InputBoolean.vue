@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import { useComponentTranslation } from '@/composables/useComponentTranslation'
 import type { HTMLAttributes } from 'vue'
 import { computed } from 'vue'
-import { useComponentTranslation } from '@/composables/useComponentTranslation'
 import SelectOptions from './SelectOptions.vue'
 
 defineOptions({ inheritAttrs: false })

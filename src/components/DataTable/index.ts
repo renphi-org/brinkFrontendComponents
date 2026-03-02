@@ -1,13 +1,22 @@
-import type { Ref } from 'vue'
 import { useSessionStorage } from '@vueuse/core'
 import { toggle as toggleRadash } from 'radash'
+import type { Ref } from 'vue'
 import { computed, ref } from 'vue'
 import DataTable from './DataTable.vue'
 import DataTableGrouped from './DataTableGrouped.vue'
+import DataTableTree from './DataTableTree.vue'
 
 export default DataTable
-export { DataTableGrouped }
+export { DataTableGrouped, DataTableTree }
 export type { DataTableGroupedProps } from './DataTableGrouped.vue'
+export type { DataTableTreeProps } from './DataTableTree.vue'
+
+export interface GroupNode<T> {
+  key: string
+  label?: string
+  items?: T[]
+  children?: GroupNode<T>[]
+}
 
 export interface DataTableProps<T> {
   items: T[]
@@ -63,32 +72,23 @@ export function useToggleState<T extends Record<string, any>>(
   storageKey?: string,
   externalState?: Ref<any[]>,
 ) {
-  const state
-    = externalState
-      || (storageKey ? useSessionStorage(storageKey, []) : ref<any[]>([]))
-  const stateMap = computed(() =>
-    Object.fromEntries(state.value.map(id => [id, true])),
-  )
-  const toggle = (id: string | number) =>
-    (state.value = toggleRadash(state.value, id))
+  const state = externalState || (storageKey ? useSessionStorage(storageKey, []) : ref<any[]>([]))
+  const stateMap = computed(() => Object.fromEntries(state.value.map((id) => [id, true])))
+  const toggle = (id: string | number) => {
+    state.value = toggleRadash(state.value, id)
+  }
   const allToggledState = computed<'indeterminate' | boolean>(() =>
-    state.value.length > 0
-      ? state.value?.length === items.value.length
-        ? true
-        : 'indeterminate'
-      : false,
+    state.value.length > 0 ? (state.value?.length === items.value.length ? true : 'indeterminate') : false,
   )
 
   function clear() {
     state.value = []
   }
   function selectAll() {
-    state.value = items.value.map(item => item[idCol])
+    state.value = items.value.map((item) => item[idCol])
   }
   const toggleAll = () =>
-    allToggledState.value === false || allToggledState.value === 'indeterminate'
-      ? selectAll()
-      : clear()
+    allToggledState.value === false || allToggledState.value === 'indeterminate' ? selectAll() : clear()
 
   return {
     state,

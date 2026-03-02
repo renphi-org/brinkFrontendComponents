@@ -6,7 +6,7 @@ import Input from '../ui/input/Input.vue';
 type GenericObject = Record<string, any>;
 export type SubmitErrors = Record<string, string[]>;
 export declare function isSubmitErrors(value: unknown): value is SubmitErrors;
-export type OnOkFn<T = any> = (value?: T) => Promise<boolean | SubmitErrors | void>;
+export type OnOkFn<T = any> = (value?: T) => Promise<boolean | SubmitErrors | undefined>;
 export type OnGenericSubmitFn = (obj: GenericObject) => Promise<boolean> | boolean;
 export interface DynamicDialogProps<T = any> {
     description?: string;
@@ -26,7 +26,7 @@ export interface DynamicComponenWithModelDialogProps<C extends Component> {
 }
 export declare function openDynamicDialogComponent<C extends Component>(dialogConfig: DynamicDialogProps | string, componentConfig: DynamicComponenWithModelConfig<C>, type?: 'drawer' | 'dialog'): string;
 export declare function alert(onOk: OnOkFn, title?: string, description?: string, onClose?: () => any): string;
-export declare function confirmGeneric<T extends Component>({ dialogConfig, initialValue, onOk, component, componentProps, onClose }: {
+export declare function confirmGeneric<T extends Component>({ dialogConfig, initialValue, onOk, component, componentProps, onClose, }: {
     dialogConfig: {
         description?: string;
         title: string;

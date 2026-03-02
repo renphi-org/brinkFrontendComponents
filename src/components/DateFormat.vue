@@ -66,8 +66,7 @@ const formattedDate = useDateFormat(dateObj, props.format, {
 
 // Calculate relative time if needed
 const relativeTime = computed(() => {
-  if (!props.relative)
-    return null
+  if (!props.relative) return null
 
   const now = new Date()
   const diff = now.getTime() - dateObj.value.getTime()
@@ -79,15 +78,14 @@ const relativeTime = computed(() => {
   if (days > 0) {
     return t('date.daysAgo', { count: days })
   }
-  else if (hours > 0) {
+  if (hours > 0) {
     return t('date.hoursAgo', { count: hours })
   }
-  else if (minutes > 0) {
+  if (minutes > 0) {
     return t('date.minutesAgo', { count: minutes })
   }
-  else {
-    return t('date.justNow')
-  }
+
+  return t('date.justNow')
 })
 
 // Display either relative time or formatted date

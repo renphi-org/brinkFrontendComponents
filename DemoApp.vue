@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { TableColumn } from './src/components/DataTable'
 import { ref } from 'vue'
+import { Tag } from './src/Tag'
+import type { TableColumn } from './src/components/DataTable'
 import DataTable from './src/components/DataTable'
 import { Button } from './src/components/ui/button'
-import { Tag } from './src/Tag'
 
 // Sample data for DataTable
 interface TableData {

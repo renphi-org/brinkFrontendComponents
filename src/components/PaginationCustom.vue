@@ -1,10 +1,4 @@
 <script setup lang="ts">
-import type { PaginationRootEmits, PaginationRootProps } from 'reka-ui'
-import type { HTMLAttributes } from 'vue'
-import { reactiveOmit } from '@vueuse/core'
-import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon } from 'lucide-vue-next'
-import { useForwardPropsEmits } from 'reka-ui'
-import { useI18n } from 'vue-i18n'
 import {
   Pagination,
   PaginationContent,
@@ -13,14 +7,22 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination'
+import { reactiveOmit } from '@vueuse/core'
+import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon } from 'lucide-vue-next'
+import type { PaginationRootEmits, PaginationRootProps } from 'reka-ui'
+import { useForwardPropsEmits } from 'reka-ui'
+import type { HTMLAttributes } from 'vue'
+import { useI18n } from 'vue-i18n'
 import SelectOptions from './SelectOptions.vue'
 
-const props = defineProps<PaginationRootProps & {
-  class?: HTMLAttributes['class']
-  itemsPerPage?: number | undefined
-  hideItemsPerPage?: boolean
-  pageSizeOptions: number[]
-}>()
+const props = defineProps<
+  PaginationRootProps & {
+    class?: HTMLAttributes['class']
+    itemsPerPage?: number | undefined
+    hideItemsPerPage?: boolean
+    pageSizeOptions: number[]
+  }
+>()
 const emits = defineEmits<PaginationRootEmits>()
 
 const delegatedProps = reactiveOmit(props, 'class')

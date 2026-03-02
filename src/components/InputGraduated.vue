@@ -1,15 +1,11 @@
 <script setup lang="ts">
-import type { HTMLAttributes } from 'vue'
-import type { ValueGraduated } from './types'
-import { Plus, Trash2, X } from 'lucide-vue-next'
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { useComponentTranslation } from '@/composables/useComponentTranslation'
+import { Plus, Trash2, X } from 'lucide-vue-next'
+import type { HTMLAttributes } from 'vue'
 import ButtonSelect from './ButtonSelect.vue'
 import DisplayGraduated from './DisplayGraduated.vue'
+import type { ValueGraduated } from './types'
 import Button from './ui/button/Button.vue'
 import Input from './ui/input/Input.vue'
 
@@ -25,7 +21,9 @@ const isString = (val: any): val is string => typeof val === 'string'
 const model = defineModel<ValueGraduated[]>({ default: () => [] })
 const add = () => model.value?.push({ from: 0, value: 0 })
 const remove = (index: number) => model.value.splice(index, 1)
-const clear = () => model.value = []
+const clear = () => {
+  model.value = []
+}
 </script>
 
 <template>

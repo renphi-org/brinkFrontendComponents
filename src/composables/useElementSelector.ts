@@ -10,8 +10,7 @@ export function useElementSelector<T extends HTMLElement = HTMLElement>(
   const updateElements = () => {
     if (parentRef.value) {
       elementRef.value = parentRef.value.querySelector<T>(selector)
-    }
-    else {
+    } else {
       elementRef.value = null
     }
   }

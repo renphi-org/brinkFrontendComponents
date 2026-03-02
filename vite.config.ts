@@ -50,7 +50,7 @@ export default defineConfig({
         index: 'src/index.ts',
       },
       name: 'BrinkComponentLibrary',
-      fileName: () => `index.js`,
+      fileName: () => 'index.js',
       formats: ['es'],
     },
     cssCodeSplit: false,
@@ -58,7 +58,7 @@ export default defineConfig({
       external: ['vue', 'reka-ui'],
       output: {
         globals: {
-          'vue': 'Vue',
+          vue: 'Vue',
           'reka-ui': 'RekaUI',
         },
         assetFileNames: 'style.css',

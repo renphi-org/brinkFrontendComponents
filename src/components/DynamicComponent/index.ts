@@ -1,8 +1,8 @@
-import type { Component } from 'vue'
-import type { ComponentEmit, ComponentProps } from 'vue-component-type-helpers'
-import { objectify } from 'radash'
-import { computed, ref, shallowRef, triggerRef } from 'vue'
 import { escapeKey } from '@/composables/useEscapeKey'
+import { objectify } from 'radash'
+import type { Component } from 'vue'
+import { computed, ref, shallowRef, triggerRef } from 'vue'
+import type { ComponentEmit, ComponentProps } from 'vue-component-type-helpers'
 
 type MakeOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
 
@@ -28,11 +28,11 @@ export type UpdateDynamicComponentFn = <F extends Component = any, C = Component
 ) => void
 
 const instances = shallowRef<DynamicComponentConfig[]>([])
-const instancesMap = computed(() => objectify(instances.value, instance => instance.key))
+const instancesMap = computed(() => objectify(instances.value, (instance) => instance.key))
 const visible = ref<Record<string, boolean>>({})
 
 function removeInstance(key: string) {
-  const index = instances.value.findIndex(instance => instance.key === key)
+  const index = instances.value.findIndex((instance) => instance.key === key)
   if (index !== -1) {
     instances.value.splice(index, 1)
   }
@@ -47,16 +47,17 @@ const close: CloseDynamicComponentFn = (key) => {
 }
 
 const open: OpenDynamicComponentFn = (config) => {
-  config.key = config.key ?? `${Math.random()}`
+  const key = config.key ?? `${Math.random()}`
+  config.key = key
   instances.value.push(config as DynamicComponentConfig)
   triggerRef(instances)
-  visible.value[config.key] = true
+  visible.value[key] = true
 
   escapeKey.add(() => {
-    close(config.key!)
+    close(key)
     return true
-  }, config.key)
-  return config.key
+  }, key)
+  return key
 }
 
 const update: UpdateDynamicComponentFn = (key, config) => {

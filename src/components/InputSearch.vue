@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import { useComponentTranslation } from '@/composables/useComponentTranslation'
 import { Search, X } from 'lucide-vue-next'
 import { computed, onMounted } from 'vue'
-import { useComponentTranslation } from '@/composables/useComponentTranslation'
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from './ui/input-group'
 
 defineOptions({
@@ -12,7 +12,7 @@ const props = withDefaults(defineProps<Props>(), {
   showClearButton: true,
 })
 
-const emit = defineEmits<{ onSubmit: [value: string], onClear: [value: string] }>()
+const emit = defineEmits<{ onSubmit: [value: string]; onClear: [value: string] }>()
 const t = useComponentTranslation()
 const defaultPlaceholder = computed(() => props.placeholder ?? t('input.search.placeholder', 'Search...'))
 

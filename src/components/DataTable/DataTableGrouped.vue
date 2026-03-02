@@ -1,13 +1,13 @@
 <script setup lang="ts" generic="T extends Record<string, any>">
-import type { DataTableEmits, DataTableProps, SortBy } from '.'
-import { ChevronDown, ChevronRight } from 'lucide-vue-next'
-import { objectify } from 'radash'
-import { computed, ref, watch } from 'vue'
 import { Badge } from '@/components/ui/badge'
 import Button from '@/components/ui/button/Button.vue'
 import { Checkbox } from '@/components/ui/checkbox'
 import { useEscapeKeyWhile } from '@/composables/useEscapeKey'
 import { useShiftKeyRangeSelect } from '@/utils'
+import { ChevronDown, ChevronRight } from 'lucide-vue-next'
+import { objectify } from 'radash'
+import { computed, ref, watch } from 'vue'
+import type { DataTableEmits, DataTableProps, SortBy } from '.'
 import { useToggleState } from '.'
 import DataTableBody from './DataTableBody.vue'
 import DataTableContainer from './DataTableContainer.vue'
@@ -19,8 +19,9 @@ import DataTableRow from './DataTableRow.vue'
 import DataTableToolbar from './DataTableToolbar.vue'
 import { provideDataTableContext } from './useDataTableContext'
 
-export interface DataTableGroupedProps<T> extends Omit<DataTableProps<T>, 'isGrouped' | 'items' | 'groups' | 'expandable' | 'isRowExpandable'> {
-  groups: Array<{ key: string, items: T[] }>
+export interface DataTableGroupedProps<T>
+  extends Omit<DataTableProps<T>, 'isGrouped' | 'items' | 'groups' | 'expandable' | 'isRowExpandable'> {
+  groups: Array<{ key: string; items: T[] }>
 }
 
 const {
@@ -43,16 +44,26 @@ const emit = defineEmits<DataTableEmits>()
 
 defineSlots<
   {
-    [K in keyof T as K extends string ? `cell:${K | 'actions'}` : never]?: (_: { item: T, value?: T[K], expanded?: boolean }) => any
+    [K in keyof T as K extends string ? `cell:${K | 'actions'}` : never]?: (_: {
+      item: T
+      value?: T[K]
+      expanded?: boolean
+    }) => any
   } & {
-    'header'?: any
-    'bulk'?: (props: { selected: any[] }) => any
-    'group-header'?: (props: { groupKey: string, items: T[], count: number, isExpanded: boolean, isSelected: boolean }) => any
+    header?: any
+    bulk?: (props: { selected: any[] }) => any
+    'group-header'?: (props: {
+      groupKey: string
+      items: T[]
+      count: number
+      isExpanded: boolean
+      isSelected: boolean
+    }) => any
   }
 >()
 
 // Flatten all items from groups
-const items = computed(() => groups.flatMap(g => g.items))
+const items = computed(() => groups.flatMap((g) => g.items))
 
 // Models
 const visibleColumns = defineModel<string[]>('visibleColumns')
@@ -62,13 +73,17 @@ const sortBy = defineModel<SortBy>('sortBy')
 const selected = defineModel<any[]>('selected', { default: () => [] })
 
 // Computed
-const columnsMap = computed(() => objectify(columns, col => col.id))
-const itemsMap = computed(() => objectify(items.value, item => item.id))
+const columnsMap = computed(() => objectify(columns, (col) => col.id))
+const itemsMap = computed(() => objectify(items.value, (item) => item.id))
 const hasItems = computed(() => items.value && items.value.length > 0)
 const hasGroups = computed(() => groups.length > 0)
-const filteredColumns = computed(() => !visibleColumns.value ? columns : columns.filter(col => visibleColumns.value?.includes(col.id as string)))
+const filteredColumns = computed(() =>
+  !visibleColumns.value ? columns : columns.filter((col) => visibleColumns.value?.includes(col.id as string)),
+)
 // Include column for group expand/collapse button
-const colNum = computed(() => filteredColumns.value.length + (selectMode === 'multiselect' ? 1 : 0) + (hasActionsColumn ? 1 : 0) + 1)
+const colNum = computed(
+  () => filteredColumns.value.length + (selectMode === 'multiselect' ? 1 : 0) + (hasActionsColumn ? 1 : 0) + 1,
+)
 
 // Reset page to 1 when items per page changes
 watch(itemsPerPage, () => {
@@ -80,28 +95,35 @@ watch(itemsPerPage, () => {
 function updateSort(key: string) {
   if (!sortBy.value || sortBy.value.key !== key) {
     sortBy.value = { key, order: 'asc' }
-  }
-  else if (sortBy.value.key === key) {
-    if (sortBy.value.order === 'asc')
-      sortBy.value = { key, order: 'desc' }
+  } else if (sortBy.value.key === key) {
+    if (sortBy.value.order === 'asc') sortBy.value = { key, order: 'desc' }
     else sortBy.value = undefined
   }
 }
 
 const itemsRef = computed(() => items.value)
-const { stateMap: selectedMap, toggle: toggleSelected, toggleAll: toggleAllSelected, allToggledState: allSelectedState, clear } = useToggleState(itemsRef, 'id', storagekey, selected)
+const {
+  stateMap: selectedMap,
+  toggle: toggleSelected,
+  toggleAll: toggleAllSelected,
+  allToggledState: allSelectedState,
+  clear,
+} = useToggleState(itemsRef, 'id', storagekey, selected)
 
 // Range select on shift key press
 useShiftKeyRangeSelect<T>(
   selected,
-  computed(() => items.value.map(item => item.id as any)),
+  computed(() => items.value.map((item) => item.id as any)),
 )
 
 // Clear selection on escape key
-useEscapeKeyWhile(() => {
-  clear()
-  return true
-}, computed(() => selected.value.length > 0))
+useEscapeKeyWhile(
+  () => {
+    clear()
+    return true
+  },
+  computed(() => selected.value.length > 0),
+)
 
 // Clear selection on page change
 watch(page, () => clear())
@@ -117,16 +139,15 @@ function toggleExpand(groupKey: string) {
 
 // Toggle all groups
 function toggleExpandAll() {
-  const groupKeys = groups.map(g => g.key)
-  const allExpanded = groupKeys.every(key => expandedMap.value[key] !== false)
+  const groupKeys = groups.map((g) => g.key)
+  const allExpanded = groupKeys.every((key) => expandedMap.value[key] !== false)
 
   if (allExpanded) {
     // Collapse all
     groupKeys.forEach((key) => {
       expandedMap.value[key] = false
     })
-  }
-  else {
+  } else {
     // Expand all
     groupKeys.forEach((key) => {
       expandedMap.value[key] = true
@@ -135,23 +156,21 @@ function toggleExpandAll() {
 }
 
 const allGroupsExpandedState = computed<'indeterminate' | boolean>(() => {
-  const groupKeys = groups.map(g => g.key)
-  const expandedCount = groupKeys.filter(key => expandedMap.value[key] !== false).length
+  const groupKeys = groups.map((g) => g.key)
+  const expandedCount = groupKeys.filter((key) => expandedMap.value[key] !== false).length
 
-  if (expandedCount === 0)
-    return false
-  if (expandedCount === groupKeys.length)
-    return true
+  if (expandedCount === 0) return false
+  if (expandedCount === groupKeys.length) return true
   return 'indeterminate'
 })
 
 // Group selection
 function isGroupSelected(groupItems: T[]) {
-  return groupItems.every(item => selected.value.includes(item.id))
+  return groupItems.every((item) => selected.value.includes(item.id))
 }
 
 function isGroupPartiallySelected(groupItems: T[]) {
-  const selectedInGroup = groupItems.filter(item => selected.value.includes(item.id))
+  const selectedInGroup = groupItems.filter((item) => selected.value.includes(item.id))
   return selectedInGroup.length > 0 && selectedInGroup.length < groupItems.length
 }
 
@@ -159,11 +178,10 @@ function toggleGroupSelection(groupItems: T[]) {
   const allSelected = isGroupSelected(groupItems)
   if (allSelected) {
     // Deselect all items in group
-    selected.value = selected.value.filter(id => !groupItems.some(item => item.id === id))
-  }
-  else {
+    selected.value = selected.value.filter((id) => !groupItems.some((item) => item.id === id))
+  } else {
     // Select all items in group
-    const groupIds = groupItems.map(item => item.id)
+    const groupIds = groupItems.map((item) => item.id)
     selected.value = [...new Set([...selected.value, ...groupIds])]
   }
 }

@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { ChevronDown, ChevronRight } from 'lucide-vue-next'
-import { title } from 'radash'
 import Button from '@/components/ui/button/Button.vue'
 import { Checkbox } from '@/components/ui/checkbox'
+import { ChevronDown, ChevronRight } from 'lucide-vue-next'
+import { title } from 'radash'
 import DataTableColumnHeader from './DataTableColumnHeader.vue'
 import { injectDataTableContext } from './useDataTableContext'
 

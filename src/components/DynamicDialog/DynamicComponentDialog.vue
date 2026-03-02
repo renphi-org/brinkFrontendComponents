@@ -20,13 +20,14 @@ async function onOk(value: any) {
   const result = dialogConfig.onOk ? await dialogConfig.onOk(value).catch((e: any) => e) : undefined
   if (result === true || result === undefined) {
     open.value = false
-  }
-  else if (isSubmitErrors(result)) {
+  } else if (isSubmitErrors(result)) {
     errors.value = result
   }
   isPending.value = false
 }
-const close = () => open.value = false
+const close = () => {
+  open.value = false
+}
 </script>
 
 <template>

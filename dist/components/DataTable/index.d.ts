@@ -65,7 +65,7 @@ export interface TranslatableConfig<T> {
 export declare function useToggleState<T extends Record<string, any>>(items: Ref<T[]>, idCol: keyof T, storageKey?: string, externalState?: Ref<any[]>): {
     state: Ref<any[], any[]>;
     stateMap: import("vue").ComputedRef<any>;
-    toggle: (id: string | number) => any[];
+    toggle: (id: string | number) => void;
     allToggledState: import("vue").ComputedRef<boolean | "indeterminate">;
     toggleAll: () => void;
     clear: () => void;

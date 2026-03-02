@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { ValueRange } from './types'
-import { computed, triggerRef } from 'vue'
 import { useComponentTranslation } from '@/composables/useComponentTranslation'
 import { cn } from '@/lib/utils'
+import { computed, triggerRef } from 'vue'
+import type { ValueRange } from './types'
 import { Input } from './ui/input'
 
 export type { ValueRange }

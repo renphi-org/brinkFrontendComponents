@@ -4,7 +4,7 @@ export interface EscapeKeyObject {
     callback: EscapeKeyCallback;
 }
 export type EscapeKeyCallback = () => boolean;
-declare function remove(callbackOrKey: EscapeKeyCallback | string): EscapeKeyObject[];
+declare function remove(callbackOrKey: EscapeKeyCallback | string): void;
 export declare const escapeKey: {
     add: (callback: EscapeKeyCallback, id?: string) => number;
     remove: typeof remove;

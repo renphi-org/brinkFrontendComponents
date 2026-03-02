@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import type { Component, HTMLAttributes, MaybeRef } from 'vue'
-import type { SelectOption } from './types'
-import { Plus, RotateCcw } from 'lucide-vue-next'
-import { SelectTrigger } from 'reka-ui'
-import { computed, toValue } from 'vue'
 import { Select, SelectContent, SelectItem, SelectValue } from '@/components/ui/select'
 import { useComponentTranslation } from '@/composables/useComponentTranslation'
 import { cn } from '@/lib/utils'
+import { Plus, RotateCcw } from 'lucide-vue-next'
+import { SelectTrigger } from 'reka-ui'
+import type { Component, HTMLAttributes, MaybeRef } from 'vue'
+import { computed, toValue } from 'vue'
 import ButtonSelect from './ButtonSelect.vue'
+import type { SelectOption } from './types'
 import Button from './ui/button/Button.vue'
 import DropdownMenuSeparator from './ui/dropdown-menu/DropdownMenuSeparator.vue'
 
@@ -35,12 +35,11 @@ defineEmits<{ onAddItem: [] }>()
 const t = useComponentTranslation()
 const model = defineModel<any>()
 
-const optionsAsMap = computed(() => Object.fromEntries(toValue(props.options).map(o => [o.value, o])))
+const optionsAsMap = computed(() => Object.fromEntries(toValue(props.options).map((o) => [o.value, o])))
 const selectedOptions = computed(() => {
-  if (!model.value)
-    return []
+  if (!model.value) return []
   if (props.multiple) {
-    return Array.isArray(model.value) ? model.value.map(v => optionsAsMap.value[v]).filter(Boolean) : []
+    return Array.isArray(model.value) ? model.value.map((v) => optionsAsMap.value[v]).filter(Boolean) : []
   }
   return optionsAsMap.value[model.value] ? [optionsAsMap.value[model.value]] : []
 })
@@ -49,7 +48,11 @@ function reset() {
   model.value = props.initialValues ?? (props.multiple ? [] : undefined)
 }
 
-const hasChanges = computed(() => props.initialValues === undefined ? model.value !== undefined : (JSON.stringify(props.initialValues) !== JSON.stringify(model.value)))
+const hasChanges = computed(() =>
+  props.initialValues === undefined
+    ? model.value !== undefined
+    : JSON.stringify(props.initialValues) !== JSON.stringify(model.value),
+)
 </script>
 
 <template>

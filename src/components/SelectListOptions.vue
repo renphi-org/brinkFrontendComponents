@@ -1,14 +1,18 @@
 <script setup lang="ts" generic="T = any">
-import type { MaybeRef } from 'vue'
-import { Check, Plus } from 'lucide-vue-next'
-import { ListboxContent, ListboxFilter, ListboxItem, ListboxItemIndicator, ListboxRoot, useFilter } from 'reka-ui'
-import { computed, ref, toValue } from 'vue'
 import { useComponentTranslation } from '@/composables/useComponentTranslation'
 import { cn } from '@/lib/utils'
+import { Check, Plus } from 'lucide-vue-next'
+import { ListboxContent, ListboxFilter, ListboxItem, ListboxItemIndicator, ListboxRoot, useFilter } from 'reka-ui'
+import type { MaybeRef } from 'vue'
+import { computed, ref, toValue } from 'vue'
 import Empty from './EmptyMini.vue'
 import Button from './ui/button/Button.vue'
 
-export interface SelectOption<T = any> { value: any, label: string, data?: T }
+export interface SelectOption<T = any> {
+  value: any
+  label: string
+  data?: T
+}
 
 export interface SelectListProps<T> {
   placeholder?: string
@@ -31,7 +35,9 @@ const t = useComponentTranslation()
 const searchTerm = ref('')
 
 const { startsWith } = useFilter({ sensitivity: 'base' })
-const filteredOptions = computed(() => toValue(props.options).filter(options => startsWith(options.label, searchTerm.value)))
+const filteredOptions = computed(() =>
+  toValue(props.options).filter((options) => startsWith(options.label, searchTerm.value)),
+)
 
 const hasOptions = computed(() => !!toValue(props.options).length)
 

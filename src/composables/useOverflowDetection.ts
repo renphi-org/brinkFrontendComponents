@@ -1,5 +1,5 @@
-import type { Ref } from 'vue'
 import { useResizeObserver, useScroll } from '@vueuse/core'
+import type { Ref } from 'vue'
 import { reactive, toValue, watch } from 'vue'
 
 export function useOverflowDetection<T extends HTMLElement = HTMLElement>(elementRef: Ref<T | null>) {
@@ -14,8 +14,7 @@ export function useOverflowDetection<T extends HTMLElement = HTMLElement>(elemen
 
   const checkOverflow = () => {
     const element = toValue(elementRef)
-    if (!element)
-      return
+    if (!element) return
     const overflowX = element.scrollWidth > element.clientWidth
     const overflowY = element.scrollHeight > element.clientHeight
     state.left = !overflowX || arrivedState.left

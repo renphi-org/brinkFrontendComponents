@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ArrowDown, ArrowUp, ArrowUpDown, ChevronsUpDown, EyeOff } from 'lucide-vue-next'
-import { computed } from 'vue'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -11,6 +9,8 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { useComponentTranslation } from '@/composables/useComponentTranslation'
 import { cn } from '@/lib/utils'
+import { ArrowDown, ArrowUp, ArrowUpDown, ChevronsUpDown, EyeOff } from 'lucide-vue-next'
+import { computed } from 'vue'
 
 interface Props {
   title: string
@@ -32,8 +32,7 @@ const emit = defineEmits<{
 const t = useComponentTranslation()
 
 const sortIcon = computed(() => {
-  if (!props.sortOrder)
-    return ChevronsUpDown
+  if (!props.sortOrder) return ChevronsUpDown
   return props.sortOrder === 'asc' ? ArrowUp : ArrowDown
 })
 

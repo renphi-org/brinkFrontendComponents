@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { Frown } from 'lucide-vue-next'
 import { useComponentTranslation } from '@/composables/useComponentTranslation'
+import { Frown } from 'lucide-vue-next'
 
 const t = useComponentTranslation()
 </script>

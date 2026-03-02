@@ -1,12 +1,6 @@
 <script setup lang="ts">
+import { Dialog, DialogDescription, DialogHeader, DialogScrollContent, DialogTitle } from '@/components/ui/dialog'
 import type { DynamicDialogProps } from '.'
-import {
-  Dialog,
-  DialogDescription,
-  DialogHeader,
-  DialogScrollContent,
-  DialogTitle,
-} from '@/components/ui/dialog'
 
 withDefaults(defineProps<DynamicDialogProps>(), {
   title: 'Are you absolutely sure?',

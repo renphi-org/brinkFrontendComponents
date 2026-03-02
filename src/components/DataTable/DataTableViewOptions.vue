@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import type { TableColumn } from '.'
-import { Settings2 } from 'lucide-vue-next'
-import { computed } from 'vue'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -12,6 +9,9 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { useComponentTranslation } from '@/composables/useComponentTranslation'
+import { Settings2 } from 'lucide-vue-next'
+import { computed } from 'vue'
+import type { TableColumn } from '.'
 
 interface Props {
   columns: TableColumn<any>[]
@@ -25,14 +25,12 @@ const emit = defineEmits<{
 
 const t = useComponentTranslation()
 
-const hideableColumns = computed(() =>
-  props.columns.filter(col => col.title && col.hideable !== false),
-)
+const hideableColumns = computed(() => props.columns.filter((col) => col.title && col.hideable !== false))
 
 // Get current visible columns - if undefined, all columns are visible
 const currentVisibleColumns = computed(() => {
   if (!props.visibleColumns || props.visibleColumns.length === 0) {
-    return props.columns.map(col => col.id as string)
+    return props.columns.map((col) => col.id as string)
   }
   return props.visibleColumns
 })
@@ -50,10 +48,12 @@ function toggleColumn(columnId: string, visible: boolean | 'indeterminate') {
     if (!current.includes(columnId)) {
       emit('update:visibleColumns', [...current, columnId])
     }
-  }
-  else {
+  } else {
     // Remove column
-    emit('update:visibleColumns', current.filter(id => id !== columnId))
+    emit(
+      'update:visibleColumns',
+      current.filter((id) => id !== columnId),
+    )
   }
 }
 </script>

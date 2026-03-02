@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed, useTemplateRef } from 'vue'
 import { useDelegatedClickEventListener } from '@/utils'
+import { computed, useTemplateRef } from 'vue'
 import { injectDataTableContext } from './useDataTableContext'
 
 const ctx = injectDataTableContext()

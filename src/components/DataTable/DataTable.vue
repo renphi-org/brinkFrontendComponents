@@ -1,9 +1,9 @@
 <script setup lang="ts" generic="T extends Record<string, any>">
-import type { DataTableEmits, DataTableProps, SortBy } from '.'
-import { objectify } from 'radash'
-import { computed, watch } from 'vue'
 import { useEscapeKeyWhile } from '@/composables/useEscapeKey'
 import { useShiftKeyRangeSelect } from '@/utils'
+import { objectify } from 'radash'
+import { computed, watch } from 'vue'
+import type { DataTableEmits, DataTableProps, SortBy } from '.'
 import { useToggleState } from '.'
 import DataTableBody from './DataTableBody.vue'
 import DataTableContainer from './DataTableContainer.vue'
@@ -37,13 +37,17 @@ const emit = defineEmits<DataTableEmits>()
 
 defineSlots<
   {
-    [K in keyof T as K extends string ? `cell:${K | 'actions'}` : never]?: (_: { item: T, value?: T[K], expanded?: boolean }) => any
+    [K in keyof T as K extends string ? `cell:${K | 'actions'}` : never]?: (_: {
+      item: T
+      value?: T[K]
+      expanded?: boolean
+    }) => any
   } & {
-    'header'?: any
-    'bulk'?: (props: { selected: any[] }) => any
+    header?: any
+    bulk?: (props: { selected: any[] }) => any
     'expanded-row'?: (props: { item: T }) => any
-    'expanded-row-raw'?: (props: { item: T, colNum: number }) => any
-    'cell:checkbox'?: (props: { item: T, selected: boolean | undefined }) => any
+    'expanded-row-raw'?: (props: { item: T; colNum: number }) => any
+    'cell:checkbox'?: (props: { item: T; selected: boolean | undefined }) => any
   }
 >()
 
@@ -55,11 +59,19 @@ const sortBy = defineModel<SortBy>('sortBy')
 const selected = defineModel<any[]>('selected', { default: () => [] })
 
 // Computed
-const columnsMap = computed(() => objectify(columns, col => col.id))
-const itemsMap = computed(() => objectify(items, item => item.id))
+const columnsMap = computed(() => objectify(columns, (col) => col.id))
+const itemsMap = computed(() => objectify(items, (item) => item.id))
 const hasItems = computed(() => items && items.length > 0)
-const filteredColumns = computed(() => !visibleColumns.value ? columns : columns.filter(col => visibleColumns.value?.includes(col.id as string)))
-const colNum = computed(() => filteredColumns.value.length + (selectMode === 'multiselect' ? 1 : 0) + (hasActionsColumn ? 1 : 0) + (expandable ? 1 : 0))
+const filteredColumns = computed(() =>
+  !visibleColumns.value ? columns : columns.filter((col) => visibleColumns.value?.includes(col.id as string)),
+)
+const colNum = computed(
+  () =>
+    filteredColumns.value.length +
+    (selectMode === 'multiselect' ? 1 : 0) +
+    (hasActionsColumn ? 1 : 0) +
+    (expandable ? 1 : 0),
+)
 
 // Reset page to 1 when items per page changes
 watch(itemsPerPage, () => {
@@ -71,36 +83,48 @@ watch(itemsPerPage, () => {
 function updateSort(key: string) {
   if (!sortBy.value || sortBy.value.key !== key) {
     sortBy.value = { key, order: 'asc' }
-  }
-  else if (sortBy.value.key === key) {
-    if (sortBy.value.order === 'asc')
-      sortBy.value = { key, order: 'desc' }
+  } else if (sortBy.value.key === key) {
+    if (sortBy.value.order === 'asc') sortBy.value = { key, order: 'desc' }
     else sortBy.value = undefined
   }
 }
 
 const itemsRef = computed(() => items)
-const { stateMap: selectedMap, toggle: toggleSelected, toggleAll: toggleAllSelected, allToggledState: allSelectedState, clear } = useToggleState(itemsRef, 'id', storagekey, selected)
+const {
+  stateMap: selectedMap,
+  toggle: toggleSelected,
+  toggleAll: toggleAllSelected,
+  allToggledState: allSelectedState,
+  clear,
+} = useToggleState(itemsRef, 'id', storagekey, selected)
 
 // Range select on shift key press
 useShiftKeyRangeSelect<T>(
   selected,
-  computed(() => items.map(item => item.id as any)),
+  computed(() => items.map((item) => item.id as any)),
 )
 
 // Clear selection on escape key
-useEscapeKeyWhile(() => {
-  clear()
-  return true
-}, computed(() => selected.value.length > 0))
+useEscapeKeyWhile(
+  () => {
+    clear()
+    return true
+  },
+  computed(() => selected.value.length > 0),
+)
 
 // Clear selection on page change
 // watch(page, () => clear())
 
-const { stateMap: expandedMap, toggle: toggleExpand, allToggledState: allExpandedState, toggleAll: toggleExpandAll } = useToggleState(itemsRef, 'id', storagekey)
+const {
+  stateMap: expandedMap,
+  toggle: toggleExpand,
+  allToggledState: allExpandedState,
+  toggleAll: toggleExpandAll,
+} = useToggleState(itemsRef, 'id', storagekey)
 
 // Helper function to check if a row is expandable
-const isRowExpandableFn = (item: T) => isRowExpandable ? isRowExpandable(item) : true
+const isRowExpandableFn = (item: T) => (isRowExpandable ? isRowExpandable(item) : true)
 
 // Provide context
 provideDataTableContext({

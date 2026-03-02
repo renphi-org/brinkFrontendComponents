@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n'
 import PaginationCustom from '@/components/PaginationCustom.vue'
+import { useI18n } from 'vue-i18n'
 import { injectDataTableContext } from './useDataTableContext'
 
 defineProps<{

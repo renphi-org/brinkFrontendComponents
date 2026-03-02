@@ -2,9 +2,9 @@
 import type { Component } from 'vue'
 import type { ComponentProps } from 'vue-component-type-helpers'
 
-import type { DynamicComponenWithModelDialogProps, SubmitErrors } from '.'
-import { computed, ref } from 'vue'
 import { useComponentTranslation } from '@/composables/useComponentTranslation'
+import { computed, ref } from 'vue'
+import type { DynamicComponenWithModelDialogProps, SubmitErrors } from '.'
 import { isSubmitErrors } from '.'
 import Button from '../ui/button/Button.vue'
 import Spinner from '../ui/spinner/Spinner.vue'
@@ -32,8 +32,7 @@ async function handleSubmit() {
   const result = props.dialogConfig.onOk ? await props.dialogConfig.onOk(model.value).catch((e: any) => e) : undefined
   if (result === true || result === undefined) {
     open.value = false
-  }
-  else if (isSubmitErrors(result)) {
+  } else if (isSubmitErrors(result)) {
     errors.value = result
   }
   isPending.value = false
