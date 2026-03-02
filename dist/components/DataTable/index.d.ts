@@ -1,9 +1,17 @@
 import type { Ref } from 'vue';
 import DataTable from './DataTable.vue';
 import DataTableGrouped from './DataTableGrouped.vue';
+import DataTableTree from './DataTableTree.vue';
 export default DataTable;
-export { DataTableGrouped };
+export { DataTableGrouped, DataTableTree };
 export type { DataTableGroupedProps } from './DataTableGrouped.vue';
+export type { DataTableTreeProps } from './DataTableTree.vue';
+export interface GroupNode<T> {
+    key: string;
+    label?: string;
+    items?: T[];
+    children?: GroupNode<T>[];
+}
 export interface DataTableProps<T> {
     items: T[];
     columns: TableColumn<T>[];

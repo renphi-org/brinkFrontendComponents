@@ -16,19 +16,14 @@
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
-  "sideEffects": [
-    "*.css",
-    "*.vue"
-  ],
+  "files": ["dist"],
+  "sideEffects": ["*.css", "*.vue"],
   "scripts": {
     "build": "vite build && vue-tsc --declaration --emitDeclarationOnly || true",
     "tsc": "vue-tsc --declaration --emitDeclarationOnly || true",
     "dev": "vite",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
     "test": "vitest"
   },
   "peerDependencies": {
@@ -54,15 +49,13 @@
     "zod": "4.3.5"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^6.7.3",
+    "@biomejs/biome": "^1.9.4",
     "@evilmartians/lefthook": "^2.0.13",
     "@shikijs/markdown-it": "^3.21.0",
     "@tailwindcss/vite": "^4.1.18",
     "@types/markdown-it": "^14.1.2",
     "@types/node": "^25.0.3",
     "@vitejs/plugin-vue": "^6.0.3",
-    "eslint": "^9.39.2",
-    "eslint-plugin-format": "^1.2.0",
     "lefthook": "^2.0.13",
     "markdown-it": "^14.1.0",
     "reka-ui": "^2.7.0",

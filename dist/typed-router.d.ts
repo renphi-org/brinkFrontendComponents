@@ -44,6 +44,13 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       | never
     >,
+    '/datatabletree': RouteRecordInfo<
+      '/datatabletree',
+      '/datatabletree',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
     '/dynamic-dialog': RouteRecordInfo<
       '/dynamic-dialog',
       '/dynamic-dialog',
@@ -86,6 +93,12 @@ declare module 'vue-router/auto-routes' {
     'pages/datatablegrouped.md': {
       routes:
         | '/datatablegrouped'
+      views:
+        | never
+    }
+    'pages/datatabletree.md': {
+      routes:
+        | '/datatabletree'
       views:
         | never
     }

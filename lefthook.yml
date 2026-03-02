@@ -16,6 +16,6 @@ pre-commit:
         - merge
         - rebase
     lint:
-      glob: '*.{ts,vue}'
-      run: npx eslint {staged_files} --fix
+      glob: '*.{ts,vue,js,json,css}'
+      run: npx biome check --write {staged_files}
       stage_fixed: true
