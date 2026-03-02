@@ -6,6 +6,7 @@ meta:
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { Badge } from '../src/components/ui/badge'
+import Button from '../src/components/ui/button/Button.vue'
 import DataTableTree from '../src/components/DataTable/DataTableTree.vue'
 import type { TableColumn, SortBy, GroupNode } from '../src/components/DataTable'
 
@@ -100,6 +101,16 @@ A tree table where every node — group or leaf — is a regular table row. The 
   </template>
   <template #cell-group:stock="{ items }">
     <span class="text-muted-foreground text-xs">{{ items.reduce((s, i) => s + i.stock, 0) }} total</span>
+  </template>
+  <template #cell-group:actions="{ group }">
+    <Button size="sm" variant="ghost" class="h-7 px-2 text-xs">
+      Export {{ group.key }}
+    </Button>
+  </template>
+  <template #cell:actions="{ item }">
+    <Button size="sm" variant="ghost" class="h-7 px-2 text-xs">
+      Edit
+    </Button>
   </template>
 </DataTableTree>
 </div>

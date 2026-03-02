@@ -28,6 +28,11 @@ declare const __VLS_export: <T extends Record<string, any>>(__VLS_props: NonNull
         group: GroupNode<T>;
         items: T[];
     }) => void) | undefined; } & {
+        'cell-group:actions'?: (_: {
+            group: GroupNode<T>;
+            items: T[];
+        }) => void;
+    } & {
         header?: any;
         bulk?: (props: {
             selected: any[];

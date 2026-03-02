@@ -46,6 +46,8 @@ defineSlots<
   } & {
     [K in keyof T as K extends string ? `cell-group:${K}` : never]?: (_: { group: GroupNode<T>; items: T[] }) => void
   } & {
+    'cell-group:actions'?: (_: { group: GroupNode<T>; items: T[] }) => void
+  } & {
     header?: any
     bulk?: (props: { selected: any[] }) => any
   }

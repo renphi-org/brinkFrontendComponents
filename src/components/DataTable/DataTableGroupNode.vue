@@ -79,7 +79,11 @@ function isItemSelected(item: T) {
         <slot :name="`cell-group:${String(col.id)}`" :group :items="allGroupItems" />
       </template>
     </td>
-    <td v-if="hasActionsColumn" />
+    <td v-if="hasActionsColumn">
+      <div class="flex items-center gap-0.5">
+        <slot name="cell-group:actions" :group :items="allGroupItems" />
+      </div>
+    </td>
   </tr>
 
   <template v-if="isExpanded">
