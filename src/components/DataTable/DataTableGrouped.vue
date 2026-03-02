@@ -20,7 +20,7 @@ import DataTableToolbar from './DataTableToolbar.vue'
 import { provideDataTableContext } from './useDataTableContext'
 
 export interface DataTableGroupedProps<T> extends Omit<DataTableProps<T>, 'isGrouped' | 'items' | 'groups' | 'expandable' | 'isRowExpandable'> {
-  groups: Record<string, T[]>
+  groups: Array<{ key: string, items: T[] }>
 }
 
 const {
@@ -52,7 +52,7 @@ defineSlots<
 >()
 
 // Flatten all items from groups
-const items = computed(() => Object.values(groups).flat())
+const items = computed(() => groups.flatMap(g => g.items))
 
 // Models
 const visibleColumns = defineModel<string[]>('visibleColumns')
@@ -65,7 +65,7 @@ const selected = defineModel<any[]>('selected', { default: () => [] })
 const columnsMap = computed(() => objectify(columns, col => col.id))
 const itemsMap = computed(() => objectify(items.value, item => item.id))
 const hasItems = computed(() => items.value && items.value.length > 0)
-const hasGroups = computed(() => Object.values(groups).length > 0)
+const hasGroups = computed(() => groups.length > 0)
 const filteredColumns = computed(() => !visibleColumns.value ? columns : columns.filter(col => visibleColumns.value?.includes(col.id as string)))
 // Include column for group expand/collapse button
 const colNum = computed(() => filteredColumns.value.length + (selectMode === 'multiselect' ? 1 : 0) + (hasActionsColumn ? 1 : 0) + 1)
@@ -117,7 +117,7 @@ function toggleExpand(groupKey: string) {
 
 // Toggle all groups
 function toggleExpandAll() {
-  const groupKeys = Object.keys(groups)
+  const groupKeys = groups.map(g => g.key)
   const allExpanded = groupKeys.every(key => expandedMap.value[key] !== false)
 
   if (allExpanded) {
@@ -135,7 +135,7 @@ function toggleExpandAll() {
 }
 
 const allGroupsExpandedState = computed<'indeterminate' | boolean>(() => {
-  const groupKeys = Object.keys(groups)
+  const groupKeys = groups.map(g => g.key)
   const expandedCount = groupKeys.filter(key => expandedMap.value[key] !== false).length
 
   if (expandedCount === 0)
@@ -239,20 +239,20 @@ defineExpose({ selected, clearSelected: clear })
 
           <DataTableBody>
             <template v-if="hasGroups">
-              <template v-for="(groupItems, groupKey) in groups" :key="groupKey">
+              <template v-for="group in groups" :key="group.key">
                 <!-- Group header row -->
-                <tr class="" :data-group-id="groupKey">
+                <tr class="" :data-group-id="group.key">
                   <!-- Group expand/collapse button column -->
                   <td class="!w-6 !pr-0">
                     <Button
                       size="sm"
                       variant="ghost"
                       class="h-6 w-6 p-0"
-                      :disabled="groupItems.length === 0"
-                      @click="toggleExpand(String(groupKey))"
+                      :disabled="group.items.length === 0"
+                      @click="toggleExpand(group.key)"
                     >
                       <component
-                        :is="expandedMap[String(groupKey)] ? ChevronDown : ChevronRight"
+                        :is="expandedMap[group.key] ? ChevronDown : ChevronRight"
                         class="h-4 w-4"
                       />
                     </Button>
@@ -260,25 +260,25 @@ defineExpose({ selected, clearSelected: clear })
                   <!-- Group selection checkbox column -->
                   <td v-if="selectMode === 'multiselect'" class="!w-6">
                     <Checkbox
-                      :model-value="groupItems.length === 0 ? false : isGroupSelected(groupItems) ? true : isGroupPartiallySelected(groupItems) ? 'indeterminate' : false"
-                      :disabled="groupItems.length === 0"
-                      @update:model-value="toggleGroupSelection(groupItems)"
+                      :model-value="group.items.length === 0 ? false : isGroupSelected(group.items) ? true : isGroupPartiallySelected(group.items) ? 'indeterminate' : false"
+                      :disabled="group.items.length === 0"
+                      @update:model-value="toggleGroupSelection(group.items)"
                     />
                   </td>
                   <!-- Group header content spanning remaining columns -->
                   <td :colspan="colNum - 1 - (selectMode === 'multiselect' ? 1 : 0)" class="font-medium">
                     <slot
                       name="group-header"
-                      :group-key="String(groupKey)"
-                      :items="groupItems"
-                      :count="groupItems.length"
-                      :is-expanded="expandedMap[String(groupKey)]"
-                      :is-selected="isGroupSelected(groupItems)"
+                      :group-key="group.key"
+                      :items="group.items"
+                      :count="group.items.length"
+                      :is-expanded="expandedMap[group.key]"
+                      :is-selected="isGroupSelected(group.items)"
                     >
                       <div class="flex items-center gap-2">
-                        <span class="text-sm">{{ groupKey || '(No value)' }}</span>
+                        <span class="text-sm">{{ group.key || '(No value)' }}</span>
                         <Badge variant="secondary" class="ml-2">
-                          {{ groupItems.length }}
+                          {{ group.items.length }}
                         </Badge>
                       </div>
                     </slot>
@@ -286,8 +286,8 @@ defineExpose({ selected, clearSelected: clear })
                 </tr>
 
                 <!-- Group items (only show if expanded) -->
-                <template v-if="expandedMap[String(groupKey)] !== false">
-                  <template v-for="item in groupItems" :key="item.id">
+                <template v-if="expandedMap[group.key] !== false">
+                  <template v-for="item in group.items" :key="item.id">
                     <DataTableRow :item>
                       <template v-for="(_, name) in $slots" #[name]="slotData">
                         <slot v-if="name !== 'group-header'" :name="(name as any)" v-bind="slotData" />

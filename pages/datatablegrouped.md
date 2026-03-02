@@ -39,14 +39,13 @@ const groupedColumns: TableColumn<GroupedData>[] = [
 
 // Group data by category
 const groupedByCategory = computed(() => {
-  const groups: Record<string, GroupedData[]> = {}
-  groupedData.value.forEach(item => {
-    if (!groups[item.category]) {
-      groups[item.category] = []
-    }
-    groups[item.category].push(item)
+  const map: Record<string, GroupedData[]> = {}
+  groupedData.value.forEach((item) => {
+    if (!map[item.category])
+      map[item.category] = []
+    map[item.category].push(item)
   })
-  return groups
+  return Object.entries(map).map(([key, items]) => ({ key, items }))
 })
 
 // State variables
@@ -132,14 +131,13 @@ const columns = [
 
 // Group data by category
 const groupedByCategory = computed(() => {
-  const groups = {}
+  const map = {}
   groupedData.value.forEach((item) => {
-    if (!groups[item.category]) {
-      groups[item.category] = []
-    }
-    groups[item.category].push(item)
+    if (!map[item.category])
+      map[item.category] = []
+    map[item.category].push(item)
   })
-  return groups
+  return Object.entries(map).map(([key, items]) => ({ key, items }))
 })
 </script>
 
@@ -213,7 +211,7 @@ The `DataTableGrouped` component accepts all props from `DataTable` except:
 
 | Prop           | Type                  | Required | Description                                                                 |
 | -------------- | --------------------- | -------- | --------------------------------------------------------------------------- |
-| `groups`       | `Record<string, T[]>` | Yes      | Object where keys are group names and values are arrays of items            |
+| `groups`       | `Array<{ key: string, items: T[] }>` | Yes      | Ordered array of groups; each entry has a `key` (group name) and `items` (array of rows) |
 | `groupByField` | `string`              | Yes      | The name of the field used for grouping (displayed in default group header) |
 
 ## Slots
