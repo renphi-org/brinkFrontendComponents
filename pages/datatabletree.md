@@ -76,6 +76,7 @@ A tree table where every node — group or leaf — is a regular table row. The 
   v-model:selected="selected"
   :groups="nestedGroups"
   :columns="columns"
+  storagekey='test'
   tree-column="product"
   select-mode="multiselect"
   :bordered="true"

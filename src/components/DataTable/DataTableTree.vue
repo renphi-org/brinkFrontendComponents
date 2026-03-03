@@ -1,6 +1,7 @@
 <script setup lang="ts" generic="T extends Record<string, any>">
 import { useEscapeKeyWhile } from '@/composables/useEscapeKey'
 import { useShiftKeyRangeSelect } from '@/utils'
+import { useSessionStorage } from '@vueuse/core'
 import { objectify } from 'radash'
 import { computed, ref } from 'vue'
 import type { DataTableEmits, DataTableProps, GroupNode, SortBy } from '.'
@@ -112,7 +113,9 @@ useEscapeKeyWhile(
   computed(() => selected.value.length > 0),
 )
 
-const expandedMap = ref({} as Record<string, boolean>)
+const expandedMap = storagekey
+  ? useSessionStorage<Record<string, boolean>>(`${storagekey}-expanded`, {})
+  : ref({} as Record<string, boolean>)
 
 function toggleExpand(groupKey: string) {
   expandedMap.value[groupKey] = expandedMap.value[groupKey] === undefined ? false : !expandedMap.value[groupKey]
