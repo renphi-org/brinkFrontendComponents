@@ -6,7 +6,7 @@ import Input from '../ui/input/Input.vue';
 type GenericObject = Record<string, any>;
 export type SubmitErrors = Record<string, string[]>;
 export declare function isSubmitErrors(value: unknown): value is SubmitErrors;
-export type OnOkFn<T = any> = (value?: T) => Promise<boolean | SubmitErrors | undefined>;
+export type OnOkFn<T = any> = (value?: T) => Promise<boolean | SubmitErrors | undefined> | Promise<void>;
 export type OnGenericSubmitFn = (obj: GenericObject) => Promise<boolean> | boolean;
 export interface DynamicDialogProps<T = any> {
     description?: string;

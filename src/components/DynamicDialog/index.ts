@@ -20,7 +20,7 @@ export function isSubmitErrors(value: unknown): value is SubmitErrors {
   return Object.values(value).every((v) => Array.isArray(v) && v.every((item) => typeof item === 'string'))
 }
 
-export type OnOkFn<T = any> = (value?: T) => Promise<boolean | SubmitErrors | undefined>
+export type OnOkFn<T = any> = (value?: T) => Promise<boolean | SubmitErrors | undefined> | Promise<void>
 export type OnGenericSubmitFn = (obj: GenericObject) => Promise<boolean> | boolean
 
 export interface DynamicDialogProps<T = any> {

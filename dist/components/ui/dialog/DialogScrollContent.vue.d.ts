@@ -3,9 +3,9 @@ import type { HTMLAttributes } from "vue";
 type __VLS_Props = DialogContentProps & {
     class?: HTMLAttributes["class"];
 };
-declare var __VLS_22: {};
+declare var __VLS_23: {};
 type __VLS_Slots = {} & {
-    default?: (props: typeof __VLS_22) => any;
+    default?: (props: typeof __VLS_23) => any;
 };
 declare const __VLS_base: import("vue").DefineComponent<__VLS_Props, {}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
     escapeKeyDown: (event: KeyboardEvent) => any;
