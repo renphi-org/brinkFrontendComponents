@@ -60,7 +60,7 @@ const selected = defineModel<any[]>('selected', { default: () => [] })
 
 // Computed
 const columnsMap = computed(() => objectify(columns, (col) => col.id))
-const itemsMap = computed(() => objectify(items, (item) => item.id))
+const itemsMap = computed(() => objectify(items, (item) => item[idcol] as string))
 const hasItems = computed(() => items && items.length > 0)
 const filteredColumns = computed(() =>
   !visibleColumns.value ? columns : columns.filter((col) => visibleColumns.value?.includes(col.id as string)),
@@ -96,12 +96,12 @@ const {
   toggleAll: toggleAllSelected,
   allToggledState: allSelectedState,
   clear,
-} = useToggleState(itemsRef, 'id', storagekey, selected)
+} = useToggleState(itemsRef, idcol, storagekey, selected)
 
 // Range select on shift key press
 useShiftKeyRangeSelect<T>(
   selected,
-  computed(() => items.map((item) => item.id as any)),
+  computed(() => items.map((item) => item[idcol] as any)),
 )
 
 // Clear selection on escape key
@@ -121,7 +121,7 @@ const {
   toggle: toggleExpand,
   allToggledState: allExpandedState,
   toggleAll: toggleExpandAll,
-} = useToggleState(itemsRef, 'id', storagekey)
+} = useToggleState(itemsRef, idcol, storagekey)
 
 // Helper function to check if a row is expandable
 const isRowExpandableFn = (item: T) => (isRowExpandable ? isRowExpandable(item) : true)
@@ -197,7 +197,7 @@ defineExpose({ selected, clearSelected: clear })
 
           <DataTableBody>
             <template v-if="hasItems">
-              <template v-for="item in items" :key="item.id">
+              <template v-for="item in items" :key="item[idcol]">
                 <DataTableRow :item>
                   <template v-for="(_, name) in $slots" #[name]="slotData">
                     <slot :name="(name as any)" v-bind="slotData" />

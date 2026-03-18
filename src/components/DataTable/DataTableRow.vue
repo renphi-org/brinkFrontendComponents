@@ -19,7 +19,7 @@ defineSlots<{
 
 const ctx = injectDataTableContext()
 
-const isSelected = computed(() => ctx.selectedMap.value[props.item.id])
+const isSelected = computed(() => ctx.selectedMap.value[props.item[ctx.idcol as keyof T]])
 const isHighlighted = computed(() => ctx.highlightedRow === props.item[ctx.idcol as keyof T])
 const isExpanded = computed(() => ctx.expandedMap.value[props.item[ctx.idcol as keyof T]])
 const isExpandable = computed(() => ctx.isRowExpandableFn(props.item))
@@ -28,7 +28,7 @@ const isExpandable = computed(() => ctx.isRowExpandableFn(props.item))
 <template>
   <tr
     :data-state="(isSelected || isHighlighted) && 'selected'"
-    :data-row-id="item.id"
+    :data-row-id="item[ctx.idcol as keyof T]"
   >
     <td v-if="ctx.expandable" class="!w-6 !pr-0">
       <Button
@@ -43,8 +43,8 @@ const isExpandable = computed(() => ctx.isRowExpandableFn(props.item))
     </td>
     <td v-if="ctx.selectMode === 'multiselect'" class="!w-6 !pr-0">
       <Checkbox
-        :model-value="ctx.selected.value.includes(item.id)"
-        @update:model-value="ctx.toggleSelected(item.id)"
+        :model-value="ctx.selected.value.includes(item[ctx.idcol as keyof T])"
+        @update:model-value="ctx.toggleSelected(item[ctx.idcol as keyof T])"
       />
     </td>
     <td

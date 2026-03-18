@@ -8415,10 +8415,10 @@ const Hf = { class: "hidden sm:block" }, Yf = /* @__PURE__ */ P({
     item: {}
   },
   setup(e) {
-    const t = e, a = Ht(), n = V(() => a.selectedMap.value[t.item.id]), o = V(() => a.highlightedRow === t.item[a.idcol]), s = V(() => a.expandedMap.value[t.item[a.idcol]]), r = V(() => a.isRowExpandableFn(t.item));
+    const t = e, a = Ht(), n = V(() => a.selectedMap.value[t.item[a.idcol]]), o = V(() => a.highlightedRow === t.item[a.idcol]), s = V(() => a.expandedMap.value[t.item[a.idcol]]), r = V(() => a.isRowExpandableFn(t.item));
     return (i, u) => (p(), R("tr", {
       "data-state": (n.value || o.value) && "selected",
-      "data-row-id": e.item.id
+      "data-row-id": e.item[l(a).idcol]
     }, [
       l(a).expandable ? (p(), R("td", Lp, [
         r.value ? (p(), A(ze, {
@@ -8436,8 +8436,8 @@ const Hf = { class: "hidden sm:block" }, Yf = /* @__PURE__ */ P({
       ])) : te("", !0),
       l(a).selectMode === "multiselect" ? (p(), R("td", Ip, [
         w(l(ma), {
-          "model-value": l(a).selected.value.includes(e.item.id),
-          "onUpdate:modelValue": u[1] || (u[1] = (c) => l(a).toggleSelected(e.item.id))
+          "model-value": l(a).selected.value.includes(e.item[l(a).idcol]),
+          "onUpdate:modelValue": u[1] || (u[1] = (c) => l(a).toggleSelected(e.item[l(a).idcol]))
         }, null, 8, ["model-value"])
       ])) : te("", !0),
       (p(!0), R(pe, null, Ee(l(a).filteredColumns.value, (c) => (p(), R("td", {
@@ -8577,7 +8577,7 @@ const Hf = { class: "hidden sm:block" }, Yf = /* @__PURE__ */ P({
   }),
   emits: /* @__PURE__ */ Ce(["clickRow"], ["update:visibleColumns", "update:itemsPerPage", "update:page", "update:sortBy", "update:selected"]),
   setup(e, { expose: t, emit: a }) {
-    const n = a, o = ve(e, "visibleColumns"), s = ve(e, "itemsPerPage"), r = ve(e, "page"), i = ve(e, "sortBy"), u = ve(e, "selected"), c = V(() => Ft(e.columns, (Z) => Z.id)), g = V(() => Ft(e.items, (Z) => Z.id)), m = V(() => e.items && e.items.length > 0), f = V(
+    const n = a, o = ve(e, "visibleColumns"), s = ve(e, "itemsPerPage"), r = ve(e, "page"), i = ve(e, "sortBy"), u = ve(e, "selected"), c = V(() => Ft(e.columns, (Z) => Z.id)), g = V(() => Ft(e.items, (Z) => Z[e.idcol])), m = V(() => e.items && e.items.length > 0), f = V(
       () => o.value ? e.columns.filter((Z) => o.value?.includes(Z.id)) : e.columns
     ), S = V(
       () => f.value.length + (e.selectMode === "multiselect" ? 1 : 0) + (e.hasActionsColumn ? 1 : 0) + (e.expandable ? 1 : 0)
@@ -8594,10 +8594,10 @@ const Hf = { class: "hidden sm:block" }, Yf = /* @__PURE__ */ P({
       toggleAll: _,
       allToggledState: x,
       clear: b
-    } = Va(k, "id", e.storagekey, u);
+    } = Va(k, e.idcol, e.storagekey, u);
     In(
       u,
-      V(() => e.items.map((Z) => Z.id))
+      V(() => e.items.map((Z) => Z[e.idcol]))
     ), Ln(
       () => (b(), !0),
       V(() => u.value.length > 0)
@@ -8607,7 +8607,7 @@ const Hf = { class: "hidden sm:block" }, Yf = /* @__PURE__ */ P({
       toggle: $,
       allToggledState: E,
       toggleAll: B
-    } = Va(k, "id", e.storagekey), Q = (Z) => e.isRowExpandable ? e.isRowExpandable(Z) : !0;
+    } = Va(k, e.idcol, e.storagekey), Q = (Z) => e.isRowExpandable ? e.isRowExpandable(Z) : !0;
     return Rn({
       items: e.items,
       columns: e.columns,
@@ -8670,7 +8670,7 @@ const Hf = { class: "hidden sm:block" }, Yf = /* @__PURE__ */ P({
               w(Mn, null, {
                 default: h(() => [
                   m.value ? (p(!0), R(pe, { key: 0 }, Ee(e.items, (H) => (p(), R(pe, {
-                    key: H.id
+                    key: H[e.idcol]
                   }, [
                     w(xl, { item: H }, Ua({ _: 2 }, [
                       Ee(Z.$slots, (be, C) => ({
