@@ -10991,7 +10991,8 @@ const eg = /* @__PURE__ */ P({
     }), {
       default: h(() => [
         q("form", {
-          onSubmit: f[2] || (f[2] = ms((S) => g(), ["prevent"]))
+          onSubmit: f[2] || (f[2] = ms((S) => g(), ["prevent"])),
+          class: "flex flex-col"
         }, [
           (p(), A(Ke(t.componentConfig.component), j(t.componentConfig.componentProps, {
             modelValue: o.value,

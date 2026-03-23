@@ -41,7 +41,7 @@ async function handleSubmit() {
 
 <template>
   <DynamicDialog v-bind="props.dialogConfig" v-model:open="open">
-    <form @submit.prevent="handleSubmit()">
+    <form @submit.prevent="handleSubmit()" class="flex flex-col">
       <component :is="props.componentConfig.component" v-bind="props.componentConfig.componentProps" v-model="model" :errors />
       <div class="pt-3 flex gap-2 justify-end">
         <Button type="button" variant="secondary" @click="handleCancel()">
