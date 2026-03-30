@@ -3,11 +3,12 @@ declare const __VLS_export: <T extends Record<string, any>>(__VLS_props: NonNull
     props: import("vue").PublicProps & __VLS_PrettifyLocal<{
         group: GroupNode<T>;
         depth: number;
+        hideHeader?: boolean;
         treeColumn: string;
         selectMode?: "multiselect";
         expandedMap: Record<string, boolean>;
         toggleExpand: (key: string) => void;
-        getAllGroupItems: (group: GroupNode<any>) => any[];
+        getAllGroupItems: (node: T | GroupNode<any>) => any[];
         isGroupSelected: (items: any[]) => boolean;
         isGroupPartiallySelected: (items: any[]) => boolean;
         toggleGroupSelection: (items: any[]) => void;

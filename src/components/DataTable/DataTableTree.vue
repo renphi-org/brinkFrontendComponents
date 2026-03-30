@@ -5,7 +5,7 @@ import { useSessionStorage } from '@vueuse/core'
 import { objectify } from 'radash'
 import { computed, ref } from 'vue'
 import type { DataTableEmits, DataTableProps, GroupNode, SortBy } from '.'
-import { useToggleState } from '.'
+import { isGroupNode, useToggleState } from '.'
 import DataTableBody from './DataTableBody.vue'
 import DataTableContainer from './DataTableContainer.vue'
 import DataTableEmpty from './DataTableEmpty.vue'
@@ -18,15 +18,15 @@ import { provideDataTableContext } from './useDataTableContext'
 export interface DataTableTreeProps<T>
   extends Omit<
     DataTableProps<T>,
-    'isGrouped' | 'items' | 'groups' | 'expandable' | 'isRowExpandable' | 'total' | 'pageSizeOptions'
+    'isGrouped' | 'items' | 'expandable' | 'isRowExpandable' | 'total' | 'pageSizeOptions'
   > {
-  groups: GroupNode<T>[]
+  items: Array<T | GroupNode<T>>
   treeColumn: string
 }
 
 const {
   storagekey,
-  groups,
+  items,
   treeColumn,
   selectMode,
   hasActionsColumn = true,
@@ -54,15 +54,16 @@ defineSlots<
   }
 >()
 
-function getAllGroupItems(group: GroupNode<T>): T[] {
-  return [...(group.items ?? []), ...(group.children ?? []).flatMap(getAllGroupItems)]
+function getAllGroupItems(node: T | GroupNode<T>): T[] {
+  if (!isGroupNode(node)) return [node]
+  return (node.children ?? []).flatMap(getAllGroupItems)
 }
 
-function getAllGroupKeys(nodes: GroupNode<T>[]): string[] {
-  return nodes.flatMap((g) => [g.key, ...getAllGroupKeys(g.children ?? [])])
+function getAllGroupKeys(nodes: Array<T | GroupNode<T>>): string[] {
+  return nodes.flatMap((n) => (isGroupNode(n) ? [n.key, ...getAllGroupKeys(n.children ?? [])] : []))
 }
 
-const items = computed(() => groups.flatMap((g) => getAllGroupItems(g)))
+const flatItems = computed(() => items.flatMap(getAllGroupItems))
 
 // Models
 const visibleColumns = defineModel<string[]>('visibleColumns')
@@ -71,9 +72,9 @@ const selected = defineModel<any[]>('selected', { default: () => [] })
 
 // Computed
 const columnsMap = computed(() => objectify(columns, (col) => col.id))
-const itemsMap = computed(() => objectify(items.value, (item) => item.id))
-const hasItems = computed(() => items.value.length > 0)
-const hasGroups = computed(() => groups.length > 0)
+const itemsMap = computed(() => objectify(flatItems.value, (item) => item.id))
+const hasItems = computed(() => flatItems.value.length > 0)
+const hasNodes = computed(() => items.length > 0)
 const filteredColumns = computed(() =>
   !visibleColumns.value ? columns : columns.filter((col) => visibleColumns.value?.includes(col.id as string)),
 )
@@ -91,7 +92,7 @@ function updateSort(key: string) {
   }
 }
 
-const itemsRef = computed(() => items.value)
+const itemsRef = computed(() => flatItems.value)
 const {
   stateMap: selectedMap,
   toggle: toggleSelected,
@@ -102,7 +103,7 @@ const {
 
 useShiftKeyRangeSelect<T>(
   selected,
-  computed(() => items.value.map((item) => item.id as any)),
+  computed(() => flatItems.value.map((item) => item.id as any)),
 )
 
 useEscapeKeyWhile(
@@ -122,7 +123,7 @@ function toggleExpand(groupKey: string) {
 }
 
 function toggleExpandAll() {
-  const allKeys = getAllGroupKeys(groups)
+  const allKeys = getAllGroupKeys(items)
   const allExpanded = allKeys.every((key) => expandedMap.value[key] !== false)
   allKeys.forEach((key) => {
     expandedMap.value[key] = !allExpanded
@@ -130,7 +131,7 @@ function toggleExpandAll() {
 }
 
 const allGroupsExpandedState = computed<'indeterminate' | boolean>(() => {
-  const allKeys = getAllGroupKeys(groups)
+  const allKeys = getAllGroupKeys(items)
   const expandedCount = allKeys.filter((key) => expandedMap.value[key] !== false).length
   if (expandedCount === 0) return false
   if (expandedCount === allKeys.length) return true
@@ -157,7 +158,7 @@ function toggleGroupSelection(groupItems: T[]) {
 // selectMode is intentionally not passed to context — checkboxes are rendered inside
 // the tree column by DataTableGroupNode, so no separate multiselect column is needed.
 provideDataTableContext({
-  items: items.value,
+  items: flatItems.value,
   columns,
   selectMode: undefined,
   hasActionsColumn,
@@ -221,25 +222,45 @@ defineExpose({ selected, clearSelected: clear })
           />
 
           <DataTableBody>
-            <template v-if="hasGroups">
-              <DataTableGroupNode
-                v-for="group in groups"
-                :key="group.key"
-                :group="group"
-                :depth="0"
-                :tree-column="treeColumn"
-                :select-mode="selectMode"
-                :expanded-map="expandedMap"
-                :toggle-expand="toggleExpand"
-                :get-all-group-items="getAllGroupItems"
-                :is-group-selected="isGroupSelected"
-                :is-group-partially-selected="isGroupPartiallySelected"
-                :toggle-group-selection="toggleGroupSelection"
-              >
-                <template v-for="(_, name) in $slots" #[name]="slotData">
-                  <slot :name="(name as any)" v-bind="slotData" />
-                </template>
-              </DataTableGroupNode>
+            <template v-if="hasNodes">
+              <template v-for="node in items" :key="isGroupNode(node) ? node.key : (node as T)[idcol as string]">
+                <DataTableGroupNode
+                  v-if="isGroupNode(node)"
+                  :group="node"
+                  :depth="0"
+                  :tree-column="treeColumn"
+                  :select-mode="selectMode"
+                  :expanded-map="expandedMap"
+                  :toggle-expand="toggleExpand"
+                  :get-all-group-items="getAllGroupItems"
+                  :is-group-selected="isGroupSelected"
+                  :is-group-partially-selected="isGroupPartiallySelected"
+                  :toggle-group-selection="toggleGroupSelection"
+                >
+                  <template v-for="(_, name) in $slots" #[name]="slotData">
+                    <slot :name="(name as any)" v-bind="slotData" />
+                  </template>
+                </DataTableGroupNode>
+                <!-- Root-level item: synthetic group hides the header, depth -1 → item at depth 0 -->
+                <DataTableGroupNode
+                  v-else
+                  :group="{ key: `__item__${(node as T)[idcol as string]}`, children: [node] }"
+                  :depth="-1"
+                  :hide-header="true"
+                  :tree-column="treeColumn"
+                  :select-mode="selectMode"
+                  :expanded-map="expandedMap"
+                  :toggle-expand="toggleExpand"
+                  :get-all-group-items="getAllGroupItems"
+                  :is-group-selected="isGroupSelected"
+                  :is-group-partially-selected="isGroupPartiallySelected"
+                  :toggle-group-selection="toggleGroupSelection"
+                >
+                  <template v-for="(_, name) in $slots" #[name]="slotData">
+                    <slot :name="(name as any)" v-bind="slotData" />
+                  </template>
+                </DataTableGroupNode>
+              </template>
             </template>
 
             <DataTableEmpty v-else />

@@ -9,9 +9,9 @@ export type { DataTableTreeProps } from './DataTableTree.vue';
 export interface GroupNode<T> {
     key: string;
     label?: string;
-    items?: T[];
-    children?: GroupNode<T>[];
+    children?: Array<T | GroupNode<T>>;
 }
+export declare function isGroupNode<T>(node: T | GroupNode<T>): node is GroupNode<T>;
 export interface DataTableProps<T> {
     items: T[];
     columns: TableColumn<T>[];

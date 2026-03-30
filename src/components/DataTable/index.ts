@@ -14,8 +14,12 @@ export type { DataTableTreeProps } from './DataTableTree.vue'
 export interface GroupNode<T> {
   key: string
   label?: string
-  items?: T[]
-  children?: GroupNode<T>[]
+  children?: Array<T | GroupNode<T>>
+}
+
+// Discriminator: GroupNode has `key`. Item types must not use `key` as a field name.
+export function isGroupNode<T>(node: T | GroupNode<T>): node is GroupNode<T> {
+  return typeof node === 'object' && node !== null && 'key' in node
 }
 
 export interface DataTableProps<T> {

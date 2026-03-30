@@ -1,6 +1,6 @@
 import type { DataTableProps, GroupNode, SortBy } from '.';
-export interface DataTableTreeProps<T> extends Omit<DataTableProps<T>, 'isGrouped' | 'items' | 'groups' | 'expandable' | 'isRowExpandable' | 'total' | 'pageSizeOptions'> {
-    groups: GroupNode<T>[];
+export interface DataTableTreeProps<T> extends Omit<DataTableProps<T>, 'isGrouped' | 'items' | 'expandable' | 'isRowExpandable' | 'total' | 'pageSizeOptions'> {
+    items: Array<T | GroupNode<T>>;
     treeColumn: string;
 }
 declare const __VLS_export: <T extends Record<string, any>>(__VLS_props: NonNullable<Awaited<typeof __VLS_setup>>["props"], __VLS_ctx?: __VLS_PrettifyLocal<Pick<NonNullable<Awaited<typeof __VLS_setup>>, "attrs" | "emit" | "slots">>, __VLS_exposed?: NonNullable<Awaited<typeof __VLS_setup>>["expose"], __VLS_setup?: Promise<{

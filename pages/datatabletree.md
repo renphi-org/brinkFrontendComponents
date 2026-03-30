@@ -6,9 +6,8 @@ meta:
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { Badge } from '../src/components/ui/badge'
-import Button from '../src/components/ui/button/Button.vue'
 import DataTableTree from '../src/components/DataTable/DataTableTree.vue'
-import type { TableColumn, SortBy, GroupNode } from '../src/components/DataTable'
+import type { TableColumn, GroupNode } from '../src/components/DataTable'
 
 type Product = {
   id: number
@@ -42,41 +41,40 @@ const columns: TableColumn<Product>[] = [
   { id: 'stock', title: 'Stock', sortable: true },
 ]
 
-const nestedGroups = computed<GroupNode<Product>[]>(() => [
+// Example: items at the root level, no group header
+const rootItemsGroups = computed<Array<Product | GroupNode<Product>>>(() => [
+  // Plain items — rendered directly at depth 0, no group header above them
+  ...data.value.filter(i => i.subcategory === 'Misc'),
+  // Regular groups follow
   {
-    key: 'Electronics',
-    items: data.value.filter(i => i.category === 'Electronics' && i.subcategory === 'Misc'),
-    children: ['Computers', 'Phones', 'Audio'].map(sub => ({
-      key: sub,
-      items: data.value.filter(i => i.category === 'Electronics' && i.subcategory === sub),
-    })),
+    key: 'Computers',
+    children: data.value.filter(i => i.subcategory === 'Computers'),
+  },
+  {
+    key: 'Phones',
+    children: data.value.filter(i => i.subcategory === 'Phones'),
   },
   {
     key: 'Furniture',
-    children: ['Desks', 'Chairs', 'Storage'].map(sub => ({
+    children: (['Desks', 'Chairs', 'Storage'] as const).map(sub => ({
       key: sub,
-      items: data.value.filter(i => i.category === 'Furniture' && i.subcategory === sub),
+      children: data.value.filter(i => i.category === 'Furniture' && i.subcategory === sub),
     })),
   },
 ])
-
-const visibleColumns = ref<string[]>(columns.map(col => col.id as string))
-const sortBy = ref<SortBy>()
-const selected = ref<any[]>([])
 </script>
 
 # DataTableTree Component
 
-A tree table where every node — group or leaf — is a regular table row. The designated `treeColumn` renders the expand/collapse chevron, the selection checkbox, and depth-based indentation all inline within that single column. Leaf rows are indented one level deeper than their parent group.
+## Items at the root level
+
+Pass plain items directly in the `groups` array — they are rendered at depth 0 with no group header above them. Groups and items can be mixed freely, in any order.
 
 <div class="not-prose">
 <DataTableTree
-  v-model:visible-columns="visibleColumns"
-  v-model:sort-by="sortBy"
-  v-model:selected="selected"
-  :groups="nestedGroups"
+  :items="rootItemsGroups"
   :columns="columns"
-  storagekey='test'
+  storagekey='root-items-example'
   tree-column="product"
   select-mode="multiselect"
   :bordered="true"
@@ -103,23 +101,25 @@ A tree table where every node — group or leaf — is a regular table row. The 
   <template #cell-group:stock="{ items }">
     <span class="text-muted-foreground text-xs">{{ items.reduce((s, i) => s + i.stock, 0) }} total</span>
   </template>
-  <template #cell-group:actions="{ group }">
-    <Button size="sm" variant="ghost" class="h-7 px-2 text-xs">
-      Export {{ group.key }}
-    </Button>
-  </template>
-  <template #cell:actions="{ item }">
-    <Button size="sm" variant="ghost" class="h-7 px-2 text-xs">
-      Edit
-    </Button>
-  </template>
 </DataTableTree>
 </div>
 
-<div class="not-prose mt-6 space-y-2 text-sm font-mono bg-muted p-4 rounded-lg">
-  <div><span class="text-muted-foreground">selected:</span> {{ selected }}</div>
-  <div><span class="text-muted-foreground">sortBy:</span> {{ sortBy }}</div>
-</div>
+```ts
+const items: Array<Product | GroupNode<Product>> = [
+  // Plain items — no group header, rendered at the top
+  ...miscProducts,
+  // Regular groups follow
+  { key: 'Computers', children: computers },
+  { key: 'Phones',    children: phones },
+  {
+    key: 'Furniture',
+    children: [
+      { key: 'Desks',    children: desks },
+      { key: 'Chairs',   children: chairs },
+    ],
+  },
+]
+```
 
 ## How it works
 
@@ -142,7 +142,7 @@ import type { GroupNode } from '@brink-components/component-library'
 
 <template>
   <DataTableTree
-    :groups="nestedGroups"
+    :items="nestedGroups"
     :columns="columns"
     tree-column="product"
     select-mode="multiselect"
@@ -163,7 +163,7 @@ Accepts all props from `DataTable` except `items`, `isGrouped`, `expandable`, `i
 
 | Prop | Type | Required | Description |
 | --- | --- | --- | --- |
-| `groups` | `GroupNode<T>[]` | Yes | Ordered array of root-level group nodes |
+| `items` | `Array<T \| GroupNode<T>>` | Yes | Ordered array of root-level nodes — plain items or group nodes |
 | `treeColumn` | `string` | Yes | Column ID that renders the tree controls (expand, checkbox, indent) |
 | `selectMode` | `'multiselect'` | No | Enables checkboxes inside the tree column for both group and leaf rows |
 
@@ -171,9 +171,10 @@ Accepts all props from `DataTable` except `items`, `isGrouped`, `expandable`, `i
 
 ```ts
 interface GroupNode<T> {
-  key: string        // unique across the whole tree
-  label?: string     // display name — falls back to key
-  items?: T[]        // leaf rows at this level
-  children?: GroupNode<T>[]
+  key: string                          // unique across the whole tree
+  label?: string                       // display name — falls back to key
+  children?: Array<T | GroupNode<T>>   // leaf items and/or nested groups, in any order
 }
 ```
+
+> **Note:** `GroupNode` is identified by the presence of a `key` field. Item types must not use `key` as a field name.
