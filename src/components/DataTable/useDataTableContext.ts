@@ -1,6 +1,6 @@
 import { createContext } from 'reka-ui'
 import type { ComputedRef, Ref } from 'vue'
-import type { SortBy, TableColumn } from './index'
+import type { FilterBy, SortBy, TableColumn } from './index'
 
 export interface DataTableContext<T = any> {
   // Props
@@ -28,6 +28,7 @@ export interface DataTableContext<T = any> {
   selectedMap: ComputedRef<Record<string, boolean>>
   expandedMap: ComputedRef<Record<string, boolean>>
   sortBy?: Ref<SortBy | undefined>
+  filterBy?: Ref<FilterBy | undefined>
 
   // Actions
   toggleSelected: (id: string | number) => void
@@ -38,6 +39,7 @@ export interface DataTableContext<T = any> {
   toggleExpandAll: () => void
   allExpandedState: ComputedRef<'indeterminate' | boolean>
   updateSort: (key: string) => void
+  updateFilter: (key: string, value: (string | number)[] | any) => void
   isRowExpandableFn: (item: T) => boolean
 
   // Events

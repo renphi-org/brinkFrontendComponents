@@ -1,6 +1,6 @@
 import { useSessionStorage } from '@vueuse/core'
 import { toggle as toggleRadash } from 'radash'
-import type { Ref } from 'vue'
+import type { Component, Ref } from 'vue'
 import { computed, ref } from 'vue'
 import DataTable from './DataTable.vue'
 import DataTableGrouped from './DataTableGrouped.vue'
@@ -44,6 +44,13 @@ export interface DataTableEmits {
   clickRow: [id: string]
 }
 
+export interface FilterOption {
+  value: string | number
+  label?: string
+}
+
+export type FilterBy = Record<string, (string | number)[] | any>
+
 export interface TableColumn<T> {
   title?: string
   id: keyof T
@@ -53,6 +60,7 @@ export interface TableColumn<T> {
   onClick?: (item: T) => void
   translatable?: boolean
   hideable?: boolean
+  filter?: (() => FilterOption[] | Promise<FilterOption[]>) | Component
 }
 
 export interface SortBy {

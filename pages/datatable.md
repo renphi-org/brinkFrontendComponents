@@ -4,9 +4,32 @@ meta:
 </route>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, defineComponent, h, watch } from 'vue'
 import { Badge } from '../src/components/ui/badge'
-import DataTable, { type TableColumn, type SortBy } from '../src/components/DataTable'
+import { Input } from '../src/components/ui/input'
+import DataTable, { type TableColumn, type SortBy, type FilterBy, type FilterOption } from '../src/components/DataTable'
+
+// Custom filter component for the Name column — receives v-model, renders a text input
+const NameSearchFilter = defineComponent({
+  props: ['modelValue'],
+  emits: ['update:modelValue'],
+  setup(props, { emit }) {
+    // Local ref keeps the input stable while the parent table re-renders on each keystroke
+    const localValue = ref<string>(props.modelValue ?? '')
+    watch(() => props.modelValue, (val) => {
+      if (val !== localValue.value) localValue.value = val ?? ''
+    })
+    return () => h(Input, {
+      placeholder: 'Search name…',
+      class: 'h-8',
+      modelValue: localValue.value,
+      'onUpdate:modelValue': (val: string) => {
+        localValue.value = val
+        emit('update:modelValue', val || undefined)
+      },
+    })
+  },
+})
 
 // Sample data for DataTable
 type TableData = {
@@ -179,6 +202,85 @@ const paginatedItems = computed(() => {
   const start = (paginationPage.value - 1) * paginationItemsPerPage.value
   const end = start + paginationItemsPerPage.value
   return items.slice(start, end)
+})
+
+// Filter example
+type FilterableData = {
+  id: number
+  name: string
+  department: string
+  role: string
+  status: string
+}
+
+const filterableData = ref<FilterableData[]>([
+  { id: 1, name: 'Alice Martin',   department: 'Engineering', role: 'Developer',  status: 'Active'   },
+  { id: 2, name: 'Bob Chen',       department: 'Marketing',   role: 'Designer',   status: 'Active'   },
+  { id: 3, name: 'Carol White',    department: 'Engineering', role: 'Lead',       status: 'Active'   },
+  { id: 4, name: 'Dan Lee',        department: 'Sales',       role: 'Developer',  status: 'Inactive' },
+  { id: 5, name: 'Eva Müller',     department: 'HR',          role: 'Manager',    status: 'Active'   },
+  { id: 6, name: 'Frank Torres',   department: 'Engineering', role: 'Developer',  status: 'Active'   },
+  { id: 7, name: 'Grace Kim',      department: 'Marketing',   role: 'Manager',    status: 'Inactive' },
+  { id: 8, name: 'Henry Brown',    department: 'Sales',       role: 'Designer',   status: 'Active'   },
+])
+
+const filterableColumns: TableColumn<FilterableData>[] = [
+  { id: 'id',         title: 'ID',         hideable: false },
+  { id: 'name', title: 'Name', sortable: true, filter: NameSearchFilter },
+  {
+    id: 'department',
+    title: 'Department',
+    sortable: true,
+    filter: (): FilterOption[] => [
+      { value: 'Engineering', label: 'Engineering' },
+      { value: 'Marketing',   label: 'Marketing'   },
+      { value: 'Sales',       label: 'Sales'       },
+      { value: 'HR',          label: 'HR'          },
+    ],
+  },
+  {
+    id: 'role',
+    title: 'Role',
+    sortable: true,
+    filter: async (): Promise<FilterOption[]> => {
+      // Async example — could be a real API call
+      await new Promise(r => setTimeout(r, 300))
+      return [
+        { value: 'Developer', label: 'Developer' },
+        { value: 'Designer',  label: 'Designer'  },
+        { value: 'Lead',      label: 'Lead'       },
+        { value: 'Manager',   label: 'Manager'    },
+      ]
+    },
+  },
+  {
+    id: 'status',
+    title: 'Status',
+    filter: (): FilterOption[] => [
+      { value: 'Active',   label: 'Active'   },
+      { value: 'Inactive', label: 'Inactive' },
+    ],
+  },
+]
+
+const filterBy = ref<FilterBy>({})
+
+const filteredItems = computed(() => {
+  return filterableData.value.filter(item =>
+    Object.entries(filterBy.value ?? {}).every(([key, value]) => {
+      if (!value) return true
+      // Array filter (checkbox list) — exact match against selected values
+      if (Array.isArray(value)) {
+        if (value.length === 0) return true
+        return value.includes(item[key as keyof FilterableData] as string | number)
+      }
+      // String filter (custom component) — case-insensitive substring match
+      if (typeof value === 'string') {
+        return String(item[key as keyof FilterableData]).toLowerCase().includes(value.toLowerCase())
+      }
+      return true
+    })
+  )
 })
 </script>
 
@@ -488,6 +590,151 @@ Click on any row to expand and see additional details.
   </template>
 </DataTable>
 </div>
+
+---
+
+## Column Filter Example
+
+Columns can carry a `filter` property — either a **callback** (sync or async) that returns options rendered as a searchable checkbox list, or a **custom component** rendered directly inside the filter popover. Filter state is tracked via `v-model:filter-by`.
+
+Click the funnel icon on the **Department**, **Role**, or **Status** header to try it. Role options load asynchronously (300 ms delay) to simulate an API call.
+
+<div class="not-prose">
+<DataTable
+  v-model:filter-by="filterBy"
+  :items="filteredItems"
+  :columns="filterableColumns"
+  :total="filteredItems.length"
+  :has-actions-column="false"
+  :page-size-options="[25]"
+/>
+</div>
+
+<div class="not-prose mt-4 space-y-2 text-sm font-mono bg-muted p-4 rounded-lg">
+  <div><span class="text-muted-foreground">filterBy:</span> <span class="text-foreground">{{ filterBy }}</span></div>
+  <div><span class="text-muted-foreground">visible rows:</span> <span class="text-foreground">{{ filteredItems.length }} / {{ filterableData.length }}</span></div>
+</div>
+
+### Code Example
+
+```vue
+<script setup lang="ts">
+import DataTable, { type TableColumn, type FilterBy, type FilterOption } from '@brink-components/component-library'
+import { Input } from '@brink-components/component-library'
+import { computed, defineComponent, h, ref } from 'vue'
+
+type Row = { id: number; name: string; department: string; role: string; status: string }
+
+// Custom component filter — receives v-model, renders whatever UI you like
+const NameSearchFilter = defineComponent({
+  props: ['modelValue'],
+  emits: ['update:modelValue'],
+  setup(props, { emit }) {
+    // Local ref keeps the input stable while the table re-renders on each keystroke
+    const localValue = ref<string>(props.modelValue ?? '')
+    watch(() => props.modelValue, (val) => {
+      if (val !== localValue.value) localValue.value = val ?? ''
+    })
+    return () => h(Input, {
+      placeholder: 'Search name…',
+      class: 'h-8',
+      modelValue: localValue.value,
+      'onUpdate:modelValue': (val: string) => {
+        localValue.value = val
+        emit('update:modelValue', val || undefined)
+      },
+    })
+  },
+})
+
+const data = ref<Row[]>([
+  { id: 1, name: 'Alice Martin', department: 'Engineering', role: 'Developer', status: 'Active'   },
+  { id: 2, name: 'Bob Chen',     department: 'Marketing',   role: 'Designer',  status: 'Active'   },
+  { id: 3, name: 'Dan Lee',      department: 'Sales',       role: 'Developer', status: 'Inactive' },
+  // ...
+])
+
+const columns: TableColumn<Row>[] = [
+  { id: 'id', title: 'ID' },
+  {
+    id: 'name',
+    title: 'Name',
+    sortable: true,
+    // Custom component — any Vue component that accepts v-model
+    filter: NameSearchFilter,
+  },
+  {
+    id: 'department',
+    title: 'Department',
+    sortable: true,
+    // Sync callback — returns options immediately
+    filter: (): FilterOption[] => [
+      { value: 'Engineering' },
+      { value: 'Marketing' },
+      { value: 'Sales' },
+    ],
+  },
+  {
+    id: 'role',
+    title: 'Role',
+    sortable: true,
+    // Async callback — e.g. fetched from an API
+    filter: async (): Promise<FilterOption[]> => {
+      const res = await fetch('/api/roles')
+      return res.json()
+    },
+  },
+  {
+    id: 'status',
+    title: 'Status',
+    filter: (): FilterOption[] => [
+      { value: 'Active' },
+      { value: 'Inactive' },
+    ],
+  },
+]
+
+const filterBy = ref<FilterBy>({})
+
+// Apply active filters client-side (swap for a server-side call as needed)
+const filteredItems = computed(() =>
+  data.value.filter(item =>
+    Object.entries(filterBy.value ?? {}).every(([key, value]) => {
+      if (!value) return true
+      // Array filter — exact match against selected values
+      if (Array.isArray(value)) {
+        if (value.length === 0) return true
+        return value.includes(item[key as keyof Row] as string | number)
+      }
+      // String filter from custom component — substring match
+      if (typeof value === 'string') {
+        return String(item[key as keyof Row]).toLowerCase().includes(value.toLowerCase())
+      }
+      return true
+    })
+  )
+)
+</script>
+
+<template>
+  <DataTable
+    v-model:filter-by="filterBy"
+    :items="filteredItems"
+    :columns="columns"
+    :total="filteredItems.length"
+  />
+</template>
+```
+
+**Key Points:**
+- Add a `filter` property to any `TableColumn` to enable the filter button on that header
+- **Custom component** — any Vue component that uses `v-model`; the value is stored in `filterBy` and passed back as `modelValue`. Great for text search, date pickers, range sliders, etc.
+- **Sync callback** `() => FilterOption[]` — options rendered as a searchable checkbox list
+- **Async callback** `async () => Promise<FilterOption[]>` — options fetched on popover open (with a loading indicator)
+- The filter state (`filterBy`) is a plain `Record<columnId, value>` — how you interpret each value depends on your filter type (array for checkboxes, string for text search, etc.)
+- The built-in checkbox list includes a search input to quickly narrow long option lists
+
+---
 
 ### Code Example
 

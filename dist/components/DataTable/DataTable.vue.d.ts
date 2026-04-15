@@ -1,10 +1,11 @@
-import type { DataTableProps, SortBy } from '.';
+import type { DataTableProps, FilterBy, SortBy, TableColumn } from '.';
 declare const __VLS_export: <T extends Record<string, any>>(__VLS_props: NonNullable<Awaited<typeof __VLS_setup>>["props"], __VLS_ctx?: __VLS_PrettifyLocal<Pick<NonNullable<Awaited<typeof __VLS_setup>>, "attrs" | "emit" | "slots">>, __VLS_exposed?: NonNullable<Awaited<typeof __VLS_setup>>["expose"], __VLS_setup?: Promise<{
     props: import("vue").PublicProps & __VLS_PrettifyLocal<(DataTableProps<T> & {
         visibleColumns?: string[];
         itemsPerPage?: number;
         page?: number;
         sortBy?: SortBy;
+        filterBy?: FilterBy;
         selected?: any[];
     }) & {
         "onUpdate:page"?: ((value: number) => any) | undefined;
@@ -12,6 +13,7 @@ declare const __VLS_export: <T extends Record<string, any>>(__VLS_props: NonNull
         "onUpdate:visibleColumns"?: ((value: string[] | undefined) => any) | undefined;
         onClickRow?: ((id: string) => any) | undefined;
         "onUpdate:sortBy"?: ((value: SortBy | undefined) => any) | undefined;
+        "onUpdate:filterBy"?: ((value: FilterBy | undefined) => any) | undefined;
         "onUpdate:selected"?: ((value: any[]) => any) | undefined;
     }> & (typeof globalThis extends {
         __VLS_PROPS_FALLBACK: infer P;
@@ -25,6 +27,8 @@ declare const __VLS_export: <T extends Record<string, any>>(__VLS_props: NonNull
         item: T;
         value?: T[K];
         expanded?: boolean;
+    }) => any) | undefined; } & { [K_1 in keyof T as K_1 extends string ? `header:${K_1}` : never]?: ((props: {
+        column: TableColumn<T>;
     }) => any) | undefined; } & {
         header?: any;
         bulk?: (props: {
@@ -42,7 +46,7 @@ declare const __VLS_export: <T extends Record<string, any>>(__VLS_props: NonNull
             selected: boolean | undefined;
         }) => any;
     };
-    emit: ((evt: "clickRow", id: string) => void) & (((evt: "update:page", value: number) => void) & ((evt: "update:itemsPerPage", value: number | undefined) => void) & ((evt: "update:visibleColumns", value: string[] | undefined) => void) & ((evt: "update:sortBy", value: SortBy | undefined) => void) & ((evt: "update:selected", value: any[]) => void));
+    emit: ((evt: "clickRow", id: string) => void) & (((evt: "update:page", value: number) => void) & ((evt: "update:itemsPerPage", value: number | undefined) => void) & ((evt: "update:visibleColumns", value: string[] | undefined) => void) & ((evt: "update:sortBy", value: SortBy | undefined) => void) & ((evt: "update:filterBy", value: FilterBy | undefined) => void) & ((evt: "update:selected", value: any[]) => void));
 }>) => import("vue").VNode & {
     __ctx?: Awaited<typeof __VLS_setup>;
 };

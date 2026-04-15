@@ -3,7 +3,7 @@ import { useEscapeKeyWhile } from '@/composables/useEscapeKey'
 import { useShiftKeyRangeSelect } from '@/utils'
 import { objectify } from 'radash'
 import { computed, watch } from 'vue'
-import type { DataTableEmits, DataTableProps, SortBy } from '.'
+import type { DataTableEmits, DataTableProps, FilterBy, SortBy, TableColumn } from '.'
 import { useToggleState } from '.'
 import DataTableBody from './DataTableBody.vue'
 import DataTableContainer from './DataTableContainer.vue'
@@ -43,6 +43,8 @@ defineSlots<
       expanded?: boolean
     }) => any
   } & {
+    [K in keyof T as K extends string ? `header:${K}` : never]?: (props: { column: TableColumn<T> }) => any
+  } & {
     header?: any
     bulk?: (props: { selected: any[] }) => any
     'expanded-row'?: (props: { item: T }) => any
@@ -56,6 +58,7 @@ const visibleColumns = defineModel<string[]>('visibleColumns')
 const itemsPerPage = defineModel<number>('itemsPerPage')
 const page = defineModel<number>('page', { default: 1 })
 const sortBy = defineModel<SortBy>('sortBy')
+const filterBy = defineModel<FilterBy>('filterBy')
 const selected = defineModel<any[]>('selected', { default: () => [] })
 
 // Computed
@@ -79,6 +82,16 @@ watch(itemsPerPage, () => {
     page.value = 1
   }
 })
+
+function updateFilter(key: string, value: any) {
+  if (!filterBy.value) filterBy.value = {}
+  if (value === undefined || (Array.isArray(value) && value.length === 0)) {
+    const { [key]: _, ...rest } = filterBy.value
+    filterBy.value = rest
+  } else {
+    filterBy.value = { ...filterBy.value, [key]: value }
+  }
+}
 
 function updateSort(key: string) {
   if (!sortBy.value || sortBy.value.key !== key) {
@@ -148,6 +161,7 @@ provideDataTableContext({
   selectedMap,
   expandedMap,
   sortBy,
+  filterBy,
   toggleSelected,
   toggleAllSelected,
   allSelectedState,
@@ -156,6 +170,7 @@ provideDataTableContext({
   toggleExpandAll,
   allExpandedState,
   updateSort,
+  updateFilter,
   isRowExpandableFn,
   onClickRow: (id: string) => emit('clickRow', id),
   onClickColumn: (colId: string, rowId: string) => {
@@ -193,7 +208,11 @@ defineExpose({ selected, clearSelected: clear })
           <DataTableHeader
             :visible-columns="visibleColumns"
             @update:visible-columns="(cols) => visibleColumns = cols"
-          />
+          >
+            <template v-for="col in columns" :key="col.id" #[`header:${String(col.id)}`]="slotData">
+              <slot :name="`header:${String(col.id)}`" v-bind="slotData" />
+            </template>
+          </DataTableHeader>
 
           <DataTableBody>
             <template v-if="hasItems">

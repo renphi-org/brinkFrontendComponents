@@ -1,4 +1,4 @@
-import type { DataTableProps, GroupNode, SortBy } from '.';
+import type { DataTableProps, FilterBy, GroupNode, SortBy, TableColumn } from '.';
 export interface DataTableTreeProps<T> extends Omit<DataTableProps<T>, 'isGrouped' | 'items' | 'expandable' | 'isRowExpandable' | 'total' | 'pageSizeOptions'> {
     items: Array<T | GroupNode<T>>;
     treeColumn: string;
@@ -7,11 +7,13 @@ declare const __VLS_export: <T extends Record<string, any>>(__VLS_props: NonNull
     props: import("vue").PublicProps & __VLS_PrettifyLocal<(DataTableTreeProps<T> & {
         visibleColumns?: string[];
         sortBy?: SortBy;
+        filterBy?: FilterBy;
         selected?: any[];
     }) & {
         "onUpdate:visibleColumns"?: ((value: string[] | undefined) => any) | undefined;
         onClickRow?: ((id: string) => any) | undefined;
         "onUpdate:sortBy"?: ((value: SortBy | undefined) => any) | undefined;
+        "onUpdate:filterBy"?: ((value: FilterBy | undefined) => any) | undefined;
         "onUpdate:selected"?: ((value: any[]) => any) | undefined;
     }> & (typeof globalThis extends {
         __VLS_PROPS_FALLBACK: infer P;
@@ -27,7 +29,9 @@ declare const __VLS_export: <T extends Record<string, any>>(__VLS_props: NonNull
     }) => any) | undefined; } & { [K_1 in keyof T as K_1 extends string ? `cell-group:${K_1}` : never]?: ((_: {
         group: GroupNode<T>;
         items: T[];
-    }) => void) | undefined; } & {
+    }) => void) | undefined; } & { [K_2 in keyof T as K_2 extends string ? `header:${K_2}` : never]?: ((props: {
+        column: TableColumn<T>;
+    }) => any) | undefined; } & {
         'cell-group:actions'?: (_: {
             group: GroupNode<T>;
             items: T[];
@@ -38,7 +42,7 @@ declare const __VLS_export: <T extends Record<string, any>>(__VLS_props: NonNull
             selected: any[];
         }) => any;
     };
-    emit: ((evt: "clickRow", id: string) => void) & (((evt: "update:visibleColumns", value: string[] | undefined) => void) & ((evt: "update:sortBy", value: SortBy | undefined) => void) & ((evt: "update:selected", value: any[]) => void));
+    emit: ((evt: "clickRow", id: string) => void) & (((evt: "update:visibleColumns", value: string[] | undefined) => void) & ((evt: "update:sortBy", value: SortBy | undefined) => void) & ((evt: "update:filterBy", value: FilterBy | undefined) => void) & ((evt: "update:selected", value: any[]) => void));
 }>) => import("vue").VNode & {
     __ctx?: Awaited<typeof __VLS_setup>;
 };

@@ -1,5 +1,5 @@
 import type { ComputedRef, Ref } from 'vue';
-import type { SortBy, TableColumn } from './index';
+import type { FilterBy, SortBy, TableColumn } from './index';
 export interface DataTableContext<T = any> {
     items: T[];
     columns: TableColumn<T>[];
@@ -21,6 +21,7 @@ export interface DataTableContext<T = any> {
     selectedMap: ComputedRef<Record<string, boolean>>;
     expandedMap: ComputedRef<Record<string, boolean>>;
     sortBy?: Ref<SortBy | undefined>;
+    filterBy?: Ref<FilterBy | undefined>;
     toggleSelected: (id: string | number) => void;
     toggleAllSelected: () => void;
     allSelectedState: ComputedRef<'indeterminate' | boolean>;
@@ -29,6 +30,7 @@ export interface DataTableContext<T = any> {
     toggleExpandAll: () => void;
     allExpandedState: ComputedRef<'indeterminate' | boolean>;
     updateSort: (key: string) => void;
+    updateFilter: (key: string, value: (string | number)[] | any) => void;
     isRowExpandableFn: (item: T) => boolean;
     onClickRow: (id: string) => void;
     onClickColumn: (colId: string, rowId: string) => void;

@@ -4,7 +4,7 @@ import { useShiftKeyRangeSelect } from '@/utils'
 import { useSessionStorage } from '@vueuse/core'
 import { objectify } from 'radash'
 import { computed, ref } from 'vue'
-import type { DataTableEmits, DataTableProps, GroupNode, SortBy } from '.'
+import type { DataTableEmits, DataTableProps, FilterBy, GroupNode, SortBy, TableColumn } from '.'
 import { isGroupNode, useToggleState } from '.'
 import DataTableBody from './DataTableBody.vue'
 import DataTableContainer from './DataTableContainer.vue'
@@ -47,6 +47,8 @@ defineSlots<
   } & {
     [K in keyof T as K extends string ? `cell-group:${K}` : never]?: (_: { group: GroupNode<T>; items: T[] }) => void
   } & {
+    [K in keyof T as K extends string ? `header:${K}` : never]?: (props: { column: TableColumn<T> }) => any
+  } & {
     'cell-group:actions'?: (_: { group: GroupNode<T>; items: T[] }) => void
   } & {
     header?: any
@@ -68,6 +70,7 @@ const flatItems = computed(() => items.flatMap(getAllGroupItems))
 // Models
 const visibleColumns = defineModel<string[]>('visibleColumns')
 const sortBy = defineModel<SortBy>('sortBy')
+const filterBy = defineModel<FilterBy>('filterBy')
 const selected = defineModel<any[]>('selected', { default: () => [] })
 
 // Computed
@@ -82,6 +85,16 @@ const filteredColumns = computed(() =>
 // No separate multiselect or expand columns — checkboxes live inside the tree column.
 // colNum = data columns + actions only.
 const colNum = computed(() => filteredColumns.value.length + (hasActionsColumn ? 1 : 0))
+
+function updateFilter(key: string, value: any) {
+  if (!filterBy.value) filterBy.value = {}
+  if (value === undefined || (Array.isArray(value) && value.length === 0)) {
+    const { [key]: _, ...rest } = filterBy.value
+    filterBy.value = rest
+  } else {
+    filterBy.value = { ...filterBy.value, [key]: value }
+  }
+}
 
 function updateSort(key: string) {
   if (!sortBy.value || sortBy.value.key !== key) {
@@ -178,6 +191,7 @@ provideDataTableContext({
   selectedMap,
   expandedMap: computed(() => ({})),
   sortBy,
+  filterBy,
   toggleSelected,
   toggleAllSelected,
   allSelectedState,
@@ -186,6 +200,7 @@ provideDataTableContext({
   toggleExpandAll,
   allExpandedState: allGroupsExpandedState,
   updateSort,
+  updateFilter,
   isRowExpandableFn: () => false,
   onClickRow: (id: string) => emit('clickRow', id),
   onClickColumn: (colId: string, rowId: string) => {
@@ -219,7 +234,11 @@ defineExpose({ selected, clearSelected: clear })
           <DataTableHeader
             :visible-columns="visibleColumns"
             @update:visible-columns="(cols) => visibleColumns = cols"
-          />
+          >
+            <template v-for="col in columns" :key="col.id" #[`header:${String(col.id)}`]="slotData">
+              <slot :name="`header:${String(col.id)}`" v-bind="slotData" />
+            </template>
+          </DataTableHeader>
 
           <DataTableBody>
             <template v-if="hasNodes">
