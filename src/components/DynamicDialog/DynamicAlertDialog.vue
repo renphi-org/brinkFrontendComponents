@@ -38,7 +38,7 @@ const { t } = useI18n()
 </script>
 
 <template>
-  <AlertDialog v-model:open="open">
+  <AlertDialog :open="open">
     <AlertDialogContent>
       <AlertDialogHeader>
         <AlertDialogTitle>

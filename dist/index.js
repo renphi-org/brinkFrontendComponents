@@ -9996,10 +9996,7 @@ const $l = (e) => {
       a.value = !1;
     }
     const { t: i } = At();
-    return (u, c) => (f(), N(l(Lp), {
-      open: a.value,
-      "onUpdate:open": c[2] || (c[2] = (p) => a.value = p)
-    }, {
+    return (u, c) => (f(), N(l(Lp), { open: a.value }, {
       default: b(() => [
         w(l(Rp), null, {
           default: b(() => [
