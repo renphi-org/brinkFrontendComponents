@@ -9990,7 +9990,7 @@ const $l = (e) => {
     async function s() {
       n.value = !0;
       const u = t.onOk ? await t.onOk().catch((c) => c) : void 0;
-      u === !0 || u === void 0 ? close() : no(u) && (o.value = u), n.value = !1;
+      u === !0 || u === void 0 ? a.value = !1 : no(u) && (o.value = u), n.value = !1;
     }
     function r() {
       a.value = !1;

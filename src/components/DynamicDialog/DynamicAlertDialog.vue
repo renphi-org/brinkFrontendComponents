@@ -23,7 +23,7 @@ async function handleOk() {
   isPending.value = true
   const result = props.onOk ? await props.onOk().catch((e: any) => e) : undefined
   if (result === true || result === undefined) {
-    close()
+    open.value = false
   } else if (isSubmitErrors(result)) {
     errors.value = result
   }
