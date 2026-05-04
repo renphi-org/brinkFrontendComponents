@@ -152,19 +152,19 @@ const allGroupsExpandedState = computed<'indeterminate' | boolean>(() => {
 })
 
 function isGroupSelected(groupItems: T[]) {
-  return groupItems.length > 0 && groupItems.every((item) => selected.value.includes(item.id))
+  return groupItems.length > 0 && groupItems.every((item) => selected.value.includes(item[idcol as string]))
 }
 
 function isGroupPartiallySelected(groupItems: T[]) {
-  const count = groupItems.filter((item) => selected.value.includes(item.id)).length
+  const count = groupItems.filter((item) => selected.value.includes(item[idcol as string])).length
   return count > 0 && count < groupItems.length
 }
 
 function toggleGroupSelection(groupItems: T[]) {
   if (isGroupSelected(groupItems)) {
-    selected.value = selected.value.filter((id) => !groupItems.some((item) => item.id === id))
+    selected.value = selected.value.filter((id) => !groupItems.some((item) => item[idcol as string] === id))
   } else {
-    selected.value = [...new Set([...selected.value, ...groupItems.map((item) => item.id)])]
+    selected.value = [...new Set([...selected.value, ...groupItems.map((item) => item[idcol as string])])]
   }
 }
 

@@ -9467,14 +9467,14 @@ const Zf = { class: "hidden sm:block" }, Qf = /* @__PURE__ */ P({
       return H === 0 ? !1 : H === k.length ? !0 : "indeterminate";
     });
     function le(k) {
-      return k.length > 0 && k.every((H) => p.value.includes(H.id));
+      return k.length > 0 && k.every((H) => p.value.includes(H[e.idcol]));
     }
     function z(k) {
-      const H = k.filter((C) => p.value.includes(C.id)).length;
+      const H = k.filter((C) => p.value.includes(C[e.idcol])).length;
       return H > 0 && H < k.length;
     }
     function ee(k) {
-      le(k) ? p.value = p.value.filter((H) => !k.some((C) => C.id === H)) : p.value = [.../* @__PURE__ */ new Set([...p.value, ...k.map((H) => H.id)])];
+      le(k) ? p.value = p.value.filter((H) => !k.some((C) => C[e.idcol] === H)) : p.value = [.../* @__PURE__ */ new Set([...p.value, ...k.map((H) => H[e.idcol])])];
     }
     return Vn({
       items: r.value,
